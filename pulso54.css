@@ -84,3 +84,23 @@
 
 .p54-duck-img{width:96px;height:96px;object-fit:contain;border-radius:18px;box-shadow:0 6px 30px #0006}
 @media(max-width:600px){.p54-duck-img{width:75px;height:75px}}
+
+
+/* PULSO 5.8 — retratos reais, marcas dos DJs e fotos dos clubes. */
+.p54-vintage-logo{width:94px;height:94px;display:block;object-fit:cover;border:1px solid #75665b;border-radius:15px;background:#160f0d;box-shadow:0 6px 24px #0006}
+.p54-signature .p54-logo-fallback{margin:0}
+.p54-rank{gap:9px;min-height:65px}
+.p54-rank>strong{flex:0 0 28px;min-width:25px}
+.p54-rank>.p54-rank-avatar{flex:0 0 48px;width:48px;height:48px;min-width:48px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:50%;border:2px solid #bfdc80;background:linear-gradient(145deg,#3b5438,#161c16)}
+.p54-rank-avatar>img{width:100%;height:100%;object-fit:cover;object-position:50% 36%;display:block}
+.p54-rank-avatar>img[hidden]{display:none!important}
+.p54-rank-avatar>.p54-avatar-fallback{display:grid;place-items:center;width:100%;height:100%;font:800 13px 'Space Grotesk',sans-serif;color:#d5fa94}
+.p54-rank-avatar>.p54-avatar-fallback[hidden]{display:none!important}
+.p54-rank>.p54-rank-name{min-width:0;flex:1;font:700 12px/1.35 'DM Sans',sans-serif}
+.p54-club-picture img{transition:transform .3s}
+.p54-club-card:hover img{transform:scale(1.03)}
+.p54-club-fallback{display:grid;place-items:center;width:100%;height:100%;padding:20px;text-align:center;color:#d1ff6b;font:900 clamp(15px,2vw,22px)/1.2 'Space Grotesk',sans-serif;letter-spacing:.03em;background:linear-gradient(140deg,#18251d,#1a2c29)}
+.p54-club-fallback[hidden]{display:none!important}
+.p54-photo-credit{display:block;margin-bottom:9px;color:#809286;font:600 10px 'DM Sans',sans-serif}
+@media(max-width:720px){.p54-rank-list{grid-template-columns:1fr 1fr}.p54-rank{min-height:60px;padding:8px 4px;gap:6px}.p54-rank>.p54-rank-avatar{flex-basis:40px;min-width:40px;width:40px;height:40px}.p54-rank>.p54-rank-name{font-size:11px}.p54-rank>strong{flex-basis:21px;min-width:21px;font-size:15px}.p54-rank>a{font-size:9px;padding:5px}.p54-vintage-logo{height:76px;width:76px}}
+@media(max-width:470px){.p54-rank-list{grid-template-columns:1fr}.p54-rank{gap:12px;padding:9px 6px}.p54-rank>.p54-rank-avatar{width:48px;height:48px;flex-basis:48px}.p54-rank>.p54-rank-name{font-size:12px}}
