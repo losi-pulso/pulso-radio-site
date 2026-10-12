@@ -124,7 +124,7 @@
   function onClose(){opened=false;linkedDismissed=true;cleanup();items=[];active=-1;document.querySelectorAll('[data-open-reels]').forEach(b=>b.setAttribute('aria-expanded','false'));}
   function slide(p,i){
     const art=safeUrl(p.cover);
-    const cover=art?`<img src="${escape(art)}" alt="" loading="lazy">`:'<div class="p52-reel-cover-fallback">◉</div>';
+    const cover=art?`<img src="${escape(art)}" alt="" loading="lazy">`:'<div class="p52-reel-cover-fallback">'+icon('play')+'</div>';
     const isCurated=!!p.curated;
     const like=isCurated?false:(app()?.isLiked?.(p.id)||false);
     const instagram=window.PULSO54?.djInstagram?.(p)||'';
@@ -149,7 +149,7 @@
   function render(){
     if(!opened)return;
     const el=track();
-    if(!items.length){el.innerHTML='<div class="p52-reels-empty"><span>▣</span><h2>Seus Reels começam aqui.</h2><p>Os vídeos aprovados e a curadoria oficial dos festivais aparecerão aqui.</p><button type="button" data-reel-action="close">Voltar ao PULSO</button></div>';}
+    if(!items.length){el.innerHTML='<div class="p52-reels-empty"><span>'+icon('play')+'</span><h2>Seus Reels começam aqui.</h2><p>Os vídeos aprovados e a curadoria oficial dos festivais aparecerão aqui.</p><button type="button" data-reel-action="close">Voltar ao PULSO</button></div>';}
     else el.innerHTML=items.map(slide).join('');
     updateCounter();
   }
