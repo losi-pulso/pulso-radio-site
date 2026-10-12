@@ -1,0 +1,160 @@
+/* PULSO 5.0 / full-width premium experience, safe extension of original stylesheet */
+[hidden]{display:none!important}
+.p5-shell{scroll-margin-top:92px;padding-top:62px;padding-bottom:68px;--p5-green:#cefd60;--p5-line:rgba(202,249,113,.17);color:#f5f7f1;font-family:'DM Sans',sans-serif}
+.p5-shell *,.p5-dialog *{box-sizing:border-box}
+.p5-shell h2,.p5-shell h3,.p5-dialog h2,.p5-dialog h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-.045em;line-height:1.07}
+.p5-shell em,.p5-dialog em{color:#d0fb6b;font-style:normal}
+.p5-overline{font:700 10px/1.5 'Space Grotesk',sans-serif;letter-spacing:.23em;text-transform:uppercase;color:#b8d786}
+.p5-shell-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding:0 0 21px}
+.p5-shell-intro h2{font-size:clamp(24px,3.6vw,48px);margin-top:8px;font-weight:700}
+.p5-edition{font:700 11px 'Space Grotesk',sans-serif;letter-spacing:.12em;white-space:nowrap;color:#b5b8b0;border:1px solid #344031;padding:11px 14px;border-radius:999px}
+.p5-edition b{color:#d0ff69}
+.p5-tabs{display:flex;gap:6px;background:#111714;padding:7px;border:1px solid #273328;border-radius:18px;width:max-content;max-width:100%;margin-bottom:24px;overflow-x:auto;scrollbar-width:none}
+.p5-tabs button{display:flex;gap:9px;align-items:center;background:transparent;border:0;color:#9aa79a;white-space:nowrap;font:700 11px 'Space Grotesk',sans-serif;letter-spacing:.08em;padding:13px 19px;border-radius:13px;cursor:pointer}
+.p5-tabs button svg{width:17px;height:17px}
+.p5-tabs button.active{background:#cffc72;color:#0b1409}
+.p5-tabs button:focus-visible,.p5-shell button:focus-visible,.p5-dialog button:focus-visible,.p5-dialog input:focus-visible{outline:2px solid #cdf96f;outline-offset:3px}
+.p5-panel{animation:p5Reveal .24s ease-out}
+@keyframes p5Reveal{from{opacity:.65;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.p5-hero{display:grid;grid-template-columns:1.22fr .78fr;min-height:330px;border:1px solid #354c2e;border-radius:24px;overflow:hidden;background:radial-gradient(circle at 80% 10%,#203728 0%,#0d1812 44%,#0c110e 80%);box-shadow:0 18px 70px rgba(0,0,0,.18)}
+.p5-hero-left{padding:clamp(24px,4vw,58px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:18px;position:relative;z-index:1}
+.p5-hero-left h2{font-size:clamp(36px,5.2vw,69px);font-weight:700;max-width:700px}
+.p5-hero-left p{color:#c0c9bd;max-width:510px;line-height:1.65;margin:0;font-size:14px}
+.p5-hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:3px}
+.p5-btn{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.012em;display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;text-decoration:none;border-radius:12px;border:1px solid transparent;padding:13px 16px;white-space:nowrap;transition:transform .2s,border-color .2s,background .2s;min-height:42px}
+.p5-btn:hover{transform:translateY(-1px)}
+.p5-btn-accent{color:#10200b;background:#d0fb6b;font-weight:700}
+.p5-btn-accent:hover{background:#e2ffa7}
+.p5-btn-outline{color:#f2f7e9;background:#202d22;border-color:#486044}
+.p5-btn-outline:hover{border-color:#c7f673;background:#293d29}
+.p5-ico{width:18px;height:18px;flex:none}
+.p5-hero-feature{min-height:330px;position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:35px 30px 30px 50px;background:linear-gradient(90deg,rgba(11,19,13,.1),rgba(5,11,7,.8));overflow:hidden}
+.p5-hero-feature>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;z-index:-2;filter:saturate(.75)}
+.p5-hero-feature::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#060b08 0%,transparent 95%)}
+.p5-hero-feature>.p5-ico{position:absolute;width:100px;height:100px;top:50px;left:calc(50% - 50px);opacity:.35}
+.p5-hero-vinyl{width:185px;height:185px;border:17px double rgba(216,255,166,.21);border-radius:50%;box-shadow:inset 0 0 0 10px rgba(0,0,0,.3),0 0 0 1px rgba(211,250,138,.3);position:absolute;right:-25px;top:-42px;opacity:.45}
+.p5-hero-feature>span{font:700 10px 'Space Grotesk',sans-serif;letter-spacing:.2em;color:#c4e38e;margin-bottom:10px}
+.p5-hero-feature>strong{font:700 clamp(21px,2vw,29px)/1.12 'Space Grotesk',sans-serif;max-width:270px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.p5-hero-feature>small{color:#d9decf;margin-top:6px}
+.p5-hero-feature>button{position:absolute;right:26px;bottom:28px;border:0;background:#d3fc74;color:#102109;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;cursor:pointer;box-shadow:0 5px 29px rgba(184,247,83,.3)}
+.p5-hero-feature>button .p5-ico{width:25px;height:25px}
+.p5-home-stats{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 23px}
+.p5-home-stats>span{display:flex;align-items:center;gap:8px;border:1px solid #2b352c;border-radius:30px;padding:10px 15px;font-size:12px;color:#adbaad;background:#121916}
+.p5-home-stats strong{color:#d8f89a}
+.p5-home-stats .p5-ico{width:14px;height:14px;color:#d1fc71}
+.p5-row-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin:45px 0 17px}
+.p5-row-heading h3,.p5-djs-title h3,.p5-lib-toolbar h3{font-size:clamp(24px,3vw,37px);margin:5px 0 0}
+.p5-subtle{font-size:12px;color:#9da89a;line-height:1.45}
+.p5-text-btn{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;color:#c9fc77;font-size:12px;cursor:pointer;text-decoration:none;font-weight:600;padding:8px 0}
+.p5-text-btn:hover{text-decoration:underline}
+.p5-scroll{display:grid;grid-auto-flow:column;grid-auto-columns:210px;grid-template-rows:1fr;gap:13px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding-bottom:13px;scrollbar-color:#465c3d #151b17}
+.p5-scroll>.p5-tile{scroll-snap-align:start;max-width:248px;min-width:176px}
+.p5-tile{background:#151c18;border:1px solid #2b382d;border-radius:17px;overflow:hidden;min-width:0;transition:transform .2s,border-color .2s;display:flex;flex-direction:column}
+.p5-tile:hover{transform:translateY(-3px);border-color:#617d4b}
+.p5-art{display:grid;place-items:center;position:relative;aspect-ratio:1;width:100%;border:0;overflow:hidden;cursor:pointer;background:linear-gradient(135deg,#23402a,#0e1712)}
+.p5-art>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.9);transition:transform .3s}
+.p5-art:hover>img{transform:scale(1.035)}
+.p5-art-fallback .p5-ico{width:88px;height:88px;opacity:.38}
+.p5-art-play{position:absolute;right:10px;bottom:10px;width:43px;height:43px;border-radius:50%;background:#d2ff76;color:#0d190d;display:grid;place-items:center;box-shadow:0 3px 16px #0008;opacity:.92}
+.p5-art-play .p5-ico{width:21px;height:21px}
+.p5-tile-text{padding:13px 13px 0;display:flex;flex-direction:column;gap:3px;flex:1}
+.p5-tile-tag{font:700 10px 'Space Grotesk',sans-serif;color:#b9d792;text-transform:uppercase;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.p5-title{background:none;border:0;color:#f7faf6;font:700 14px/1.27 'Space Grotesk',sans-serif;text-align:left;padding:2px 0 0;cursor:pointer;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.p5-tile-artist{color:#9ca79c;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p5-tile-buttons{display:flex;justify-content:flex-end;gap:4px;padding:10px}
+.p5-icon-btn{width:35px;height:35px;flex:none;border:1px solid #2f4132;color:#d3e3ce;background:#1a251d;border-radius:12px;display:inline-grid;place-items:center;cursor:pointer}
+.p5-icon-btn:hover,.p5-icon-btn.is-active{color:#d3fb72;border-color:#94bb69;background:#253323}
+.p5-icon-btn .p5-ico{width:16px;height:16px}
+.p5-empty-mini{border:1px dashed #344632;background:#111a14;border-radius:15px;padding:27px;color:#aebcab;font-size:13px;line-height:1.8}
+.p5-djs-title,.p5-lib-toolbar{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:30px 0 21px}
+.p5-djs-title p{font-size:13px;color:#9eb09f;line-height:1.7;max-width:560px;margin:12px 0 0}
+.p5-djs-search{margin-bottom:20px}
+.p5-djs-search input{width:100%;max-width:460px;border:1px solid #354836;background:#151c18;border-radius:14px;padding:15px 18px;color:#f3ffed;font-size:14px;outline:none}
+.p5-dj-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.p5-dj{background:linear-gradient(146deg,#19251d,#121915);border:1px solid #304634;border-radius:19px;padding:20px;min-width:0;display:flex;flex-direction:column}
+.p5-dj-head{display:flex;justify-content:space-between;margin-bottom:15px;align-items:flex-start}
+.p5-dj-head img,.p5-dj-portrait{width:72px;height:72px;border-radius:50%;object-fit:cover;background:#324b35;display:grid;place-items:center;border:2px solid #a8d47a}
+.p5-dj-portrait .p5-ico{width:36px;height:36px;color:#d1ff70}
+.p5-dj-metrics{text-align:right;display:flex;flex-direction:column;gap:3px;color:#a0a99f;font-size:11px}
+.p5-dj-metrics strong{font:700 22px 'Space Grotesk',sans-serif;color:#d8ff88}
+.p5-dj-name{font:700 20px 'Space Grotesk',sans-serif;word-wrap:break-word}
+.p5-dj>small{font-size:11px;color:#b5d58b;margin:5px 0}
+.p5-dj>p{line-height:1.5;color:#aab7aa;font-size:12px;min-height:35px;max-height:70px;overflow:hidden;word-break:break-word}
+.p5-dj-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.p5-dj-actions .p5-btn{padding:11px 13px;font-size:11px}
+.p5-lib-tabs{display:flex;gap:10px;border-bottom:1px solid #2b3b2f;padding-bottom:12px;margin:0 0 18px;overflow-x:auto}
+.p5-lib-tabs button{padding:10px 15px;background:transparent;border-radius:10px;border:1px solid transparent;color:#b2c0b1;cursor:pointer;white-space:nowrap}
+.p5-lib-tabs button.active{background:#283c27;border-color:#6a8451;color:#e6ffbe}
+.p5-list-row{display:flex;align-items:center;gap:14px;border:1px solid #283b2a;background:#151d17;padding:9px 12px;border-radius:12px;margin:7px 0;min-width:0}
+.p5-row-cover{width:54px;height:54px;flex:none;border:0;background:#28472c;border-radius:9px;display:grid;place-items:center;overflow:hidden;cursor:pointer;color:#d7ff88}
+.p5-row-cover img{width:100%;height:100%;object-fit:cover}
+.p5-row-info{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1}
+.p5-row-info strong{font:700 14px 'Space Grotesk',sans-serif;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.p5-row-info span{font-size:11px;color:#a7b1aa;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.p5-history-note{color:#b2d296;font-size:11px;padding-left:82px;margin-top:0;margin-bottom:14px}
+.p5-login-card{border:1px solid #395138;background:linear-gradient(135deg,#1a311d,#101612);text-align:center;padding:55px 25px;border-radius:20px}
+.p5-login-card>.p5-ico{width:40px;height:40px;color:#cbfa7f}
+.p5-login-card h3{font-size:30px;margin:10px 0}
+.p5-login-card p{color:#bbc9bb;font-size:13px;max-width:490px;margin:12px auto 23px;line-height:1.65}
+.p5-playlist-card{display:flex;align-items:center;gap:15px;background:#162019;border:1px solid #344535;padding:12px 17px;border-radius:15px;margin:10px 0}
+.p5-playlist-logo{width:56px;height:56px;flex:none;border-radius:14px;background:#293e26;color:#c8fb72;display:grid;place-items:center}
+.p5-playlist-logo .p5-ico{width:26px;height:26px}
+.p5-playlist-card>div:nth-child(2){flex:1;min-width:0}
+.p5-playlist-card h4{font:700 16px 'Space Grotesk',sans-serif;margin:0 0 6px;color:#f2f8e8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p5-playlist-card span{color:#a8b9a6;font-size:11px}
+.p5-import{margin:12px 0}
+.p5-dialog{border:1px solid #39523c;border-radius:21px;background:#111a14;color:#f3fbeb;padding:0;max-width:min(620px,calc(100vw - 25px));max-height:calc(100dvh - 32px);width:100%;box-shadow:0 20px 100px #000c;overflow-y:auto}
+.p5-dialog::backdrop{background:rgba(1,7,4,.78);backdrop-filter:blur(6px)}
+.p5-dialog .p5-modal{padding:clamp(18px,3vw,30px)}
+.p5-dialog .p5-modal-wide{min-width:0}
+.p5-dialog:has(.p5-modal-wide){max-width:min(780px,calc(100vw - 25px))}
+.p5-dialog-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:25px}
+.p5-dialog h2{font-size:clamp(23px,3vw,35px);margin-top:5px}
+.p5-modal-close{border:1px solid #425543;background:#243026;color:#e5f7dc;font-size:26px;line-height:1;border-radius:11px;cursor:pointer;width:43px;height:43px;flex:none}
+.p5-form{display:flex;flex-direction:column;gap:16px}
+.p5-form label{color:#cfe6b4;font:bold 11px 'Space Grotesk',sans-serif;letter-spacing:.04em;display:flex;flex-direction:column;gap:9px}
+.p5-form input,.p5-form textarea,.p5-form select{background:#1a2a1c;border:1px solid #466143;border-radius:10px;color:#fff;font:400 14px 'DM Sans',sans-serif;padding:13px 14px;max-width:100%;width:100%}
+.p5-form label small{color:#90a18d;font:400 11px 'DM Sans',sans-serif;letter-spacing:0}
+.p5-form textarea{resize:vertical}
+.p5-error{color:#ffc49c;font-size:12px;min-height:1em;margin:0}
+.p5-detail-top{display:grid;grid-template-columns:122px 1fr;gap:24px;align-items:start;margin-bottom:24px}
+.p5-detail-avatar{width:122px;height:122px;background:#213922;display:grid;place-items:center;border:3px solid #a5d66a;border-radius:50%;overflow:hidden}
+.p5-detail-avatar img{width:100%;height:100%;object-fit:cover}
+.p5-detail-avatar .p5-ico{width:51px;height:51px;color:#b9e66c}
+.p5-detail-top h3{font-size:34px;margin:7px 0}
+.p5-detail-top p{color:#b4bfb0;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.p5-detail-top small{color:#b6d690;font-size:11px}
+.p5-detail-actions,.p5-modal-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.p5-detail-list-head h3{font-size:29px;margin:6px 0}
+.p5-detail-list-head p,.p5-detail-list-head>span:last-child{color:#a5b8a8;font-size:13px;line-height:1.5}
+.p5-playlist-rows{margin-top:23px}
+.p5-choose-row{border:1px solid #324c35;background:#1b2b1e;border-radius:11px;margin-bottom:9px;padding:15px;display:flex;gap:12px;width:100%;color:#efffe4;text-align:left;align-items:center;cursor:pointer}
+.p5-choose-row span{flex:1}
+.p5-create-from-add{margin-top:13px}
+.p5-player-extras{margin-top:12px;padding:23px 20px;border-radius:18px;background:linear-gradient(135deg,#122719,#101914);border:1px solid #344b37}
+.p5-player-extra-head{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.p5-led{font:bold 10px 'Space Grotesk',sans-serif;color:#bff36e;letter-spacing:.09em}
+.p5-eq{display:flex;justify-content:center;align-items:center;gap:4px;height:60px;padding:6px 0;overflow:hidden}
+.p5-eq i{width:5px;height:var(--h);min-height:5px;background:linear-gradient(0deg,#79b840,#d7fd8d);border-radius:3px;opacity:.3;transform-origin:center;transition:opacity .2s}
+.pulso-audio-deck.playing .p5-eq i{animation:p5Pulse calc(.65s + var(--i)*.04s) ease-in-out infinite alternate;opacity:.95}
+@keyframes p5Pulse{from{height:5px;opacity:.5}to{height:var(--h);opacity:1}}
+.p5-player-extra-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:7px}
+.p5-queue{margin:16px 0 0;border-top:1px solid #3d543e;padding-top:15px}
+.p5-queue-title{display:flex;gap:7px;align-items:center;font-size:11px;color:#d8f5bb}
+.p5-queue-title span{margin-left:auto;color:#9cab9b;font-size:10px}
+.p5-queue-items{max-height:150px;overflow:auto;margin:8px 0}
+.p5-queue-items button{display:flex;gap:9px;align-items:center;border:0;border-bottom:1px solid #324334;background:transparent;color:#afc2ae;text-align:left;font-size:11px;width:100%;padding:9px;cursor:pointer;overflow:hidden;text-overflow:ellipsis}
+.p5-queue-items button.active{color:#d6fb83;background:#233724}
+.p5-queue-items button span{font-size:10px;color:#7caa6c}
+.p5-queue>.p5-btn{width:100%;margin-top:5px}
+/* Immersive vinyl deck: improves original audio player while maintaining its controls and Media Session. */
+.pulso-audio-deck{background:radial-gradient(circle at 50% 3%,#284632 0,#121c17 45%,#0a110f 100%)!important;border:1px solid #3b5e3a!important;box-shadow:inset 0 1px #5e985533,0 25px 60px #0007}
+.pulso-deck-hero{gap:20px}
+.pulso-deck-disc{box-shadow:0 0 0 11px #0b1310,0 0 0 12px #41533e,0 12px 35px #0009!important}
+.pulso-audio-deck.playing .pulso-deck-disc{filter:drop-shadow(0 0 12px #adf07230)}
+.pulso-big-play{box-shadow:0 7px 28px #b1e75b45!important}
+@media(max-width:1000px){.p5-dj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.p5-hero{grid-template-columns:1.1fr .9fr}.p5-hero-left h2{font-size:clamp(35px,5vw,52px)}}
+@media(max-width:680px){.p5-shell{padding-top:34px;padding-bottom:44px;scroll-margin-top:66px}.p5-shell-intro{align-items:start}.p5-shell-intro h2{font-size:26px}.p5-edition{font-size:9px;padding:8px}.p5-tabs{width:100%;justify-content:space-between;margin-bottom:16px;padding:5px}.p5-tabs button{flex:1;justify-content:center;padding:11px 8px;font-size:9px;gap:4px}.p5-tabs button svg{width:15px;height:15px}.p5-hero{grid-template-columns:1fr}.p5-hero-left{padding:29px 23px;gap:13px}.p5-hero-left h2{font-size:clamp(37px,10vw,51px)}.p5-hero-feature{min-height:174px;padding:24px}.p5-hero-feature>img{object-position:center 40%}.p5-hero-feature>button{width:48px;height:48px;right:18px;bottom:20px}.p5-hero-vinyl{top:-90px;right:-40px}.p5-home-stats{gap:7px}.p5-home-stats>span{font-size:10px;padding:7px 9px}.p5-row-heading{margin:32px 0 13px;align-items:end}.p5-row-heading h3{font-size:26px}.p5-subtle{max-width:145px;text-align:right;font-size:10px}.p5-scroll{grid-auto-columns:160px;gap:9px}.p5-scroll>.p5-tile{min-width:160px;max-width:160px}.p5-art-play{width:38px;height:38px}.p5-title{font-size:13px}.p5-djs-title,.p5-lib-toolbar{flex-wrap:wrap;margin-top:20px}.p5-djs-title h3,.p5-lib-toolbar h3{font-size:27px}.p5-dj-grid{grid-template-columns:1fr}.p5-dj{padding:18px}.p5-playlist-card{gap:9px;padding:10px}.p5-playlist-card .p5-btn{font-size:10px;padding:9px}.p5-detail-top{grid-template-columns:1fr;gap:12px}.p5-detail-avatar{width:90px;height:90px}.p5-dialog .p5-modal{padding:20px}.p5-player-extras{padding:14px 11px}.p5-eq{gap:3px}.p5-eq i{width:4px}}
+@media(prefers-reduced-motion:reduce){.p5-panel{animation:none}.pulso-audio-deck.playing .p5-eq i{animation:none}.p5-tile:hover,.p5-btn:hover{transform:none}}
+
+@media(max-width:680px){.pulso-app-tabs{justify-content:space-between}.pulso-app-tabs>.p5-bottom-account{display:none!important}.pulso-app-tabs>button{min-width:0;flex:1;padding:5px 3px}.pulso-app-tabs small{font-size:9px;letter-spacing:0}.pulso-app-tabs span{font-size:23px}}

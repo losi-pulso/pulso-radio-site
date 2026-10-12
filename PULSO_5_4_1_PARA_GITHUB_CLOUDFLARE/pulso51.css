@@ -1,0 +1,49 @@
+/* PULSO 5.1 — iPhone, Android, gallery avatar, streaming, help */
+.p51-avatar-uploader{border:1px solid #426144;padding:16px;border-radius:16px;background:#132016}
+.p51-avatar-uploader>label,.p51-alternative{font-size:11px;font-weight:800;letter-spacing:.06em;color:#ddf5bd;display:block}
+.p51-avatar-row{display:flex;gap:16px;align-items:center;margin:12px 0}
+.p51-avatar-row img,.p51-avatar-placeholder{object-fit:cover;width:85px;height:85px;min-width:85px;border-radius:50%;border:2px solid #cefa67;background:#273e2b;display:grid;place-items:center;font-size:32px;color:#d2fb63}
+.p51-avatar-row img[hidden],.p51-avatar-placeholder[hidden]{display:none}
+.p51-avatar-row input[type=file]{width:100%;font-size:12px;padding:9px;max-width:440px}
+.p51-avatar-row small{display:block;color:#acc3a4;font-size:11px;margin-top:8px;line-height:1.6}
+.p51-alternative{margin-top:14px}
+.p51-alternative input{margin-top:8px}
+.p51-section{margin:18px auto 80px;padding:36px;border-radius:26px;border:1px solid #365039;background:radial-gradient(circle at 95% 0%,#496e2b35,transparent 42%),#101914;color:#e7f4db}
+.p51-heading h2{font-size:clamp(25px,4vw,43px);margin:8px 0;font-family:'Space Grotesk',sans-serif}
+.p51-heading em{color:#d2fb63;font-style:normal}.p51-heading p{color:#acbea7;line-height:1.6;max-width:700px;font-size:13px}
+.p51-stream-search,.p51-stream-preview{max-width:880px;margin-top:25px}.p51-stream-search>label,.p51-stream-preview>label{display:block;color:#bdda9d;font-weight:800;font-size:10px;letter-spacing:1.4px;margin-bottom:9px}
+.p51-stream-search>div,.p51-stream-preview>div:first-of-type{display:flex;gap:8px}.p51-stream-search input,.p51-stream-preview input{min-width:0;flex:1;padding:13px 15px;border-radius:12px;border:1px solid #415e42;background:#17251b;color:#fff;font-size:15px}
+.p51-stream-search button,.p51-stream-preview button,.p51-stream-links a{border:0;border-radius:12px;padding:13px 18px;background:#d2fb63;color:#121d10;font-weight:800;cursor:pointer;text-decoration:none}
+.p51-stream-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.p51-stream-links[hidden]{display:none}.p51-stream-links a{background:#24372a;border:1px solid #698451;color:#e3f6d6}
+#p51StreamingStatus{color:#c1d4b6;font-size:12px;line-height:1.6}.p51-embed{margin-top:13px}.p51-embed iframe{display:block;width:100%;min-height:180px;border:0;border-radius:15px;background:#1c211e}
+.p51-install-bar{position:fixed;z-index:130;bottom:12px;left:50%;transform:translateX(-50%);width:min(750px,calc(100% - 24px));display:flex;gap:13px;align-items:center;padding:12px 45px 12px 14px;border:1px solid #789a5b;border-radius:16px;background:#111f15f5;box-shadow:0 10px 40px #000b;backdrop-filter:blur(16px);color:#e7f3e2;font-family:'Space Grotesk',sans-serif}
+.p51-install-bar[hidden]{display:none}.p51-appmark{background:#d2fb63;color:#14200e;width:40px;height:40px;flex:none;border-radius:11px;display:grid;place-items:center;font-size:27px}.p51-install-bar>div{flex:1;min-width:0}.p51-install-bar strong{display:block;font-size:11px;letter-spacing:.04em}.p51-install-bar small{display:block;font-size:10px;color:#b5c5a9;margin-top:4px}
+.p51-install-bar>button:not(.p51-install-close),.p51-install-bar>a{font-size:11px;font-weight:800;white-space:nowrap;text-decoration:none;border-radius:9px;padding:10px;background:#d2fb63;color:#14200e;border:0;cursor:pointer}.p51-install-bar>a{background:#273d2a;color:#e3f4df;border:1px solid #527a4a}
+.p51-install-close{position:absolute;right:7px;top:5px;background:none;border:0;color:#bbc9b9;font-size:22px;cursor:pointer}
+.p51-help-button{position:fixed;right:18px;bottom:94px;z-index:151;display:flex;align-items:center;gap:7px;padding:11px 15px;background:#d2fb63;border:0;border-radius:99px;color:#14200e;font-weight:900;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 8px 26px #000c}.p51-help-button svg{width:19px;height:19px;fill:none;stroke:#14200e;stroke-width:1.8}
+.p51-help-dialog{position:fixed;right:16px;bottom:147px;z-index:151;width:min(400px,calc(100vw - 24px));height:min(570px,calc(100dvh - 170px));border:1px solid #658256;border-radius:20px;background:#101b15;color:#edf9e7;box-shadow:0 20px 55px #000e;display:flex;flex-direction:column;overflow:hidden}.p51-help-dialog[hidden]{display:none}
+.p51-help-dialog header{padding:17px 19px;background:#1d2b20;display:flex;justify-content:space-between;align-items:center}.p51-help-dialog h2{font-size:17px;margin:6px 0 0}.p51-help-dialog header button{background:none;border:0;color:#fff;font-size:26px;cursor:pointer}.p51-help-messages{overflow-y:auto;flex:1;padding:18px;display:flex;flex-direction:column;gap:12px}.p51-bubble{font-size:12.5px;line-height:1.6;max-width:92%;border-radius:13px;padding:11px 13px;white-space:pre-wrap;overflow-wrap:anywhere}.p51-bubble.bot{background:#28422c;align-self:flex-start}.p51-bubble.user{background:#d2fb63;color:#172211;align-self:flex-end}.p51-questions{display:flex;gap:5px;overflow-x:auto;padding:0 12px 9px}.p51-questions button{font-size:10px;color:#e7f6dd;background:#26372b;border:1px solid #526d49;border-radius:99px;white-space:nowrap;padding:8px;cursor:pointer}.p51-help-dialog form{display:flex;gap:5px;padding:9px 12px}.p51-help-dialog form input{flex:1;min-width:0;background:#1e2d21;color:white;border:1px solid #536e48;border-radius:10px;padding:11px}.p51-help-dialog form button{border:0;background:#d2fb63;color:#17220f;border-radius:10px;width:40px;font-size:17px;cursor:pointer}.p51-help-dialog>small{display:block;font-size:9px;line-height:1.5;color:#9cb59b;padding:0 12px 12px}
+.p51-visually-hidden,.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+/* Accurate, touch-friendly position controls on phones */
+@media(max-width:680px){
+ .pulso-deck-timeline{position:sticky;top:-1px;z-index:5;margin:6px -6px 11px;padding:12px 10px 8px;border:1px solid #456a43;border-radius:13px;background:#18291bf5;backdrop-filter:blur(10px)}
+ .pulso-deck-time{font-size:15px;letter-spacing:.2px}.pulso-deck-time time{font-size:15px;font-weight:800;color:#e4ffb9;font-variant-numeric:tabular-nums;min-width:49px}
+ .pulso-deck-time>span{font-size:9px;letter-spacing:.2px;text-align:center}
+ .pulso-deck-timeline .pulso-seek{margin-top:7px;height:42px;touch-action:pan-y}
+ .pulso-deck-timeline .pulso-seek::-webkit-slider-thumb{width:25px;height:25px;margin-top:-9px;border-width:3px}
+ .radio-seek-group{position:sticky;top:0;z-index:2;background:#132015f2;padding:11px 15px 12px;border-bottom:1px solid #496343}
+ .radio-time-row #radioElapsed,.radio-time-row #radioDuration{font-size:16px;font-weight:900;color:#e7ffb4}
+ .radio-time-hint{font-size:8px;letter-spacing:0}
+ #radioSeek{height:44px;margin-top:4px}#radioSeek::-webkit-slider-thumb{width:26px;height:26px;margin-top:-9px}
+ .radio-jump{display:grid;grid-template-columns:auto minmax(100px,1fr) 57px;gap:8px;padding:12px 14px 16px}
+ .radio-jump>label{font-size:10px}.radio-jump input{width:100%;height:45px;font-size:16px}.radio-jump button{height:45px}.radio-jump #radioSpeedWrap{grid-column:1/-1;justify-self:end;margin-left:0}
+ .pulso-deck-actions input.pulso-minute{height:44px;min-width:110px;font-size:16px}
+ .p51-section{padding:24px 14px;margin:8px auto 50px}.p51-stream-search>div,.p51-stream-preview>div:first-of-type{flex-direction:column}.p51-stream-search button,.p51-stream-preview button{min-height:45px}
+ .p51-install-bar{bottom:calc(72px + env(safe-area-inset-bottom));width:calc(100% - 20px);gap:8px;padding:9px 27px 9px 9px}.p51-appmark{width:32px;height:32px;font-size:22px}.p51-install-bar strong{font-size:9px}.p51-install-bar small{font-size:8px}.p51-install-bar>a,.p51-install-bar>button:not(.p51-install-close){padding:7px 6px;font-size:9px;white-space:normal;text-align:center;max-width:75px}
+ .p51-help-button{bottom:calc(149px + env(safe-area-inset-bottom));right:10px;font-size:11px}.p51-help-dialog{bottom:calc(206px + env(safe-area-inset-bottom));right:8px;height:min(540px,calc(100dvh - 220px))}
+}
+
+.p51-install-bar>a[hidden]{display:none!important}
+
+.p51-install-bar>button[hidden],.p51-install-bar>a[hidden]{display:none!important}
+@media(max-width:420px){.p51-install-bar{gap:5px}.p51-install-bar>div{flex:1 1 75px}.p51-install-bar>a,.p51-install-bar>button:not(.p51-install-close){font-size:9px;max-width:82px}}

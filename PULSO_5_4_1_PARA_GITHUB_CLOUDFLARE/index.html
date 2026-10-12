@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0b0e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PULSO">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <meta name="description" content="PULSO by LØSI — Descubra, compartilhe e publique músicas, videoclipes, sets e apresentações de DJs da cena eletrônica.">
+  <title>PULSO 5.4.1 by LØSI — Música eletrônica sem pausa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PULSO by LØSI — Música eletrônica sem pausa">
+  <meta property="og:description" content="Descubra e compartilhe techno, house, sets, playlists e outras frequências da cena eletrônica.">
+  <link rel="stylesheet" href="styles.css?v=5.0">
+  <link rel="stylesheet" href="pulso5.css?v=5.0">
+  <link rel="stylesheet" href="pulso51.css?v=5.1">
+  <link rel="stylesheet" href="pulso52.css?v=5.4">
+  <link rel="stylesheet" href="pulso54.css?v=5.4">
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="config.js"></script>
+  <script defer src="https://w.soundcloud.com/player/api.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
+  <script defer src="background.js"></script>
+  <script defer src="notifications.js"></script>
+  <script defer src="security.js?v=4.2"></script>
+  <script defer src="script.js?v=5.3.1"></script>
+  <script defer src="social.js?v=5.3"></script>
+  <script defer src="identify.js"></script>
+  <script defer src="pulso5.js?v=5.3"></script>
+  <script defer src="pulso51.js?v=5.1"></script>
+  <script defer src="pulso54.js?v=5.4"></script>
+  <script defer src="pulso52.js?v=5.4"></script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="preview-banner" id="previewBanner" hidden><div class="container">MODO DEMONSTRAÇÃO — Os sons ainda estão salvos apenas neste navegador. Para ativar a versão pública, conecte o Supabase no arquivo <strong>config.js</strong>.<button type="button" id="previewDismiss" aria-label="Dispensar aviso">×</button></div></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="PULSO, início">
+        <span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>PULSO<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="nav-link p5-nav" href="#pulso5" data-p5tab="home">Início</a>
+        <a class="nav-link" href="#p54Catalog" data-p54-nav>Festivais</a>
+        <a class="nav-link active" href="#explorar" data-nav="explorar">Explorar</a>
+        <button type="button" class="nav-link pulso-reels-nav" data-open-reels>▣ Reels</button>
+        <a class="nav-link p5-nav" href="#pulso5" data-p5tab="djs">DJs</a>
+        <a class="nav-link p5-nav" href="#pulso5" data-p5tab="library">Biblioteca</a>
+        <a class="nav-link" href="#explorar" data-nav="novidades">Novidades</a>
+        <a class="nav-link" href="#explorar" data-nav="salvos">Salvos</a>
+        <a class="nav-link" href="#sobre" data-nav="sobre">Sobre</a>
+      </nav>
+      <div class="header-actions">
+        <button id="pulsoNotifyButton" class="pulso-notify-top" type="button" title="Novos DJ sets e notificações" aria-label="Novos DJ sets e notificações">🔔 <span class="pulso-notify-label">AVISOS</span><span id="pulsoNotifyBadge" class="pulso-notify-badge" hidden>0</span></button>
+        <button class="account-trigger" type="button" id="accountButton" aria-label="Entrar na conta">Entrar <span>↗</span></button>
+        <button class="account-trigger admin-trigger hidden" type="button" id="adminButton">Painel admin <span>●</span></button>
+        <span class="onair"><i></i> PULSO RADIO</span>
+        <button class="button button-accent header-publish" id="openComposer" type="button"><span>Publicar som</span><span class="button-plus">↗</span></button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Navegação móvel">
+      <a href="#pulso5" data-p5tab="home">Início</a>
+      <a href="#p54Catalog">Festivais</a>
+      <a href="#explorar" data-nav="explorar">Explorar</a>
+      <button type="button" data-open-reels>▣ Reels</button>
+      <a href="#pulso5" data-p5tab="djs">DJs</a>
+      <a href="#pulso5" data-p5tab="library">Biblioteca</a>
+      <a href="#explorar" data-nav="novidades">Novidades</a>
+      <a href="#explorar" data-nav="salvos">Salvos</a>
+      <a href="#sobre" data-nav="sobre">Sobre</a>
+      <button id="mobilePublish" type="button">+ Publicar som</button>
+      <button id="mobileAccount" type="button">Entrar / Minha conta</button>
+      <button id="mobileAdmin" class="hidden" type="button">Painel de moderação</button>
+    </nav>
+  </header>
+
+  <main id="inicio">
+
+    <!-- PULSO 5.4.1 — DESERT FREQUENCIES: localização dinâmica e visual Burning Man mais realista -->
+    <section id="desert" class="p54-desert container" aria-labelledby="p54Title">
+      <div class="p54-desert-art" aria-hidden="true"><div class="p54-desert-dust"></div><div class="p54-laser p54-laser-1"></div><div class="p54-laser p54-laser-2"></div></div>
+      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.4</span>
+      <h1 id="p54Title">ALÉM DO <span>AMANHECER.</span></h1>
+      <p>Da poeira da playa aos templos da música eletrônica. Art cars, luzes, DJs e sets que atravessam a madrugada.</p>
+      <div class="p54-desert-actions"><button type="button" data-open-desert>EXPLORAR SETS ↗</button><button type="button" data-open-reels>▶ ABRIR REELS ALEATÓRIOS</button></div>
+      <div class="p54-desert-meter" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="p54-location-wrap">
+        <span class="p54-desert-coordinate" id="p54DesertCoordinate">BLACK ROCK CITY → SUA FREQUÊNCIA → O MUNDO</span>
+        <button type="button" class="p54-location-btn" id="p54UseLocation">USAR LOCALIZAÇÃO ATUAL</button>
+      </div>
+    </section>
+    <section id="p54Catalog" class="p54-section container" aria-labelledby="p54CatalogTitle">
+      <div class="p54-over"><span>EXPEDIÇÃO SONORA · YOUTUBE OFICIAL</span><strong>EXPLORE AS FREQUÊNCIAS</strong></div>
+      <div class="p54-heading"><div><span class="p54-eyebrow">FESTIVAL ARCHIVE / PULSO CURADORIA</span><h2 id="p54CatalogTitle">OS GRANDES <em>SESSIONS.</em></h2><p>Seleção de apresentações publicadas no YouTube por canais dos DJs, festivais e art cars. Toque para assistir no player dos Reels.</p></div><span class="p54-livebadge">● CURADORIA ATUALIZADA</span></div>
+      <div class="p54-eventnav" role="group" aria-label="Selecionar evento"><button aria-pressed="true" data-p54-event="Todos">✳ TODOS OS SETS</button><button data-p54-event="Tomorrowland">✦ TOMORROWLAND</button><button data-p54-event="Burning Man">✺ BURNING MAN</button><button data-p54-event="Green Valley">◈ GREEN VALLEY</button><button data-p54-event="Warung">◉ WARUNG</button><button data-p54-event="Só Track Boa">⚡ SÓ TRACK BOA</button></div>
+      <div class="p54-toolbar"><div class="p54-filtergroup" aria-label="Filtrar por ano"><button data-p54-year="Todos" aria-pressed="true">TODOS OS ANOS</button><button data-p54-year="2026">2026</button><button data-p54-year="2025">2025</button><button data-p54-year="Clássicos">CLÁSSICOS</button></div><div class="p54-filtergroup" aria-label="Filtrar por estilo"><button data-p54-genre="Todos" aria-pressed="true">TODOS OS ESTILOS</button><button data-p54-genre="Techno">TECHNO</button><button data-p54-genre="EDM">EDM</button><button data-p54-genre="House">HOUSE</button><button data-p54-genre="Melodic">MELODIC</button><button data-p54-genre="Progressive">PROGRESSIVE</button><button data-p54-genre="Afro">AFRO</button></div><label class="p54-search"><span class="sr-only">Buscar DJ, evento ou gênero</span><input id="p54Search" type="search" placeholder="Buscar DJ, evento ou estilo…" autocomplete="off"></label></div>
+      <div class="p54-catalog-meta"><strong id="p54Count"></strong><span>Vídeos reproduzidos pelo YouTube · Disponibilidade depende dos canais originais</span></div>
+      <div id="p54Grid" class="p54-grid" aria-live="polite"></div>
+    </section>
+    <section class="p54-rank-section container" aria-labelledby="p54RankTitle"><div><span class="p54-eyebrow">TOP 100 DJS · DJ MAG / EDIÇÃO 2026</span><h2 id="p54RankTitle">OS NOMES QUE <em>MOVEM A CENA.</em></h2><p>Ranking de popularidade da DJ Mag 2026, independente da seleção de sets. Os links de Instagram aparecem apenas quando identificados.</p><a href="https://djmag.com/top100djs" target="_blank" rel="noopener noreferrer" class="p54-ranking-src">CONFERIR RANKING DJ MAG ↗</a></div><div id="p54Djs" class="p54-rank-list"></div></section>
+
+    <!-- PULSO 5.0 integrates with existing media catalog and player; no duplicate audio engine. -->
+    <section class="p5-shell container" id="pulso5" aria-labelledby="p5Title">
+      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.4</b> / BY LØSI</span></div>
+      <nav class="p5-tabs" aria-label="Navegação de descoberta, DJs e biblioteca">
+        <button type="button" class="active" data-p5tab="home" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v11H3V10Z"/><path d="M9 21v-8h6v8"/></svg> PARA VOCÊ</button>
+        <button type="button" data-p5tab="djs" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg> PERFIS DE DJs</button>
+        <button type="button" data-p5tab="library" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14v18l-7-5-7 5V3Z"/></svg> MINHA BIBLIOTECA</button>
+      </nav>
+      <div id="p5PanelHome" class="p5-panel" aria-live="polite"><div class="p5-empty-mini">Carregando suas recomendações…</div></div>
+      <div id="p5PanelDjs" class="p5-panel" hidden><div class="p5-djs-title"><div><span class="p5-overline">THE ARTISTS BEHIND THE MUSIC</span><h3>Conheça quem <em>publica.</em></h3><p>Siga os DJs e criadores da plataforma. Os nomes dos artistas dos sets continuam creditados nas músicas.</p></div><div id="p5MyProfile"></div></div><div class="p5-djs-search"><input id="p5DjSearch" type="search" placeholder="Buscar por DJ, @usuário ou biografia" aria-label="Buscar perfis de DJs"></div><div id="p5DjGrid" class="p5-dj-grid"></div></div>
+      <div id="p5PanelLibrary" class="p5-panel" hidden><div class="p5-empty-mini">Carregando sua biblioteca…</div></div>
+    </section>
+
+
+    <section class="p52-reels-banner container" aria-label="PULSO Reels">
+      <div><span class="p52-reels-kicker">▣ PULSO REELS / VISUAL FREQUENCY</span><h2>VÍDEOS EM <em>MOVIMENTO.</em></h2><p>Deslize para descobrir vídeos aprovados da comunidade e sets oficiais do YouTube, em ordem surpreendente a cada visita.</p></div>
+      <button type="button" class="p52-reels-open" data-open-reels><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 10 7-10 7z"/></svg> EXPLORAR REELS <span>↗</span></button>
+    </section>
+
+    <section id="p51Streaming" class="p51-section container" aria-labelledby="p51StreamTitle">
+      <div class="p51-heading"><div><span class="p5-overline">MAIS MÚSICA • FONTES OFICIAIS</span><h2 id="p51StreamTitle">STREAMING <em>SEM FRONTEIRAS.</em></h2><p>Descubra catálogos do Spotify, SoundCloud e YouTube Music. A reprodução segue as regras e disponibilidade de cada serviço.</p></div></div>
+      <form id="p51StreamingSearch" class="p51-stream-search"><label for="p51Search">BUSCAR MÚSICA, ARTISTA OU SET</label><div><input id="p51Search" type="search" maxlength="120" placeholder="Ex.: Tech House Warung" required><button type="submit" class="p51-primary">Explorar streaming ↗</button></div></form>
+      <div class="p51-stream-links" id="p51StreamingLinks" hidden><a id="p51SpotifySearch" target="_blank" rel="noopener noreferrer">Spotify ↗</a><a id="p51SoundcloudSearch" target="_blank" rel="noopener noreferrer">SoundCloud ↗</a><a id="p51YoutubeSearch" target="_blank" rel="noopener noreferrer">YouTube Music ↗</a></div>
+      <div class="p51-stream-preview"><label for="p51OfficialLink">JÁ TEM O LINK DE UMA FAIXA OU PLAYLIST?</label><div><input id="p51OfficialLink" type="url" placeholder="Cole link do Spotify ou SoundCloud"><button type="button" id="p51PreviewOfficial">Ouvir no player oficial</button></div><p id="p51StreamingStatus" role="status"></p><div id="p51OfficialEmbed" class="p51-embed"></div></div>
+    </section>
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="losi-signature">CURADORIA <strong>LØSI</strong><span>®</span></div>
+        <div class="eyebrow"><span class="small-cross">✳</span> CULTURA CLUBBER • SEM LIMITES</div>
+        <h1 id="hero-title">A BATIDA<br><span>NÃO PARA<span class="hero-period">.</span></span></h1>
+        <p>O seu espaço para descobrir, publicar e compartilhar o melhor da <strong>música eletrônica.</strong> Das pistas underground aos sets que não saem da cabeça.</p>
+        <div class="hero-buttons">
+          <a href="#explorar" class="button button-accent button-lg">Explorar sons <span>↗</span></a>
+          <button id="heroPublish" type="button" class="button button-ghost button-lg">Enviar meu som <span>＋</span></button>
+        </div>
+        <div class="hero-footer">
+          <div class="avatar-stack" aria-hidden="true"><span>◉</span><span>✦</span><span>∿</span><span>✳</span></div>
+          <span>Feito para quem vive a pista.<br><strong>Techno, house & além.</strong></span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Ilustração abstrata de um disco de vinil e ondas sonoras">
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="orbit orbit-a" aria-hidden="true"></div><div class="orbit orbit-b" aria-hidden="true"></div>
+        <div class="vinyl">
+          <div class="vinyl-shine"></div>
+          <div class="vinyl-center"><img id="heroRecordCover" class="record-cover-image" alt="" loading="lazy" hidden><span class="vinyl-brand">LØSI</span><span>33⅓ RPM</span><span class="vinyl-hole"></span><span>FREQUENCY / 001</span></div>
+        </div>
+        <button type="button" id="vinylRadioToggle" class="vinyl-radio-hit" aria-label="Ligar a Rádio PULSO no disco giratório" aria-pressed="false"><span id="vinylRadioLabel">▶ OUVIR RÁDIO</span></button>
+        <div class="hero-radio-caption">◉ PULSO RADIO <small>TOQUE NO DISCO PARA SINTONIZAR</small></div>
+        <div class="hero-sticker"><span>100%</span><small>ELETRÔNICO<br>UNDERGROUND</small></div>
+        <button class="wave-pill wave-radio-button" type="button" id="waveRadioToggle" aria-label="Ligar a Rádio PULSO"><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><strong id="waveRadioTitle">SINTONIZE.</strong><small id="waveRadioSubtitle">APERTE PARA OUVIR A RÁDIO</small></div><span class="live-circle"><svg class="pulso-control-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5 19 12 8 18.5Z" fill="currentColor"/></svg></span></button>
+        <span class="edge-caption">A LØSI FREQUENCY // 2026</span>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true"><div class="ticker-content"><span>TECHNO</span> ✳ <span>HOUSE</span> ✳ <span>PROGRESSIVE</span> ✳ <span>MELODIC</span> ✳ <span>AFRO HOUSE</span> ✳ <span>MINIMAL</span> ✳ <span>UNDERGROUND FOREVER</span> ✳ <span>TECHNO</span> ✳ <span>HOUSE</span> ✳ <span>PROGRESSIVE</span> ✳ <span>MELODIC</span> ✳ <span>AFRO HOUSE</span> ✳ <span>MINIMAL</span> ✳ <span>UNDERGROUND FOREVER</span> ✳</div></div>
+
+    <section class="feed-section container" id="explorar" aria-labelledby="feed-title">
+      <div class="section-topline"><span class="text-eyebrow"><span class="green-line"></span> O SOM EM MOVIMENTO</span><span class="section-coordinate">01 / EXPLORE THE FREQUENCY</span></div>
+      <div class="feed-heading">
+        <div><h2 id="feed-title">DESCUBRA O <em>PRÓXIMO.</em></h2><p>Faixas, videoclipes, sets e apresentações para alimentar sua próxima sessão.</p></div>
+        <div class="feed-status"><span class="status-pulse"></span><span id="trackCount">06 sons no radar</span></div>
+      </div>
+      <div class="discovery-panel">
+        <div class="search-wrap"><span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></span><input id="searchInput" type="search" placeholder="Buscar música, artista ou estilo..." aria-label="Buscar música, artista ou estilo" autocomplete="off"><span class="search-shortcut">⌕</span></div>
+        <div class="sort-wrap"><label for="sortSelect">ORDENAR POR</label><select id="sortSelect"><option value="recent">Mais recentes</option><option value="popular">Mais curtidas</option><option value="az">A–Z</option></select></div>
+      </div>
+      <div class="media-filters" id="mediaFilters" role="group" aria-label="Escolher músicas ou vídeos"><button type="button" data-media="all" class="media-chip active" aria-pressed="true">◉ Tudo</button><button type="button" data-media="music" class="media-chip" aria-pressed="false">♫ Músicas</button><button type="button" data-media="video" class="media-chip" aria-pressed="false">▣ Vídeos</button></div>
+      <div class="filters-row"><div class="genre-filters" id="genreFilters" role="group" aria-label="Filtrar por gênero musical"></div><div class="feed-tools"><button id="refreshPosts" class="own-posts-button" type="button" aria-label="Atualizar sons">↻ Atualizar</button><button id="myPostsButton" class="own-posts-button" type="button">Meus posts <span id="myPostsCount">0</span></button></div></div>
+      <div class="cards-grid" id="cardsGrid" aria-live="polite"></div>
+      <div class="empty-state hidden" id="emptyState"><span class="empty-icon">◉</span><h3>NENHUM SOM POR AQUI.</h3><p id="emptyMessage">Experimente outro filtro ou publique a primeira faixa.</p><button type="button" class="button button-accent" id="emptyPublish">Publicar música ↗</button></div>
+      <div class="feed-bottom"><span>FIM DA FREQUÊNCIA, POR ENQUANTO.</span><span>↘</span></div>
+    </section>
+
+    <section class="submit-banner container" aria-labelledby="submit-title"><div class="banner-grid"></div><div class="banner-copy"><span class="text-eyebrow">✳ ESSA PISTA TAMBÉM É SUA</span><h2 id="submit-title">TEM UM SOM<br><em>QUE MERECE PLAY?</em></h2><p>Compartilhe sua música, videoclipe, DJ set ou apresentação com a comunidade. A próxima descoberta pode ser sua.</p><button id="bannerPublish" type="button" class="button button-dark button-lg">PUBLICAR AGORA <span>↗</span></button></div><div class="banner-art" aria-hidden="true"><div class="banner-ring ring1"></div><div class="banner-ring ring2"></div><div class="banner-ring ring3"></div><div class="banner-ring ring4"></div><span>↗</span></div></section>
+  </main>
+
+  <nav class="pulso-app-tabs" aria-label="Navegação do aplicativo PULSO">
+    <button type="button" data-p5tab="home" aria-label="Início personalizado"><span>⌂</span><small>Início</small></button>
+    <button type="button" id="appRadioButton" aria-label="Ouvir Rádio PULSO"><span>◉</span><small>Rádio</small></button>
+    <button type="button" data-open-reels aria-label="Assistir Reels"><span>▣</span><small>Reels</small></button>
+    <button type="button" id="appPublishButton" aria-label="Publicar música"><span>＋</span><small>Publicar</small></button>
+    <button type="button" data-p5tab="djs" aria-label="Perfis de DJs"><span>♬</span><small>DJs</small></button>
+    <button type="button" data-p5tab="library" aria-label="Minha biblioteca"><span>▤</span><small>Biblioteca</small></button>
+    <button type="button" id="appAccountButton" class="p5-bottom-account" aria-label="Minha conta"><span>♙</span><small>Conta</small></button>
+  </nav>
+  <dialog class="pulso-notify-dialog" id="pulsoNotifyDialog" aria-labelledby="pulsoNotifyTitle">
+  <div class="pulso-notify-inside">
+    <div class="pulso-notify-heading"><div><span class="text-eyebrow">◉ NOVOS SONS NA CENA</span><h2 id="pulsoNotifyTitle">NOTIFICAÇÕES <em>PULSO.</em></h2></div><button type="button" id="pulsoNotifyClose" class="close-dialog" aria-label="Fechar notificações">×</button></div>
+    <p class="pulso-notify-explain">Novos DJ sets aprovados no PULSO. Ative alertas para receber avisos na tela de bloqueio do iPhone, se o sistema permitir.</p>
+    <div class="pulso-notify-optin"><div><strong>Alertas de novos DJ sets</strong><small id="pulsoNotifyStatus">Entre na conta para ativar os alertas.</small></div><button id="pulsoNotifyEnable" type="button" class="button button-accent">Ativar avisos</button></div>
+    <div class="pulso-notify-list" id="pulsoNotifyList" aria-live="polite"><p>Buscando novidades…</p></div>
+    <p class="pulso-notify-help">No iPhone, instale primeiro o PULSO pelo Safari em Compartilhar → Adicionar à Tela de Início. Os alertas são opcionais e podem ser desativados aqui.</p>
+  </div>
+</dialog>
+
+<footer class="footer" id="sobre"><div class="container"><div class="footer-main"><div><a class="brand footer-brand" href="#inicio"><span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></span><span>PULSO<span class="brand-dot">.</span></span></a><p>Uma plataforma de música eletrônica<br>com curadoria e identidade LØSI.</p></div><div class="footer-side"><span>FEITO PARA A CENA.</span><span>POWERED BY THE MUSIC.</span></div></div><div class="footer-bottom"><span>© <span id="year"></span> PULSO × LØSI. ALL FREQUENCIES WELCOME.</span><span>MADE WITH ♡ FOR ELECTRONIC MUSIC</span><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos de uso</a><button type="button" id="exportPosts">Exportar meus posts ↓</button></div></div></footer>
+
+  <!-- PULSO 5.0: separate, accessible dialogs -->
+  <dialog class="p5-dialog" id="p5ProfileDialog" aria-labelledby="p5ProfileTitle"><div class="p5-modal"><div class="p5-dialog-head"><div><span class="p5-overline">PULSO SOCIAL</span><h2 id="p5ProfileTitle">MEU PERFIL DE <em>DJ.</em></h2></div><button type="button" class="p5-modal-close" data-p5-close aria-label="Fechar">×</button></div><form id="p5ProfileForm" class="p5-form"><label>NOME ARTÍSTICO / CRIADOR <input name="display_name" minlength="2" maxlength="50" placeholder="Ex.: LØSI" required></label><label>USUÁRIO (@) <input name="handle" minlength="3" maxlength="24" pattern="[a-z0-9_]{3,24}" placeholder="Ex.: dj_losi" required autocomplete="off"><small>Apenas letras minúsculas, números e _. Seu e-mail não aparecerá no perfil.</small></label><label>BIOGRAFIA <textarea name="bio" maxlength="450" rows="3" placeholder="Sua vibe, referências e próximos sets..."></textarea></label><div class="p51-avatar-uploader"><label for="p51AvatarFile">FOTO DE PERFIL — GALERIA OU CÂMERA</label><div class="p51-avatar-row"><img id="p51AvatarPreview" alt="Prévia da foto de perfil" hidden><span id="p51AvatarPlaceholder" class="p51-avatar-placeholder" aria-hidden="true">♪</span><div><input id="p51AvatarFile" name="avatar_file" type="file" accept="image/*,.heic,.heif" aria-describedby="p51AvatarHint"><small id="p51AvatarHint">Escolha da galeria. A imagem é ajustada para até 640 px, JPG, antes de enviar. Máximo 12 MB.</small></div></div><label class="p51-alternative">OU URL HTTPS DA FOTO (OPCIONAL)<input name="avatar_url" type="url" maxlength="2048" placeholder="https://..."></label></div><p id="p5ProfileError" class="p5-error" role="alert"></p><button class="p5-btn p5-btn-accent" type="submit">Salvar meu perfil →</button></form></div></dialog>
+  <dialog class="p5-dialog" id="p5DjDialog" aria-label="Detalhes do perfil de DJ"><div class="p5-modal p5-modal-wide"><div class="p5-dialog-head"><span class="p5-overline">PULSO / CREATOR PROFILE</span><button type="button" class="p5-modal-close" data-p5-close aria-label="Fechar">×</button></div><div id="p5DjDetail"></div></div></dialog>
+  <dialog class="p5-dialog" id="p5NewPlaylistDialog" aria-labelledby="p5NewPlaylistTitle"><div class="p5-modal"><div class="p5-dialog-head"><div><span class="p5-overline">SUA CURADORIA</span><h2 id="p5NewPlaylistTitle">NOVA <em>PLAYLIST.</em></h2></div><button type="button" class="p5-modal-close" data-p5-close aria-label="Fechar">×</button></div><form id="p5NewPlaylistForm" class="p5-form"><label>NOME DA PLAYLIST <input name="title" maxlength="70" minlength="2" required placeholder="Minha seleção Warung"></label><label>DESCRIÇÃO <textarea name="description" maxlength="220" rows="3" placeholder="Uma coleção para as noites especiais..."></textarea></label><label>PRIVACIDADE <select name="visibility"><option value="private">Privada — só eu posso ver</option><option value="public">Pública — todos podem ouvir</option></select></label><p id="p5PlaylistError" class="p5-error" role="alert"></p><button type="submit" class="p5-btn p5-btn-accent">Criar playlist →</button></form></div></dialog>
+  <dialog class="p5-dialog" id="p5PlaylistDialog" aria-label="Conteúdo da playlist"><div class="p5-modal p5-modal-wide"><div class="p5-dialog-head"><span class="p5-overline">PULSO / SUA SELEÇÃO</span><button type="button" class="p5-modal-close" data-p5-close aria-label="Fechar">×</button></div><div id="p5PlaylistDetail"></div></div></dialog>
+  <dialog class="p5-dialog" id="p5ChooseDialog" aria-label="Adicionar música à playlist"><div class="p5-modal"><div class="p5-dialog-head"><div><span class="p5-overline">PULSO LIBRARY</span><h2>ADICIONAR À <em>PLAYLIST.</em></h2></div><button type="button" class="p5-modal-close" data-p5-close aria-label="Fechar">×</button></div><input type="hidden" id="p5ChooseSongId"><div id="p5ChooseList"></div><button type="button" class="p5-btn p5-btn-outline p5-create-from-add" data-p5="new-playlist">+ Criar playlist</button></div></dialog>
+
+  <dialog class="composer-dialog" id="composerDialog" aria-labelledby="composerTitle"><div class="dialog-inner"><div class="dialog-header"><div><span class="text-eyebrow">✳ FAÇA PARTE DA FREQUÊNCIA</span><h2 id="composerTitle">PUBLICAR <em>UM SOM.</em></h2></div><button type="button" class="close-dialog" id="closeComposer" aria-label="Fechar">×</button></div><p class="dialog-intro" id="composerIntro">Publique músicas e DJ sets diretamente da galeria. Como administrador, você pode usar o Cloudflare R2 após configurá-lo. Para vídeos, só o título é obrigatório; vídeos longos podem usar YouTube. Os envios passam pela aprovação LØSI.</p><form id="postForm"><div class="form-row two-col"><label><span id="postTitleLabel">NOME DA FAIXA / SET <b>*</b></span><input type="text" id="postTitle" maxlength="90" placeholder="Ex.: Trip to the Warehouse" required></label><label><span id="postArtistLabel">ARTISTA / DJ <b>*</b></span><input type="text" id="postArtist" maxlength="60" placeholder="Ex.: LØSI" required></label></div><div class="form-row two-col"><label><span id="postGenreLabel">GÊNERO <b>*</b></span><select id="postGenre" required><option value="">Selecione o gênero</option><optgroup label="HOUSE & GROOVE"><option>House</option><option>Tech House</option><option>Deep House</option><option>Afro House</option><option>Organic House</option><option>Progressive House</option><option>Melodic House</option><option>Minimal House</option><option>Bass House</option><option>Funky House</option><option>Jackin House</option><option>Latin House</option></optgroup>
+<optgroup label="TECHNO"><option>Techno</option><option>Hard Techno</option><option>Industrial Techno</option><option>Peak Time Techno</option><option>Hypnotic Techno</option><option>Melodic Techno</option><option>Acid Techno</option><option>Hardgroove</option></optgroup>
+<optgroup label="MELODIC & PROGRESSIVE"><option>Progressive</option><option>Melodic</option><option>Indie Dance</option><option>Organic</option></optgroup>
+<optgroup label="OUTRAS FREQUÊNCIAS"><option>Minimal</option><option>Trance</option><option>Psytrance</option><option>Drum &amp; Bass</option><option>UK Garage</option><option>Breakbeat</option><option>Electro</option><option>Nu Disco</option><option>Disco</option><option>Dubstep</option><option>Outros</option></optgroup></select></label><label><span>TIPO DE POSTAGEM</span><select id="postType"><option>Faixa</option><option>DJ Set</option><option>Playlist</option><option>Videoclipe</option><option>Vídeo DJ Set</option><option>Live</option></select></label></div><div class="form-row hidden" id="videoUploadRow"><label><span>ESCOLHER VÍDEO DA GALERIA / ARQUIVOS</span><input type="file" id="postVideoFile" class="video-picker-input" accept="video/*,video/quicktime,.mp4,.webm,.mov" aria-describedby="videoUploadHint"><small><span id="videoUploadHint">MP4, MOV do iPhone ou WebM. No Cloudflare R2, administradores podem enviar até 2 GB. Outros envios: até 48 MB.</span></small></label><div class="video-progress hidden" id="videoUploadProgress" aria-live="polite"><div id="videoUploadStatus">Preparando envio…</div><progress id="videoUploadMeter" max="100" value="0"></progress><button type="button" id="cancelVideoUpload" class="button button-ghost dark-ghost">Cancelar upload</button></div></div><div class="form-row hidden" id="audioUploadRow"><label><span>ESCOLHER ÁUDIO DO CELULAR / COMPUTADOR</span><input type="file" id="postAudioFile" class="video-picker-input" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac" aria-describedby="audioUploadHint"><small id="audioUploadHint">MP3 de até 400 MB (dividido em partes quando necessário). M4A, WAV, AAC e OGG até 48 MB. Sua publicação precisa ser aprovada pela LØSI.</small></label></div><div class="form-row"><label><span id="postUrlLabel">LINK DA MÚSICA <b>*</b></span><input type="url" id="postUrl" placeholder="https://soundcloud.com/..." required><small id="postUrlHint">Cole o link da música. Para vídeos, escolha um tipo de vídeo acima.</small></label></div><div class="form-row"><label><span>DESCRIÇÃO</span><textarea id="postDescription" maxlength="220" rows="3" placeholder="Fale um pouco sobre o som, a vibe ou a inspiração..."></textarea></label></div><div class="form-row"><label><span>URL DA CAPA <small>(OPCIONAL)</small></span><input type="url" id="postCover" placeholder="https://exemplo.com/capa.jpg"><small>Ou envie uma capa JPEG, PNG ou WEBP de até 3 MB.</small></label></div><div class="form-row" id="uploadRow"><label><span>ENVIAR IMAGEM DE CAPA <small>(OPCIONAL)</small></span><input type="file" id="postCoverFile" accept="image/png,image/jpeg,image/webp"><small>O upload exige login na versão pública. Sem imagem, criamos uma arte abstrata.</small></label></div><p class="form-note" id="formError" role="alert"></p><div class="form-actions"><button class="button button-ghost dark-ghost" type="button" id="cancelComposer">Cancelar</button><button class="button button-accent" type="submit" id="submitPost">Enviar para publicação <span>↗</span></button></div></form></div></dialog>
+
+
+  <!-- Rádio PULSO: player independente do feed; não se trata de transmissão simultânea por servidor. -->
+  <section class="radio-dock" id="radioDock" aria-label="Rádio PULSO — reprodução contínua" hidden>
+    <div class="radio-topbar">
+      <span class="radio-live-dot" aria-hidden="true"></span><strong>PULSO <em>RADIO</em></strong>
+      <span id="radioCount" class="radio-count">SELEÇÃO LØSI</span>
+      <button type="button" id="radioClose" class="radio-close" aria-label="Fechar e desligar a rádio">×</button>
+    </div>
+    <div class="radio-current">
+      <div class="radio-cover" aria-hidden="true"><img id="radioCoverImage" class="record-cover-image" alt="" loading="lazy" hidden><span>◉</span><small>LØSI</small></div>
+      <div class="radio-track-info">
+        <span class="radio-label">AGORA NA FREQUÊNCIA</span>
+        <strong id="radioTitle">Selecione uma música</strong>
+        <span id="radioArtist">PULSO × LØSI</span>
+        <small id="radioStatus" role="status" aria-live="polite">Pronto para tocar</small>
+      </div>
+    </div>
+    <div class="radio-seek-group" id="radioSeekGroup">
+      <div class="radio-time-row"><span id="radioElapsed">00:00</span><span class="radio-time-hint">ARRASTE PARA AVANÇAR</span><span id="radioDuration">--:--</span></div>
+      <input id="radioSeek" class="pulso-seek" type="range" min="0" max="1000" step="1" value="0" disabled aria-label="Avançar ou voltar na música" title="Arraste para ir a qualquer momento do set">
+    </div>
+    <div class="radio-controls" role="group" aria-label="Controles da rádio">
+      <button type="button" id="radioPrev" aria-label="Música anterior" title="Anterior"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 5v14M19 6l-10 6 10 6V6Z"/></svg></button>
+      <button type="button" id="radioBack15" class="radio-skip" aria-label="Voltar quinze segundos" title="Voltar 15 segundos"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M4 10a8 8 0 1 1 3 8M4 4v6h6"/></svg><small>15</small></button>
+      <button type="button" class="radio-main-control" id="radioToggle" aria-label="Pausar a rádio" title="Tocar / Pausar"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg></button>
+      <button type="button" id="radioForward15" class="radio-skip" aria-label="Avançar quinze segundos" title="Avançar 15 segundos"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M20 10a8 8 0 1 0-3 8M20 4v6h-6"/></svg><small>15</small></button>
+      <button type="button" id="radioNext" aria-label="Próxima música" title="Próxima"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M19 5v14M5 6l10 6-10 6V6Z"/></svg></button>
+      <button type="button" id="radioShuffle" class="radio-shuffle" aria-label="Desativar modo aleatório" aria-pressed="true" title="Ordem aleatória"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m16 4 4 4-4 4M4 18h3c5 0 6-10 11-10h2M16 20l4-4-4-4M4 6h3c2 0 3 2 4 4m1 4c1 2 2 4 6 4h2"/></svg></button>
+      <a id="radioExternal" href="#" target="_blank" rel="noopener noreferrer" title="Ouvir na plataforma original">ABRIR ↗</a>
+    </div>
+    <div class="radio-jump"><label for="radioHour">IR PARA O TEMPO</label><div class="pulso-mmss pulso-hhmmss" role="group" aria-label="Posição: horas, minutos e segundos"><input id="radioHour" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="hh" aria-label="Horas desejadas" autocomplete="off" autocorrect="off" spellcheck="false"><span aria-hidden="true">:</span><input id="radioMinute" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="mm" aria-label="Minutos desejados" autocomplete="off" autocorrect="off" spellcheck="false"><span aria-hidden="true">:</span><input id="radioSecond" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="ss" aria-label="Segundos desejados" autocomplete="off" autocorrect="off" spellcheck="false"></div><button id="radioGoMinute" type="button">IR ↗</button><span id="radioSpeedWrap"><label for="radioSpeed">VELOCIDADE</label><select id="radioSpeed" aria-label="Velocidade de reprodução"><option value="1">1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option><option value="2">2×</option></select></span></div>
+    <div class="pulso-identify-spot"><button id="identifyRadio" type="button" class="identify-trigger"><span class="identify-icon">✦</span> IDENTIFICAR FAIXA <span class="identify-badge">IA</span></button><small>Descubra o som que está tocando, sem pausar</small></div>
+    <div class="radio-embed" id="radioEmbed" aria-label="Player da faixa atual"></div>
+    <div class="radio-bottom">
+      <label for="radioGenre">FREQUÊNCIA</label>
+      <select id="radioGenre" aria-label="Filtrar gênero na rádio"><option value="Todos">Todos os estilos</option><optgroup label="HOUSE & GROOVE"><option>House</option><option>Tech House</option><option>Deep House</option><option>Afro House</option><option>Organic House</option><option>Progressive House</option><option>Melodic House</option><option>Minimal House</option><option>Bass House</option><option>Funky House</option><option>Jackin House</option><option>Latin House</option></optgroup>
+<optgroup label="TECHNO"><option>Techno</option><option>Hard Techno</option><option>Industrial Techno</option><option>Peak Time Techno</option><option>Hypnotic Techno</option><option>Melodic Techno</option><option>Acid Techno</option><option>Hardgroove</option></optgroup>
+<optgroup label="MELODIC & PROGRESSIVE"><option>Progressive</option><option>Melodic</option><option>Indie Dance</option><option>Organic</option></optgroup>
+<optgroup label="OUTRAS FREQUÊNCIAS"><option>Minimal</option><option>Trance</option><option>Psytrance</option><option>Drum &amp; Bass</option><option>UK Garage</option><option>Breakbeat</option><option>Electro</option><option>Nu Disco</option><option>Disco</option><option>Dubstep</option><option>Outros</option></optgroup></select>
+    </div>
+    <p class="radio-disclaimer" id="radioDisclaimer">Para áudios e sets compatíveis, arraste a barra ou indique o minuto exato. Spotify usa os próprios controles.</p>
+  </section>
+
+  <dialog id="pulsoReelsDialog" class="p52-reels-dialog" aria-label="Vídeos do PULSO em tela cheia">
+    <div class="p52-reels-shell">
+      <div class="p52-reels-header"><div><span class="p52-reels-live">● VIDEO FEED</span><strong>PULSO <i>REELS.</i></strong></div><span id="p52ReelsCounter" aria-live="polite"></span><button type="button" id="p52ReelsClose" aria-label="Fechar Reels">×</button></div>
+      <div id="p52ReelsTrack" class="p52-reels-track" aria-label="Deslize verticalmente para ver outros vídeos" tabindex="0"></div>
+      <div class="p52-reels-hint" aria-hidden="true">DESLIZE ↑ PARA O PRÓXIMO</div>
+    </div>
+  </dialog>
+
+  <dialog class="player-dialog" id="playerDialog" aria-labelledby="playerTitle"><div class="player-dialog-inner"><div class="player-header"><div><span class="text-eyebrow">◉ AGORA TOCANDO</span><h2 id="playerTitle">PLAYER</h2><p id="playerArtist"></p></div><button type="button" id="closePlayer" class="close-dialog" aria-label="Fechar player">×</button></div><div class="embed-container" id="embedContainer"></div><div class="pulso-identify-spot"><button id="identifyPlayer" type="button" class="identify-trigger"><span class="identify-icon">✦</span> QUE MÚSICA É ESSA? <span class="identify-badge">IA</span></button><small>O set continua tocando durante a identificação</small></div><a class="player-external" id="playerExternal" href="#" target="_blank" rel="noopener noreferrer">Abrir na plataforma original ↗</a><p id="youtubePlayerHint" class="auth-hint" hidden>Para continuar com a tela bloqueada, abra no aplicativo oficial YouTube. O recurso de segundo plano é do YouTube Premium.</p></div></dialog>
+
+
+  <dialog class="auth-dialog" id="authDialog" aria-labelledby="authTitle">
+    <div class="dialog-inner">
+      <div class="dialog-header"><div><span class="text-eyebrow">✳ FAÇA PARTE DO PULSO</span><h2 id="authTitle">ENTRAR <em>NA PISTA.</em></h2></div><button class="close-dialog" type="button" id="closeAuth" aria-label="Fechar">×</button></div>
+      <div id="authSignedOut">
+        <div class="auth-tabs"><button type="button" id="loginTab" class="active">Entrar</button><button type="button" id="signupTab">Criar conta</button></div>
+        <form id="authForm" class="auth-form"><label>E-MAIL<input type="email" id="authEmail" placeholder="seu@email.com" required autocomplete="email" maxlength="254"></label><label>SENHA<input type="password" id="authPassword" placeholder="Digite sua senha" minlength="6" required autocomplete="current-password" maxlength="128"></label><p id="signupPasswordHint" class="auth-hint" hidden>Na nova conta, use no mínimo 12 caracteres, incluindo letras maiúsculas, minúsculas, um número e um símbolo. Sua senha nunca é publicada no PULSO.</p><div id="authCaptchaWrap" class="pulso-captcha" hidden><p class="auth-hint">Verificação de segurança</p><div id="authCaptcha"></div></div><p class="form-note" id="authError" role="alert"></p><button class="button button-accent" id="authSubmit" type="submit">Entrar ↗</button><div class="auth-recovery-actions"><button type="button" id="forgotPassword" class="security-link">Esqueci minha senha</button><button type="button" id="resendConfirmation" class="security-link">Reenviar confirmação de e-mail</button></div></form>
+        <p class="auth-hint">Seu cadastro permite enviar músicas para moderação, curtir publicações e acompanhar seus envios. A confirmação de e-mail pode ser exigida.</p>
+      </div>
+      <div id="authSignedIn" class="hidden"><p class="signed-in">Conectado como <strong id="currentEmail"></strong></p><p class="auth-hint">Use “Publicar som” para enviar sua faixa. Você acompanha a aprovação em “Meus posts”.</p><button type="button" id="setupMfa" class="button button-ghost" style="margin-right:8px;margin-bottom:12px">PROTEGER CONTA COM AUTENTICADOR ↗</button><button class="button button-ghost" id="logoutButton" type="button">Sair da conta ↗</button></div>
+    </div>
+  </dialog>
+
+  <dialog id="securityDialog" class="auth-dialog security-dialog" aria-labelledby="securityTitle"><div class="dialog-inner"><div class="dialog-header"><div><span class="text-eyebrow">✳ PROTEÇÃO DE CONTA</span><h2 id="securityTitle">VERIFICAÇÃO <em>EXTRA.</em></h2></div><button id="closeSecurity" class="close-dialog" type="button" aria-label="Fechar">×</button></div><p id="securityDescription" class="auth-hint">Use um aplicativo autenticador para proteger sua conta.</p><div id="securityQrContainer" hidden><img id="securityQr" alt="QR code para configurar o autenticador" width="210" height="210"><p class="auth-hint">Escaneie com Google Authenticator, Microsoft Authenticator ou similar. Não compartilhe este QR code.</p></div><form id="securityForm" class="auth-form"><label>CÓDIGO DE 6 DÍGITOS<input type="text" id="securityCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required></label><p id="securityError" class="form-note" role="alert"></p><button id="securitySubmit" type="submit" class="button button-accent">Confirmar código ↗</button></form><p class="auth-hint">Guarde acesso ao autenticador. O Supabase não fornece códigos de recuperação para esse tipo de MFA.</p></div></dialog>
+
+  <dialog class="admin-dialog" id="adminDialog" aria-labelledby="adminTitle">
+    <div class="dialog-inner"><div class="dialog-header"><div><span class="text-eyebrow">✳ CONTROLE DE CURADORIA • LØSI</span><h2 id="adminTitle">PAINEL <em>ADMIN.</em></h2></div><button class="close-dialog" type="button" id="closeAdmin" aria-label="Fechar">×</button></div>
+      <p class="dialog-intro">Aprove ou recuse envios, edite postagens, escolha destaques e acompanhe denúncias. Somente administradores podem gerenciar a curadoria.</p>
+      <button id="socialModOpen" type="button" class="button button-ghost" style="margin-bottom:16px">MODERAR COMENTÁRIOS ↗</button>
+      <div class="admin-stats" id="adminStats"></div>
+      <div class="admin-tabs"><button type="button" class="active" data-admin-tab="pending">Aguardando aprovação</button><button type="button" data-admin-tab="approved">Publicadas</button><button type="button" data-admin-tab="rejected">Recusadas</button><button type="button" data-admin-tab="reports">Denúncias</button></div>
+      <div id="adminList" class="admin-list" aria-live="polite"></div>
+      <div class="admin-import"><label for="importBackup">Importar posts antigos (backup .json)</label><input type="file" id="importBackup" accept="application/json,.json"><small>Exclusivo para administrador. Importa como publicações aprovadas. Arquivos e links precisam ser confiáveis.</small></div>
+    </div>
+  </dialog>
+
+
+  <!-- PULSO SOCIAL — comentários, reações e stories -->
+  <dialog id="socialDialog" class="social-dialog" aria-labelledby="socialPostTitle">
+    <div class="social-dialog-inner">
+      <div class="social-dialog-header"><div><span class="text-eyebrow">◉ CONVERSA NA PISTA</span><h2 id="socialPostTitle">COMENTÁRIOS</h2></div><button type="button" id="closeSocialDialog" class="close-dialog" aria-label="Fechar comentários">×</button></div>
+      <div id="socialCommentsList" class="social-comments-list" aria-live="polite"></div>
+      <form id="socialCommentForm"><div id="socialComposer"><label for="socialNickname">Apelido (opcional)</label><input id="socialNickname" maxlength="40" placeholder="Seu nome na pista"><label for="socialCommentInput">Seu comentário</label><textarea id="socialCommentInput" maxlength="600" rows="3" placeholder="O que achou dessa faixa?" required></textarea><button type="submit" id="socialCommentSubmit" class="button button-accent">PUBLICAR COMENTÁRIO ↗</button></div><div id="socialLoginHint" hidden><p>Entre no PULSO para comentar.</p><button id="socialLoginButton" type="button" class="button button-accent">ENTRAR ↗</button></div><p id="socialCommentStatus" role="status"></p></form>
+    </div>
+  </dialog>
+  <dialog id="socialModerationDialog" class="social-dialog" aria-label="Moderação dos comentários"><div class="social-dialog-inner"><div class="social-dialog-header"><h2>MODERAÇÃO DE COMENTÁRIOS</h2><button id="socialModClose" type="button" class="close-dialog">×</button></div><div id="socialReportsList"></div></div></dialog>
+  <dialog id="storyDialog" class="social-dialog story-dialog" aria-label="Compartilhar nos stories"><div class="social-dialog-inner"><div class="social-dialog-header"><div><span class="text-eyebrow">PULSO STORIES</span><h2 id="storyPostHeading">STORY</h2></div><button type="button" id="storyClose" class="close-dialog">×</button></div><p class="social-story-info">Crie um Story com a capa da música. Em navegadores compatíveis, gere também um vídeo de 15 segundos com áudio, desde que possua autorização para compartilhar.</p><canvas id="socialStoryCanvas" width="1080" height="1920" aria-label="Prévia vertical do story"></canvas><div class="story-actions"><button id="shareStoryImage" type="button">SALVAR / COMPARTILHAR CAPA</button><button id="shareStoryLink" type="button">COMPARTILHAR LINK</button></div><label class="story-consent"><input id="storyRights" type="checkbox"> Tenho direitos ou autorização para compartilhar este conteúdo musical no Instagram.</label><div class="story-actions"><label>Início do trecho (segundos) <input id="storyStartSeconds" type="number" min="0" value="0" step="1"></label><button id="renderStoryVideo" type="button">GERAR STORY COM ÁUDIO (15 S)</button><button id="shareStoryVideo" type="button" disabled>COMPARTILHAR VÍDEO</button><button id="downloadStoryVideo" type="button" disabled>BAIXAR VÍDEO</button></div><p id="storyStatus" role="status"></p><small>O Instagram não permite publicar automaticamente Stories com áudio a partir deste site. Compartilhe o arquivo criado pela função de compartilhamento do dispositivo ou pela galeria.</small></div></dialog>
+  <dialog id="identifyDialog" class="social-dialog identify-dialog" aria-labelledby="identifyHeading"><div class="social-dialog-inner"><div class="social-dialog-header"><div><span class="text-eyebrow">✦ PULSO IDENTIFY</span><h2 id="identifyHeading">QUE FAIXA É ESSA?</h2></div><button type="button" id="identifyClose" class="close-dialog" aria-label="Fechar identificação">×</button></div><div class="identify-orbit"><div class="identify-ring"></div><span>✦</span></div><p id="identifyStatus" class="identify-status" role="status">Pronto para reconhecer uma faixa.</p><div id="identifyResult" aria-live="polite"></div><p class="identify-note">O reconhecimento usa cerca de 12 segundos do MP3 que está tocando. A música não é pausada. Não há garantia de reconhecimento, especialmente com remixes inéditos e transições.</p><p class="identify-note">Som do YouTube, SoundCloud ou Spotify embutido não pode ser capturado diretamente pelo navegador. O recurso requer sua conta PULSO e a ativação do serviço AudD pelo administrador.</p></div></dialog>
+
+
+  <aside id="p51InstallBar" class="p51-install-bar" aria-label="Instalar aplicativo PULSO"><span class="p51-appmark" aria-hidden="true">◉</span><div><strong>LEVE O PULSO COM VOCÊ.</strong><small>Android • iPhone • música aonde for</small></div><button id="p51AndroidInstall" type="button">Instalar Android ↗</button><a id="p51ApkLink" href="downloads/PULSO-Android.apk" download hidden>Baixar APK ↗</a><a href="ios.html">Instalar no iPhone ↗</a><a href="instalar.html" aria-label="Guia de instalação do PULSO">Ver guia ↗</a><button id="p51DismissInstall" class="p51-install-close" type="button" aria-label="Fechar faixa de instalação">×</button></aside>
+  <button id="p51HelpToggle" class="p51-help-button" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="p51HelpDialog"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H9l-5 4V5Z"/><path d="M9 8a3 3 0 1 1 5 2c-1 1-2 1-2 3M12 16h.01"/></svg> AJUDA</button>
+  <section id="p51HelpDialog" class="p51-help-dialog" role="dialog" aria-modal="false" aria-label="Assistente PULSO" hidden><header><div><span class="p5-overline">ASSISTENTE PULSO</span><h2>TIRE SUAS DÚVIDAS.</h2></div><button id="p51HelpClose" type="button" aria-label="Fechar assistente">×</button></header><div id="p51HelpMessages" class="p51-help-messages" aria-live="polite"><div class="p51-bubble bot">Olá! Posso ajudar com upload de sets, playlists, perfis, rádio, identificação de faixas e instalação do app. Qual é sua dúvida?</div></div><div class="p51-questions"><button type="button" data-p51-question="Como envio um DJ set?">Enviar set</button><button type="button" data-p51-question="Como instalo no iPhone?">Instalar no iPhone</button><button type="button" data-p51-question="Como funciona a IA de identificar música?">Identificar música</button></div><form id="p51HelpForm"><label for="p51HelpInput" class="sr-only">Sua dúvida</label><input id="p51HelpInput" maxlength="350" placeholder="Digite sua pergunta…" required><button type="submit" aria-label="Enviar pergunta">➤</button></form><small>Ajuda contextual disponível sem login. A IA generativa exige configuração opcional e protegida no servidor.</small></section>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
