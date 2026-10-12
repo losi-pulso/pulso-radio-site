@@ -42,20 +42,46 @@
    link.click();
    status('Se o WhatsApp não abrir, use Copiar link e envie na conversa.');
  };
- document.addEventListener('DOMContentLoaded',()=>{
+ const setupPanel=()=>{
+   const trigger=byId('pulsoShareToggle');
+   const panel=byId('pulsoSharePanel');
+   const closeButton=byId('pulsoShareClose');
    const shareButton=byId('pulsoShareButton');
-   if(!shareButton)return;
+   if(!trigger||!panel||!closeButton||!shareButton)return;
+   let opener=trigger;
+   const close=(restoreFocus=false)=>{
+     if(panel.hidden)return;
+     panel.hidden=true;
+     trigger.setAttribute('aria-expanded','false');
+     if(restoreFocus)opener?.focus({preventScroll:true});
+   };
+   const open=(button)=>{
+     opener=button||trigger;
+     // Popovers should not compete for screen space on iPhone.
+     const help=byId('p51HelpDialog'),helpButton=byId('p51HelpToggle');
+     if(help&&!help.hidden){help.hidden=true;helpButton?.setAttribute('aria-expanded','false');}
+     panel.hidden=false;
+     trigger.setAttribute('aria-expanded','true');
+     status('');
+     closeButton.focus({preventScroll:true});
+   };
+   trigger.addEventListener('click',()=>panel.hidden?open(trigger):close(true));
+   closeButton.addEventListener('click',()=>close(true));
    shareButton.addEventListener('click',share);
    byId('pulsoShareWhatsapp')?.addEventListener('click',whatsapp);
    byId('pulsoShareCopy')?.addEventListener('click',copyLink);
-   byId('pulsoShareHero')?.addEventListener('click',()=>{
-     const section=byId('pulsoSharePanel');
-     section?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
-     section?.querySelector('#pulsoShareButton')?.focus({preventScroll:true});
-   });
    byId('pulsoShareMenu')?.addEventListener('click',()=>{
      byId('mobileNav')?.classList.remove('open');
-     byId('pulsoSharePanel')?.scrollIntoView({behavior:'smooth',block:'center'});
+     open(trigger);
    });
- });
+   document.addEventListener('keydown',event=>{
+     if(event.key==='Escape'&&!panel.hidden){event.preventDefault();close(true);}
+   });
+   document.addEventListener('click',event=>{
+     if(panel.hidden)return;
+     if(event.target.closest('#p51HelpToggle')){close(false);return;}
+     if(!panel.contains(event.target)&&!trigger.contains(event.target)&&!event.target.closest('#pulsoShareMenu'))close(false);
+   });
+ };
+ document.addEventListener('DOMContentLoaded',setupPanel);
 })();
