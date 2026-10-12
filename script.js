@@ -786,6 +786,7 @@
     const p=s.split(':').map(Number);return p.reduce((acc,v)=>acc*60+v,0);
   }
   function playPost(p) {
+    window.PULSO_VIDEO?.pause?.(); // Pausa o vídeo flutuante antes de abrir outra publicação.
     if(p.demo){toast('Exemplo de layout. Publique um link real para ativar o player.');return;}
     if (radioActive) radioStop(); // Evita dois players reproduzindo ao mesmo tempo.
     const url=safeUrl(p.url);if(!url){toast('Esta publicação não tem link válido.');return;}
@@ -1123,6 +1124,7 @@
     else {radioIndex=nextIndex;radioUpdateUI();}
   }
   function radioStart() {
+    window.PULSO_VIDEO?.pause?.(); // Rádio e vídeo não devem tocar simultaneamente.
     radioQueue=radioRandomize(radioCandidates());
     // Dê preferência a fontes que permitem avançar automaticamente.
     const firstAuto=radioQueue.findIndex(p=>radioSource(p)?.kind!=='spotify');
@@ -1146,6 +1148,7 @@
   }
   function radioResume() {
     if(!radioActive||!radioPaused)return;
+    window.PULSO_VIDEO?.pause?.();
     const source=radioSource(radioQueue[radioIndex]);
     if(source?.kind==='spotify'){toast('Use o botão play dentro do Spotify.');return;}
     radioPaused=false;
