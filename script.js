@@ -325,7 +325,7 @@
     $('postUrl').placeholder=video?'https://www.youtube.com/watch?v=...':'https://soundcloud.com/...';
     $('postUrl').required=!video&&!audioFile;
     $('audioUploadHint').textContent=useR2()?'Cloudflare R2: MP3, M4A, WAV, AAC e OGG até 400 MB para administradores. Upload multipart com reprodução por minuto.':'MP3 até 400 MB: acima de 48 MB o PULSO envia em partes no Supabase. M4A, WAV, AAC e OGG até 48 MB.';
-    $('videoUploadHint').textContent=useR2()?'Cloudflare R2 conectado: MP4, MOV do iPhone e WebM até 2 GB. A reprodução de MOV/HEVC depende do navegador.':`Envie MP4, MOV ou WebM da galeria, até ${allowedUploadMB} MB no Supabase. Para melhor compatibilidade com Android e Windows, prefira MP4 (H.264).`;
+    $('videoUploadHint').textContent=useR2()?'Cloudflare R2 configurado: MP4, MOV do iPhone e WebM até 2 GB. A reprodução de MOV/HEVC depende do navegador.':`Envie MP4, MOV ou WebM da galeria, até ${allowedUploadMB} MB no Supabase. Para melhor compatibilidade com Android e Windows, prefira MP4 (H.264).`;
   }
   async function uploadVideoSupabase(file, path) {
     if (file.size <= 6 * 1024 * 1024) {
@@ -403,7 +403,15 @@
     const {data,error}=await sb.auth.getSession();
     if(error || !data?.session?.access_token)throw new Error('Sessão expirada. Entre novamente na conta LØSI.');
     const headers={Authorization:`Bearer ${data.session.access_token}`,...(opts.headers||{})};
-    const resp=await fetch(`${r2Endpoint}${path}`,{...opts,headers});
+    let resp;
+    try {
+      resp=await fetch(`${r2Endpoint}${path}`,{...opts,headers,mode:'cors'});
+    } catch (err) {
+      if (opts.signal?.aborted) throw new Error('Envio cancelado.');
+      const etapa=String(path).split('?')[0];
+      console.warn('PULSO R2 — falha de conexão na etapa', etapa, err);
+      throw new Error(`Não foi possível conectar ao Cloudflare R2 (${etapa}). Verifique a conexão e se o Worker permite o domínio ${location.origin} nas configurações CORS. Se continuar, envie esta mensagem ao suporte.`);
+    }
     if(!resp.ok){
       let detail='';try{detail=(await resp.json()).error||'';}catch{}
       throw new Error(detail||`Cloudflare respondeu com erro ${resp.status}.`);
