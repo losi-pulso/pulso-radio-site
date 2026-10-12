@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+<title id="title">Joker Duck</title><desc id="desc">Pato amarelo usando máscara colorida e chapéu de bobo da corte, inspirado no universo Boris Brejcha</desc>
+<defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#1a473a"/><stop offset="1" stop-color="#0b1314"/></linearGradient><radialGradient id="duck"><stop stop-color="#fff53e"/><stop offset="1" stop-color="#ecc009"/></radialGradient></defs>
+<rect width="240" height="240" rx="26" fill="url(#bg)"/>
+<circle cx="120" cy="121" r="86" fill="#bcff45" opacity=".07"/>
+<path d="M59 107C44 85 47 62 65 38L92 75C94 56 103 43 119 22L137 75C149 53 163 45 185 44L179 101" fill="#e62b29" stroke="#ffdf56" stroke-width="4" stroke-linejoin="round"/>
+<path d="M58 98C42 77 40 57 49 43L69 83 M94 79C92 55 99 37 109 29L117 78 M141 79C159 53 169 40 190 38L177 93" fill="#20c355" stroke="#f4ffe4" stroke-width="3"/>
+<circle cx="49" cy="41" r="9" fill="#fff5d8"/><circle cx="110" cy="27" r="9" fill="#e93038"/><circle cx="190" cy="38" r="9" fill="#18d576"/>
+<ellipse cx="119" cy="146" rx="76" ry="60" fill="url(#duck)" stroke="#d4a500" stroke-width="3"/>
+<path d="M79 112Q82 72 118 75Q164 74 167 112L163 137Q144 156 121 155Q91 153 77 132Z" fill="#fffbe9" stroke="#f3cf69" stroke-width="2"/>
+<path d="M81 112Q91 89 108 81L103 133Z" fill="#159852"/><path d="M157 112Q149 87 134 81L137 132Z" fill="#cf2a29"/>
+<ellipse cx="99" cy="116" rx="14" ry="23" fill="white" transform="rotate(-17 99 116)"/><ellipse cx="143" cy="116" rx="14" ry="23" fill="white" transform="rotate(17 143 116)"/>
+<ellipse cx="102" cy="118" rx="8" ry="16" fill="#091421"/><ellipse cx="140" cy="118" rx="8" ry="16" fill="#091421"/>
+<circle cx="104" cy="113" r="4" fill="#fff"/><circle cx="142" cy="113" r="4" fill="#fff"/>
+<ellipse cx="120" cy="146" rx="39" ry="17" fill="#fb7c1b" stroke="#d9520a" stroke-width="3"/><path d="M85 143Q119 133 155 143" fill="none" stroke="#fdbb4f" stroke-width="4"/>
+<path d="M50 176Q64 161 80 166M190 176Q172 160 158 164" fill="none" stroke="#e7c00b" stroke-width="8" stroke-linecap="round"/>
+<text x="120" y="211" fill="#11261a" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="21" letter-spacing="1.2">BORIS BREJCHA</text>
+</svg>
