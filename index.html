@@ -11,19 +11,24 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
   <meta name="description" content="PULSO by LØSI — Descubra, compartilhe e publique músicas, videoclipes, sets e apresentações de DJs da cena eletrônica.">
-  <title>PULSO 5.10 by LØSI — Música eletrônica sem pausa</title>
+  <title>PULSO 5.11 by LØSI — Música eletrônica sem pausa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta property="og:type" content="website">
   <meta property="og:title" content="PULSO by LØSI — Música eletrônica sem pausa">
-  <meta property="og:description" content="Descubra e compartilhe techno, house, sets, playlists e outras frequências da cena eletrônica.">
+  <meta property="og:description" content="Ouça sets do Warung, Green Valley, Tomorrowland e Burning Man. Use gratuitamente no navegador ou instale na tela inicial do celular, se preferir.">
+  <meta property="og:url" content="https://pulso-radio-site.pages.dev/">
+  <meta property="og:image" content="https://pulso-radio-site.pages.dev/icons/icon-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="styles.css?v=5.0">
   <link rel="stylesheet" href="pulso5.css?v=5.0">
   <link rel="stylesheet" href="pulso51.css?v=5.1">
   <link rel="stylesheet" href="pulso52.css?v=5.4">
-  <link rel="stylesheet" href="pulso54.css?v=5.10-svg-icons">
+  <link rel="stylesheet" href="pulso54.css?v=5.11-share">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="config.js"></script>
   <script defer src="https://w.soundcloud.com/player/api.js"></script>
@@ -38,6 +43,7 @@
   <script defer src="pulso51.js?v=5.1"></script>
   <script defer src="pulso54.js?v=5.10-svg-icons"></script>
   <script defer src="pulso52.js?v=5.10-svg-icons"></script>
+  <script defer src="pulso-share.js?v=5.11"></script>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -78,6 +84,7 @@
       <a href="#explorar" data-nav="novidades">Novidades</a>
       <a href="#explorar" data-nav="salvos">Salvos</a>
       <a href="#sobre" data-nav="sobre">Sobre</a>
+      <button id="pulsoShareMenu" type="button"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V3.5m0 0-4 4m4-4 4 4"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg> Compartilhar PULSO</button>
       <button id="mobilePublish" type="button">+ Publicar som</button>
       <button id="mobileAccount" type="button">Entrar / Minha conta</button>
       <button id="mobileAdmin" class="hidden" type="button">Painel de moderação</button>
@@ -89,15 +96,33 @@
     <!-- PULSO 5.4.1 — DESERT FREQUENCIES: localização dinâmica e visual Burning Man mais realista -->
     <section id="desert" class="p54-desert container" aria-labelledby="p54Title">
       <div class="p54-desert-art" aria-hidden="true"><div class="p54-desert-dust"></div><div class="p54-laser p54-laser-1"></div><div class="p54-laser p54-laser-2"></div></div>
-      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.10</span>
+      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.11</span>
       <h1 id="p54Title">ALÉM DO <span>AMANHECER.</span></h1>
       <p>Da poeira da playa aos templos da música eletrônica. Art cars, luzes, DJs e sets que atravessam a madrugada.</p>
-      <div class="p54-desert-actions"><button type="button" data-open-desert>EXPLORAR SETS ↗</button><button type="button" data-open-reels><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.6a1 1 0 0 1 1.52-.86l9.6 6.4a1.02 1.02 0 0 1 0 1.72l-9.6 6.4A1 1 0 0 1 8 18.4z" fill="currentColor" stroke="none"/></svg> ABRIR REELS ALEATÓRIOS</button></div>
+      <div class="p54-desert-actions"><button type="button" data-open-desert>EXPLORAR SETS ↗</button><button type="button" data-open-reels><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.6a1 1 0 0 1 1.52-.86l9.6 6.4a1.02 1.02 0 0 1 0 1.72l-9.6 6.4A1 1 0 0 1 8 18.4z" fill="currentColor" stroke="none"/></svg> ABRIR REELS ALEATÓRIOS</button><button type="button" id="pulsoShareHero"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V3.5m0 0-4 4m4-4 4 4"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg> ENVIAR AOS AMIGOS</button></div>
       <div class="p54-desert-meter" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
       </div>
       <div class="p54-location-wrap">
         <span class="p54-desert-coordinate" id="p54DesertCoordinate">BLACK ROCK CITY → SUA FREQUÊNCIA → O MUNDO</span>
         <button type="button" class="p54-location-btn" id="p54UseLocation">USAR LOCALIZAÇÃO ATUAL</button>
+      </div>
+    </section>
+
+    <section id="pulsoSharePanel" class="pulso-share-panel container" aria-labelledby="pulsoShareHeading">
+      <div class="pulso-share-copy">
+        <span class="pulso-share-eyebrow">PULSO × LØSI · CONVITE PARA A PISTA</span>
+        <h2 id="pulsoShareHeading">COMPARTILHE A <em>FREQUÊNCIA.</em></h2>
+        <p>Gostou do PULSO? Envie para seus amigos descobrirem DJ sets, festivais e Reels de música eletrônica. Um único link funciona no computador, no Android e no iPhone.</p>
+        <div class="pulso-share-browsing"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 0 0 18m0-18a14 14 0 0 1 0 18"/></svg><span><strong>USE PELO NAVEGADOR — SEM BAIXAR NADA.</strong>É só abrir o link no Safari, Chrome ou outro navegador. Instalar como aplicativo na tela inicial é opcional e gratuito.</span></div>
+      </div>
+      <div class="pulso-share-options">
+        <button type="button" id="pulsoShareButton"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V3.5m0 0-4 4m4-4 4 4"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg> COMPARTILHAR PULSO</button>
+        <button type="button" id="pulsoShareWhatsapp" class="pulso-share-secondary"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.5-4.1a8.5 8.5 0 1 1 15-4.9Z"/><path d="M9 8.8c.2 2.5 3.6 5.8 6 6.1l1.1-1.3"/></svg> ENVIAR NO WHATSAPP</button>
+        <button type="button" id="pulsoShareCopy" class="pulso-share-secondary"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg> COPIAR LINK</button>
+        <a href="instalar.html" class="pulso-share-install"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2"/><path d="M12 7v8m0 0-3-3m3 3 3-3M10 18h4"/></svg> INSTALAR NO CELULAR (OPCIONAL)</a>
+        <input id="pulsoShareLink" class="pulso-share-link" readonly hidden aria-label="Endereço para compartilhar o PULSO">
+        <p id="pulsoShareStatus" class="pulso-share-status" role="status" aria-live="polite"></p>
+        <p class="pulso-share-caption">Não precisa criar conta para começar a explorar o catálogo.</p>
       </div>
     </section>
     <section id="p54SignatureSection" class="p54-signatures container" aria-labelledby="p54SignatureHeading">
@@ -126,7 +151,7 @@
 
     <!-- PULSO 5.0 integrates with existing media catalog and player; no duplicate audio engine. -->
     <section class="p5-shell container" id="pulso5" aria-labelledby="p5Title">
-      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.10</b> / BY LØSI</span></div>
+      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.11</b> / BY LØSI</span></div>
       <nav class="p5-tabs" aria-label="Navegação de descoberta, DJs e biblioteca">
         <button type="button" class="active" data-p5tab="home" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v11H3V10Z"/><path d="M9 21v-8h6v8"/></svg> PARA VOCÊ</button>
         <button type="button" data-p5tab="djs" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg> PERFIS DE DJs</button>
