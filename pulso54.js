@@ -13,7 +13,7 @@ function djInstagram(p){
   const handle=insta[norm(p?.artist)];return handle?'https://www.instagram.com/'+handle+'/':'';
 }
 window.PULSO54={sets,ranking,djInstagram};
-let selectedEvent='Todos',selectedYear='Todos',selectedGenre='Todos',search='';
+let selectedEvent='Todos',selectedYear='Todos',selectedGenre='Todos',selectedArtist='Todos',search='';
 const $=id=>document.getElementById(id);
 
 async function resolveCity(lat,lon){
@@ -66,10 +66,11 @@ function card(s){const id=encodeURIComponent(s.id);return `<article class="p54-c
  <a href="${safe(s.url)}" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a></div></div></article>`;}
 function filtered(){return sets.filter(s=>{
  const passEvent=selectedEvent==='Todos'||s.event===selectedEvent;
+ const passArtist=selectedArtist==='Todos'||norm(s.artist).includes(norm(selectedArtist));
  const passYear=selectedYear==='Todos'||String(s.year)===selectedYear||(selectedYear==='Clássicos'&&s.year<2025);
  const passGenre=selectedGenre==='Todos'||norm(s.genre).includes(norm(selectedGenre));
  const passSearch=!search||norm([s.artist,s.title,s.event,s.genre,s.year].join(' ')).includes(norm(search));
- return passEvent&&passYear&&passGenre&&passSearch;
+ return passEvent&&passYear&&passGenre&&passSearch&&passArtist;
  });}
 function render(){const grid=$('p54Grid');if(!grid)return;const list=filtered();
  let archivesNode=$('p54OfficialPlaylists');
@@ -82,14 +83,16 @@ grid.innerHTML=list.length?list.map(card).join(''):'<div class="p54-empty">Nenhu
  const counter=$('p54Count');if(counter)counter.textContent=`${list.length} SET${list.length===1?'':'S'} · YOUTUBE OFICIAL`;
  document.querySelectorAll('[data-p54-event]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p54Event===selectedEvent)));
  document.querySelectorAll('[data-p54-year]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p54Year===selectedYear)));
+ document.querySelectorAll('[data-p54-artist]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p54Artist===selectedArtist)));
  document.querySelectorAll('[data-p54-genre]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p54Genre===selectedGenre)));
 }
-function pickEvent(event){selectedEvent=event;selectedYear='Todos';selectedGenre='Todos';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});}
+function pickEvent(event){selectedEvent=event;selectedArtist='Todos';selectedYear='Todos';selectedGenre='Todos';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});}
 function renderRanking(){const el=$('p54Djs');if(!el)return;el.innerHTML=ranking.map((artist,i)=>{const l=djInstagram({artist});return `<div class="p54-rank"><strong>${String(i+1).padStart(2,'0')}</strong><span>${safe(artist)}</span>${l?`<a href="${safe(l)}" target="_blank" rel="noopener noreferrer" aria-label="Instagram de ${safe(artist)}">IG ↗</a>`:''}</div>`}).join('');}
 document.addEventListener('DOMContentLoaded',()=>{
   renderRanking();render();setHeroLocation('');setupHeroLocation();
   document.addEventListener('click',ev=>{
     const e=ev.target.closest('[data-p54-event]');if(e){pickEvent(e.dataset.p54Event);return;}
+    const a=ev.target.closest('[data-p54-artist]');if(a){selectedArtist=a.dataset.p54Artist;selectedEvent='Todos';selectedYear='Todos';selectedGenre='Todos';search='';const input=$('p54Search');if(input)input.value='';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});return;}
     const y=ev.target.closest('[data-p54-year]');if(y){selectedYear=y.dataset.p54Year;render();return;}
     const g=ev.target.closest('[data-p54-genre]');if(g){selectedGenre=g.dataset.p54Genre;render();return;}
     const r=ev.target.closest('[data-p54-reel]');if(r){ev.preventDefault();window.PULSO_REELS?.open?.(r.dataset.p54Reel);return;}
