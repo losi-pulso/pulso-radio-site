@@ -62,10 +62,10 @@ function setupHeroLocation(){
   }
 }
 function card(s){const id=encodeURIComponent(s.id);return `<article class="p54-card">
- <button type="button" class="p54-card-art" data-p54-reel="${safe(s.id)}" aria-label="Abrir Reel: ${safe(s.title)}">
+ <button type="button" class="p54-card-art" data-p54-video="${safe(s.id)}" aria-label="Assistir ${safe(s.title)} no player flutuante">
   <img src="${safe(s.cover)}" alt="${safe(s.artist)} em ${safe(s.event)}" loading="lazy"><span class="p54-play"><svg class="pulso-svg-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.3 5.4c0-.72.79-1.16 1.41-.79l10.17 6.59a.95.95 0 0 1 0 1.6L9.71 19.4c-.62.4-1.41-.05-1.41-.79V5.4Z" fill="currentColor"/></svg></span><span class="p54-card-year">${s.year}</span></button>
  <div class="p54-card-info"><span class="p54-genre">${safe(s.event)} · ${safe(s.genre)}</span><h3>${safe(s.title)}</h3>
- <p>${safe(s.description)}</p><div class="p54-card-actions"><button type="button" data-p54-reel="${safe(s.id)}"><svg class="pulso-svg-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.3 5.4c0-.72.79-1.16 1.41-.79l10.17 6.59a.95.95 0 0 1 0 1.6L9.71 19.4c-.62.4-1.41-.05-1.41-.79V5.4Z" fill="currentColor"/></svg> ASSISTIR NO PULSO</button>
+ <p>${safe(s.description)}</p><div class="p54-card-actions"><button type="button" data-p54-video="${safe(s.id)}"><svg class="pulso-svg-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.3 5.4c0-.72.79-1.16 1.41-.79l10.17 6.59a.95.95 0 0 1 0 1.6L9.71 19.4c-.62.4-1.41-.05-1.41-.79V5.4Z" fill="currentColor"/></svg> ASSISTIR NO PULSO</button>
  <a href="${safe(s.url)}" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a></div></div></article>`;}
 function filtered(){return sets.filter(s=>{
  const passEvent=selectedEvent==='Todos'||s.event===selectedEvent;
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const a=ev.target.closest('[data-p54-artist]');if(a){selectedArtist=a.dataset.p54Artist;selectedEvent='Todos';selectedYear='Todos';selectedGenre='Todos';search='';const input=$('p54Search');if(input)input.value='';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});return;}
     const y=ev.target.closest('[data-p54-year]');if(y){selectedYear=y.dataset.p54Year;render();return;}
     const g=ev.target.closest('[data-p54-genre]');if(g){selectedGenre=g.dataset.p54Genre;render();return;}
-    const r=ev.target.closest('[data-p54-reel]');if(r){ev.preventDefault();window.PULSO_REELS?.open?.(r.dataset.p54Reel);return;}
+    const r=ev.target.closest('[data-p54-video]');if(r){ev.preventDefault();const id=r.dataset.p54Video;if(!window.PULSO_VIDEO?.open?.(id))window.PULSO_REELS?.open?.(id);return;}
   });
   $('p54Search')?.addEventListener('input',ev=>{search=ev.target.value;render();});
   document.querySelectorAll('[data-open-desert]').forEach(b=>b.addEventListener('click',()=>{$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});}));
