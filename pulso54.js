@@ -63,9 +63,9 @@ function setupHeroLocation(){
 }
 function card(s){const id=encodeURIComponent(s.id);return `<article class="p54-card">
  <button type="button" class="p54-card-art" data-p54-reel="${safe(s.id)}" aria-label="Abrir Reel: ${safe(s.title)}">
-  <img src="${safe(s.cover)}" alt="${safe(s.artist)} em ${safe(s.event)}" loading="lazy"><span class="p54-play">▶</span><span class="p54-card-year">${s.year}</span></button>
+  <img src="${safe(s.cover)}" alt="${safe(s.artist)} em ${safe(s.event)}" loading="lazy"><span class="p54-play"><svg class="pulso-svg-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.3 5.4c0-.72.79-1.16 1.41-.79l10.17 6.59a.95.95 0 0 1 0 1.6L9.71 19.4c-.62.4-1.41-.05-1.41-.79V5.4Z" fill="currentColor"/></svg></span><span class="p54-card-year">${s.year}</span></button>
  <div class="p54-card-info"><span class="p54-genre">${safe(s.event)} · ${safe(s.genre)}</span><h3>${safe(s.title)}</h3>
- <p>${safe(s.description)}</p><div class="p54-card-actions"><button type="button" data-p54-reel="${safe(s.id)}">▶ ASSISTIR NO PULSO</button>
+ <p>${safe(s.description)}</p><div class="p54-card-actions"><button type="button" data-p54-reel="${safe(s.id)}"><svg class="pulso-svg-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.3 5.4c0-.72.79-1.16 1.41-.79l10.17 6.59a.95.95 0 0 1 0 1.6L9.71 19.4c-.62.4-1.41-.05-1.41-.79V5.4Z" fill="currentColor"/></svg> ASSISTIR NO PULSO</button>
  <a href="${safe(s.url)}" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a></div></div></article>`;}
 function filtered(){return sets.filter(s=>{
  const passEvent=selectedEvent==='Todos'||s.event===selectedEvent;
@@ -81,7 +81,7 @@ function render(){const grid=$('p54Grid');if(!grid)return;const list=filtered();
  const showArchives=(selectedEvent==='Todos'||selectedEvent==='Tomorrowland')&&selectedGenre==='Todos'&&!search.trim();
  const visibleArchives=showArchives?festivalPlaylists.filter(p=>selectedYear==='Todos'||String(p.year)===selectedYear):[];
  archivesNode.hidden=visibleArchives.length===0;
- archivesNode.innerHTML=visibleArchives.length?'<div class="p54-archives-intro"><span>ARQUIVO DO FESTIVAL</span><strong>TOMORROWLAND · PLAYLISTS COMPLETAS</strong><p>Explore as coleções oficiais publicadas pelo Tomorrowland no YouTube. Os vídeos permanecem nos canais originais.</p></div><div class="p54-archives-grid">'+visibleArchives.map(p=>'<a class="p54-archive-link" href="'+safe(p.url)+'" target="_blank" rel="noopener noreferrer"><span class="p54-archive-overline">▶ PLAYLIST NO YOUTUBE · '+p.year+'</span><strong>'+safe(p.title)+'</strong><small>'+safe(p.subtitle)+'</small><span class="p54-archive-go">ABRIR COLEÇÃO ↗</span></a>').join('')+'</div>':'';
+ archivesNode.innerHTML=visibleArchives.length?'<div class="p54-archives-intro"><span>ARQUIVO DO FESTIVAL</span><strong>TOMORROWLAND · PLAYLISTS COMPLETAS</strong><p>Explore as coleções oficiais publicadas pelo Tomorrowland no YouTube. Os vídeos permanecem nos canais originais.</p></div><div class="p54-archives-grid">'+visibleArchives.map(p=>'<a class="p54-archive-link" href="'+safe(p.url)+'" target="_blank" rel="noopener noreferrer"><span class="p54-archive-overline">PLAYLIST NO YOUTUBE · '+p.year+'</span><strong>'+safe(p.title)+'</strong><small>'+safe(p.subtitle)+'</small><span class="p54-archive-go">ABRIR COLEÇÃO ↗</span></a>').join('')+'</div>':'';
 grid.innerHTML=list.length?list.map(card).join(''):'<div class="p54-empty">Nenhum set corresponde a esses filtros. Tente outro evento ou estilo.</div>';
  const counter=$('p54Count');if(counter)counter.textContent=`${list.length} SET${list.length===1?'':'S'} · YOUTUBE OFICIAL`;
  document.querySelectorAll('[data-p54-event]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p54Event===selectedEvent)));
@@ -115,7 +115,7 @@ function renderSignatures(){
     +'<span class="p54-featured-style">'+safe(dj.style)+'</span>'
     +'<h3>'+safe(dj.artist)+'</h3>'
     +'<p>'+safe(dj.detail)+'</p>'
-    +'<div class="p54-featured-actions"><button type="button" data-p54-artist="'+safe(dj.artist)+'" aria-label="Mostrar sets de '+safe(dj.artist)+'">▶ VER '+amount+' SET'+(amount===1?'':'S')+'</button>'
+    +'<div class="p54-featured-actions"><button type="button" data-p54-artist="'+safe(dj.artist)+'" aria-label="Mostrar sets de '+safe(dj.artist)+'"><svg class="pulso-svg-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.3 5.4c0-.72.79-1.16 1.41-.79l10.17 6.59a.95.95 0 0 1 0 1.6L9.71 19.4c-.62.4-1.41-.05-1.41-.79V5.4Z" fill="currentColor"/></svg> VER '+amount+' SET'+(amount===1?'':'S')+'</button>'
     +'<a href="'+safe(dj.instagram)+'" target="_blank" rel="noopener noreferrer" aria-label="Instagram de '+safe(dj.artist)+'">INSTAGRAM ↗</a></div>'
     +'</div></article>';
  }).join('');
