@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
   <meta name="description" content="PULSO by LØSI — Descubra, compartilhe e publique músicas, videoclipes, sets e apresentações de DJs da cena eletrônica.">
-  <title>PULSO 5.11 by LØSI — Música eletrônica sem pausa</title>
+  <title>PULSO 5.12 by LØSI — Música eletrônica sem pausa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="pulso5.css?v=5.0">
   <link rel="stylesheet" href="pulso51.css?v=5.1">
   <link rel="stylesheet" href="pulso52.css?v=5.4">
-  <link rel="stylesheet" href="pulso54.css?v=5.11-share">
+  <link rel="stylesheet" href="pulso54.css?v=5.12-share-fab">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="config.js"></script>
   <script defer src="https://w.soundcloud.com/player/api.js"></script>
@@ -43,7 +43,7 @@
   <script defer src="pulso51.js?v=5.1"></script>
   <script defer src="pulso54.js?v=5.10-svg-icons"></script>
   <script defer src="pulso52.js?v=5.10-svg-icons"></script>
-  <script defer src="pulso-share.js?v=5.11"></script>
+  <script defer src="pulso-share.js?v=5.12-fab"></script>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -96,10 +96,10 @@
     <!-- PULSO 5.4.1 — DESERT FREQUENCIES: localização dinâmica e visual Burning Man mais realista -->
     <section id="desert" class="p54-desert container" aria-labelledby="p54Title">
       <div class="p54-desert-art" aria-hidden="true"><div class="p54-desert-dust"></div><div class="p54-laser p54-laser-1"></div><div class="p54-laser p54-laser-2"></div></div>
-      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.11</span>
+      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.12</span>
       <h1 id="p54Title">ALÉM DO <span>AMANHECER.</span></h1>
       <p>Da poeira da playa aos templos da música eletrônica. Art cars, luzes, DJs e sets que atravessam a madrugada.</p>
-      <div class="p54-desert-actions"><button type="button" data-open-desert>EXPLORAR SETS ↗</button><button type="button" data-open-reels><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.6a1 1 0 0 1 1.52-.86l9.6 6.4a1.02 1.02 0 0 1 0 1.72l-9.6 6.4A1 1 0 0 1 8 18.4z" fill="currentColor" stroke="none"/></svg> ABRIR REELS ALEATÓRIOS</button><button type="button" id="pulsoShareHero"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V3.5m0 0-4 4m4-4 4 4"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg> ENVIAR AOS AMIGOS</button></div>
+      <div class="p54-desert-actions"><button type="button" data-open-desert>EXPLORAR SETS ↗</button><button type="button" data-open-reels><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.6a1 1 0 0 1 1.52-.86l9.6 6.4a1.02 1.02 0 0 1 0 1.72l-9.6 6.4A1 1 0 0 1 8 18.4z" fill="currentColor" stroke="none"/></svg> ABRIR REELS ALEATÓRIOS</button></div>
       <div class="p54-desert-meter" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
       </div>
       <div class="p54-location-wrap">
@@ -108,23 +108,6 @@
       </div>
     </section>
 
-    <section id="pulsoSharePanel" class="pulso-share-panel container" aria-labelledby="pulsoShareHeading">
-      <div class="pulso-share-copy">
-        <span class="pulso-share-eyebrow">PULSO × LØSI · CONVITE PARA A PISTA</span>
-        <h2 id="pulsoShareHeading">COMPARTILHE A <em>FREQUÊNCIA.</em></h2>
-        <p>Gostou do PULSO? Envie para seus amigos descobrirem DJ sets, festivais e Reels de música eletrônica. Um único link funciona no computador, no Android e no iPhone.</p>
-        <div class="pulso-share-browsing"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 0 0 18m0-18a14 14 0 0 1 0 18"/></svg><span><strong>USE PELO NAVEGADOR — SEM BAIXAR NADA.</strong>É só abrir o link no Safari, Chrome ou outro navegador. Instalar como aplicativo na tela inicial é opcional e gratuito.</span></div>
-      </div>
-      <div class="pulso-share-options">
-        <button type="button" id="pulsoShareButton"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V3.5m0 0-4 4m4-4 4 4"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg> COMPARTILHAR PULSO</button>
-        <button type="button" id="pulsoShareWhatsapp" class="pulso-share-secondary"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.5-4.1a8.5 8.5 0 1 1 15-4.9Z"/><path d="M9 8.8c.2 2.5 3.6 5.8 6 6.1l1.1-1.3"/></svg> ENVIAR NO WHATSAPP</button>
-        <button type="button" id="pulsoShareCopy" class="pulso-share-secondary"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg> COPIAR LINK</button>
-        <a href="instalar.html" class="pulso-share-install"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2"/><path d="M12 7v8m0 0-3-3m3 3 3-3M10 18h4"/></svg> INSTALAR NO CELULAR (OPCIONAL)</a>
-        <input id="pulsoShareLink" class="pulso-share-link" readonly hidden aria-label="Endereço para compartilhar o PULSO">
-        <p id="pulsoShareStatus" class="pulso-share-status" role="status" aria-live="polite"></p>
-        <p class="pulso-share-caption">Não precisa criar conta para começar a explorar o catálogo.</p>
-      </div>
-    </section>
     <section id="p54SignatureSection" class="p54-signatures container" aria-labelledby="p54SignatureHeading">
   <span class="p54-eyebrow">PULSO PICKS · SELEÇÃO DE ARTISTAS</span>
   <h2 id="p54SignatureHeading">DJs EM <em>DESTAQUE.</em></h2>
@@ -151,7 +134,7 @@
 
     <!-- PULSO 5.0 integrates with existing media catalog and player; no duplicate audio engine. -->
     <section class="p5-shell container" id="pulso5" aria-labelledby="p5Title">
-      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.11</b> / BY LØSI</span></div>
+      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.12</b> / BY LØSI</span></div>
       <nav class="p5-tabs" aria-label="Navegação de descoberta, DJs e biblioteca">
         <button type="button" class="active" data-p5tab="home" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v11H3V10Z"/><path d="M9 21v-8h6v8"/></svg> PARA VOCÊ</button>
         <button type="button" data-p5tab="djs" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg> PERFIS DE DJs</button>
@@ -353,7 +336,26 @@
 
 
   <aside id="p51InstallBar" class="p51-install-bar" aria-label="Instalar aplicativo PULSO"><span class="p51-appmark" aria-hidden="true">◉</span><div><strong>LEVE O PULSO COM VOCÊ.</strong><small>Android • iPhone • música aonde for</small></div><button id="p51AndroidInstall" type="button">Instalar Android ↗</button><a id="p51ApkLink" href="downloads/PULSO-Android.apk" download hidden>Baixar APK ↗</a><a href="ios.html">Instalar no iPhone ↗</a><a href="instalar.html" aria-label="Guia de instalação do PULSO">Ver guia ↗</a><button id="p51DismissInstall" class="p51-install-close" type="button" aria-label="Fechar faixa de instalação">×</button></aside>
-  <button id="p51HelpToggle" class="p51-help-button" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="p51HelpDialog"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H9l-5 4V5Z"/><path d="M9 8a3 3 0 1 1 5 2c-1 1-2 1-2 3M12 16h.01"/></svg> AJUDA</button>
+    <button type="button" id="pulsoShareToggle" class="pulso-share-fab" title="Compartilhar PULSO" aria-label="Compartilhar o PULSO com amigos" aria-haspopup="dialog" aria-controls="pulsoSharePanel" aria-expanded="false"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V3.5m0 0-4 4m4-4 4 4"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg></button>
+  <section id="pulsoSharePanel" class="pulso-share-panel" role="dialog" aria-modal="false" aria-labelledby="pulsoShareHeading" tabindex="-1" hidden>
+    <header class="pulso-share-header"><div><span>CONVITE PULSO × LØSI</span><strong>Compartilhar com amigos</strong></div><button type="button" id="pulsoShareClose" aria-label="Fechar opções de compartilhamento">×</button></header>
+      <div class="pulso-share-copy">
+        <span class="pulso-share-eyebrow">PULSO × LØSI · CONVITE PARA A PISTA</span>
+        <h2 id="pulsoShareHeading">COMPARTILHE A <em>FREQUÊNCIA.</em></h2>
+        <p>Gostou do PULSO? Envie para seus amigos descobrirem DJ sets, festivais e Reels de música eletrônica. Um único link funciona no computador, no Android e no iPhone.</p>
+        <div class="pulso-share-browsing"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 0 0 18m0-18a14 14 0 0 1 0 18"/></svg><span><strong>USE PELO NAVEGADOR — SEM BAIXAR NADA.</strong>É só abrir o link no Safari, Chrome ou outro navegador. Instalar como aplicativo na tela inicial é opcional e gratuito.</span></div>
+      </div>
+      <div class="pulso-share-options">
+        <button type="button" id="pulsoShareButton"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V3.5m0 0-4 4m4-4 4 4"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg> COMPARTILHAR PULSO</button>
+        <button type="button" id="pulsoShareWhatsapp" class="pulso-share-secondary"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.5-4.1a8.5 8.5 0 1 1 15-4.9Z"/><path d="M9 8.8c.2 2.5 3.6 5.8 6 6.1l1.1-1.3"/></svg> ENVIAR NO WHATSAPP</button>
+        <button type="button" id="pulsoShareCopy" class="pulso-share-secondary"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg> COPIAR LINK</button>
+        <a href="instalar.html" class="pulso-share-install"><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2"/><path d="M12 7v8m0 0-3-3m3 3 3-3M10 18h4"/></svg> INSTALAR NO CELULAR (OPCIONAL)</a>
+        <input id="pulsoShareLink" class="pulso-share-link" readonly hidden aria-label="Endereço para compartilhar o PULSO">
+        <p id="pulsoShareStatus" class="pulso-share-status" role="status" aria-live="polite"></p>
+        <p class="pulso-share-caption">Não precisa criar conta para começar a explorar o catálogo.</p>
+      </div>
+  </section>
+<button id="p51HelpToggle" class="p51-help-button" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="p51HelpDialog"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H9l-5 4V5Z"/><path d="M9 8a3 3 0 1 1 5 2c-1 1-2 1-2 3M12 16h.01"/></svg> AJUDA</button>
   <section id="p51HelpDialog" class="p51-help-dialog" role="dialog" aria-modal="false" aria-label="Assistente PULSO" hidden><header><div><span class="p5-overline">ASSISTENTE PULSO</span><h2>TIRE SUAS DÚVIDAS.</h2></div><button id="p51HelpClose" type="button" aria-label="Fechar assistente">×</button></header><div id="p51HelpMessages" class="p51-help-messages" aria-live="polite"><div class="p51-bubble bot">Olá! Posso ajudar com upload de sets, playlists, perfis, rádio, identificação de faixas e instalação do app. Qual é sua dúvida?</div></div><div class="p51-questions"><button type="button" data-p51-question="Como envio um DJ set?">Enviar set</button><button type="button" data-p51-question="Como instalo no iPhone?">Instalar no iPhone</button><button type="button" data-p51-question="Como funciona a IA de identificar música?">Identificar música</button></div><form id="p51HelpForm"><label for="p51HelpInput" class="sr-only">Sua dúvida</label><input id="p51HelpInput" maxlength="350" placeholder="Digite sua pergunta…" required><button type="submit" aria-label="Enviar pergunta">➤</button></form><small>Ajuda contextual disponível sem login. A IA generativa exige configuração opcional e protegida no servidor.</small></section>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
