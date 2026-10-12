@@ -31,3 +31,19 @@
 @media(max-width:600px){.p54-desert{height:450px;border-radius:17px;margin-top:8px}.p54-desert-art{background-position:62% center;background-image:linear-gradient(90deg,#030608e9,#05090774 72%,#080b0677),url('burningman-real.webp')}.p54-desert-content{padding:28px 22px 78px;justify-content:flex-end}.p54-desert h1{font-size:clamp(43px,10vw,64px);margin:13px 0 8px}.p54-desert p{font-size:13px;margin:3px 0}.p54-desert-actions button{font-size:10px;padding:13px 13px}.p54-location-wrap{left:16px;right:16px;bottom:12px;gap:8px}.p54-desert-coordinate{font-size:8px;order:2;width:100%;text-align:left}.p54-location-btn{font-size:9px;padding:8px 11px}.p54-desert-meter{display:none}.p54-section{padding-top:35px}.p54-heading{flex-wrap:wrap;gap:9px}.p54-heading h2{font-size:35px}.p54-livebadge{display:none}.p54-over{font-size:8px}.p54-eventnav button{padding:12px 14px;min-height:48px}.p54-toolbar{gap:11px}.p54-grid{grid-template-columns:1fr;gap:14px}.p54-card-art{height:205px}.p54-catalog-meta{flex-wrap:wrap}.p54-rank-list{grid-template-columns:1fr 1fr}.p54-rank{gap:5px}.p54-rank>span{font-size:10px}.p54-rank>strong{font-size:15px;min-width:20px}}
 @media(max-width:370px){.p54-rank-list{grid-template-columns:1fr}.p54-desert-actions{gap:6px}.p54-desert-actions button{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.p54-desert-art,.p54-desert-dust,.p54-laser,.p54-desert-meter span{animation:none}.p54-card,.p54-card-art img,.p54-eventnav button{transition:none}}
+
+/* PULSO 5.4.2 — playlists completas Tomorrowland. */
+.p54-official-playlists{margin:17px 0 26px}
+.p54-official-playlists[hidden]{display:none!important}
+.p54-archives-intro{margin:0 0 13px}
+.p54-archives-intro>span{display:block;font-size:10px;letter-spacing:.2em;font-weight:800;color:var(--p54-lime,#d1ff6b);margin-bottom:5px}
+.p54-archives-intro>strong{display:block;font-size:clamp(16px,2.1vw,23px);letter-spacing:-.02em;color:#f7f8f1}
+.p54-archives-intro>p{font-size:12px;line-height:1.5;color:#c4c8b9;max-width:730px;margin:7px 0 0}
+.p54-archives-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.p54-archive-link{display:flex;flex-direction:column;gap:9px;min-height:152px;padding:18px;border:1px solid rgba(203,244,113,.26);border-radius:15px;background:linear-gradient(135deg,#243124d9,#101619);text-decoration:none!important;color:#f6f9f3!important;transition:border-color .15s,transform .15s}
+.p54-archive-link:hover,.p54-archive-link:focus-visible{border-color:#d1ff6b;transform:translateY(-2px)}
+.p54-archive-overline{font-size:10px;letter-spacing:.08em;color:#d1ff6b}
+.p54-archive-link strong{font-size:16px;line-height:1.3}
+.p54-archive-link small{color:#bcbfb7;font-size:12px}
+.p54-archive-go{margin-top:auto;font-size:10px;font-weight:800;color:#d1ff6b;letter-spacing:.07em}
+@media(max-width:540px){.p54-archives-grid{grid-template-columns:1fr 1fr;gap:8px}.p54-archive-link{min-height:160px;padding:13px}.p54-archive-link strong{font-size:13px}.p54-archive-link small{font-size:11px}}
