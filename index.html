@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
   <meta name="description" content="PULSO by LØSI — Descubra, compartilhe e publique músicas, videoclipes, sets e apresentações de DJs da cena eletrônica.">
-  <title>PULSO 5.4.1 by LØSI — Música eletrônica sem pausa</title>
+  <title>PULSO 5.7 by LØSI — Música eletrônica sem pausa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="pulso5.css?v=5.0">
   <link rel="stylesheet" href="pulso51.css?v=5.1">
   <link rel="stylesheet" href="pulso52.css?v=5.4">
-  <link rel="stylesheet" href="pulso54.css?v=5.5-artists">
+  <link rel="stylesheet" href="pulso54.css?v=5.7-clubs">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="config.js"></script>
   <script defer src="https://w.soundcloud.com/player/api.js"></script>
@@ -32,12 +32,12 @@
   <script defer src="notifications.js"></script>
   <script defer src="security.js?v=4.2"></script>
   <script defer src="script.js?v=5.4.1-r2diag"></script>
-  <script defer src="social.js?v=5.3"></script>
+  <script defer src="social.js?v=5.7-story60"></script>
   <script defer src="identify.js"></script>
   <script defer src="pulso5.js?v=5.3"></script>
   <script defer src="pulso51.js?v=5.1"></script>
-  <script defer src="pulso54.js?v=5.6-greenvalley-warung"></script>
-  <script defer src="pulso52.js?v=5.4"></script>
+  <script defer src="pulso54.js?v=5.7-boris"></script>
+  <script defer src="pulso52.js?v=5.7-full"></script>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -89,7 +89,7 @@
     <!-- PULSO 5.4.1 — DESERT FREQUENCIES: localização dinâmica e visual Burning Man mais realista -->
     <section id="desert" class="p54-desert container" aria-labelledby="p54Title">
       <div class="p54-desert-art" aria-hidden="true"><div class="p54-desert-dust"></div><div class="p54-laser p54-laser-1"></div><div class="p54-laser p54-laser-2"></div></div>
-      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.4</span>
+      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.7</span>
       <h1 id="p54Title">ALÉM DO <span>AMANHECER.</span></h1>
       <p>Da poeira da playa aos templos da música eletrônica. Art cars, luzes, DJs e sets que atravessam a madrugada.</p>
       <div class="p54-desert-actions"><button type="button" data-open-desert>EXPLORAR SETS ↗</button><button type="button" data-open-reels>▶ ABRIR REELS ALEATÓRIOS</button></div>
@@ -100,7 +100,13 @@
         <button type="button" class="p54-location-btn" id="p54UseLocation">USAR LOCALIZAÇÃO ATUAL</button>
       </div>
     </section>
-    <section id="p54Catalog" class="p54-section container" aria-labelledby="p54CatalogTitle">
+    <section id="p54SignatureSection" class="p54-signatures container" aria-labelledby="p54SignatureHeading">
+  <span class="p54-eyebrow">PULSO SIGNATURES · ÍCONES DA PISTA</span>
+  <h2 id="p54SignatureHeading">AS MARCAS DOS <em>GRANDES DJS.</em></h2>
+  <p>O Joker Duck de Boris Brejcha, a assinatura visual inspirada em Vintage Culture e o Templo Warung. Toque para explorar os sets.</p>
+  <div id="p54Signatures" class="p54-signatures-row"></div>
+</section>
+<section id="p54Catalog" class="p54-section container" aria-labelledby="p54CatalogTitle">
       <div class="p54-over"><span>EXPEDIÇÃO SONORA · YOUTUBE OFICIAL</span><strong>EXPLORE AS FREQUÊNCIAS</strong></div>
       <div class="p54-heading"><div><span class="p54-eyebrow">FESTIVAL ARCHIVE / PULSO CURADORIA</span><h2 id="p54CatalogTitle">OS GRANDES <em>SESSIONS.</em></h2><p>Seleção de apresentações publicadas no YouTube por canais dos DJs, festivais e art cars. Toque para assistir no player dos Reels.</p></div><span class="p54-livebadge">● CURADORIA ATUALIZADA</span></div>
       <div class="p54-eventnav" role="group" aria-label="Selecionar evento"><button aria-pressed="true" data-p54-event="Todos">✳ TODOS OS SETS</button><button data-p54-event="Tomorrowland">✦ TOMORROWLAND</button><button data-p54-event="Burning Man">✺ BURNING MAN</button><button data-p54-event="Green Valley">◈ GREEN VALLEY</button><button data-p54-event="Warung">◉ WARUNG</button><button data-p54-event="Só Track Boa">⚡ SÓ TRACK BOA</button><button data-p54-event="Sets especiais">✧ SETS ESPECIAIS</button></div>
@@ -109,11 +115,18 @@
       <div class="p54-catalog-meta"><strong id="p54Count"></strong><span>Vídeos reproduzidos pelo YouTube · Disponibilidade depende dos canais originais</span></div>
       <div id="p54Grid" class="p54-grid" aria-live="polite"></div>
     </section>
-    <section class="p54-rank-section container" aria-labelledby="p54RankTitle"><div><span class="p54-eyebrow">TOP 100 DJS · DJ MAG / EDIÇÃO 2026</span><h2 id="p54RankTitle">OS NOMES QUE <em>MOVEM A CENA.</em></h2><p>Ranking de popularidade da DJ Mag 2026, independente da seleção de sets. Os links de Instagram aparecem apenas quando identificados.</p><a href="https://djmag.com/top100djs" target="_blank" rel="noopener noreferrer" class="p54-ranking-src">CONFERIR RANKING DJ MAG ↗</a></div><div id="p54Djs" class="p54-rank-list"></div></section>
+    <section class="p54-rank-section container" aria-labelledby="p54RankTitle"><div><span class="p54-eyebrow">TOP 100 DJS · DJ MAG / EDIÇÃO 2026</span><h2 id="p54RankTitle">OS NOMES QUE <em>MOVEM A CENA.</em></h2><p>Top 20 da DJ Mag 2026 com links para o Instagram dos DJs.</p><a href="https://djmag.com/top100djs" target="_blank" rel="noopener noreferrer" class="p54-ranking-src">CONFERIR RANKING DJ MAG ↗</a></div><div id="p54Djs" class="p54-rank-list"></div></section>
+<section id="p54ClubRank" class="p54-club-section container" aria-labelledby="p54ClubTitle">
+  <span class="p54-eyebrow">DJ MAG · TOP 100 CLUBS / 2026</span>
+  <h2 id="p54ClubTitle">OS MELHORES <em>CLUBES DO MUNDO.</em></h2>
+  <p>Classificação oficial de 2026. Destaques: [UNVRS] #1, GREENVALLEY #2 e Warung Beach Club #46. Fotos de casas selecionadas; nas demais, abra a fonte oficial.</p>
+  <a href="https://djmag.com/top100clubs/2026" target="_blank" rel="noopener noreferrer" class="p54-ranking-src">RANKING COMPLETO NA DJ MAG ↗</a>
+  <div id="p54Clubs" class="p54-club-grid"></div>
+</section>
 
     <!-- PULSO 5.0 integrates with existing media catalog and player; no duplicate audio engine. -->
     <section class="p5-shell container" id="pulso5" aria-labelledby="p5Title">
-      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.4</b> / BY LØSI</span></div>
+      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.7</b> / BY LØSI</span></div>
       <nav class="p5-tabs" aria-label="Navegação de descoberta, DJs e biblioteca">
         <button type="button" class="active" data-p5tab="home" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v11H3V10Z"/><path d="M9 21v-8h6v8"/></svg> PARA VOCÊ</button>
         <button type="button" data-p5tab="djs" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg> PERFIS DE DJs</button>
@@ -126,7 +139,7 @@
 
 
     <section class="p52-reels-banner container" aria-label="PULSO Reels">
-      <div><span class="p52-reels-kicker">▣ PULSO REELS / VISUAL FREQUENCY</span><h2>VÍDEOS EM <em>MOVIMENTO.</em></h2><p>Deslize para descobrir vídeos aprovados da comunidade e sets oficiais do YouTube, em ordem surpreendente a cada visita.</p></div>
+      <div><span class="p52-reels-kicker">▣ PULSO REELS / VISUAL FREQUENCY</span><h2>VÍDEOS EM <em>MOVIMENTO.</em></h2><p>Deslize para descobrir vídeos aprovados da comunidade e sets oficiais do YouTube, em ordem surpreendente a cada visita. Os vídeos podem tocar por inteiro; deslize quando quiser.</p></div>
       <button type="button" class="p52-reels-open" data-open-reels><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 10 7-10 7z"/></svg> EXPLORAR REELS <span>↗</span></button>
     </section>
 
@@ -310,7 +323,7 @@
     </div>
   </dialog>
   <dialog id="socialModerationDialog" class="social-dialog" aria-label="Moderação dos comentários"><div class="social-dialog-inner"><div class="social-dialog-header"><h2>MODERAÇÃO DE COMENTÁRIOS</h2><button id="socialModClose" type="button" class="close-dialog">×</button></div><div id="socialReportsList"></div></div></dialog>
-  <dialog id="storyDialog" class="social-dialog story-dialog" aria-label="Compartilhar nos stories"><div class="social-dialog-inner"><div class="social-dialog-header"><div><span class="text-eyebrow">PULSO STORIES</span><h2 id="storyPostHeading">STORY</h2></div><button type="button" id="storyClose" class="close-dialog">×</button></div><p class="social-story-info">Crie um Story com a capa da música. Em navegadores compatíveis, gere também um vídeo de 15 segundos com áudio, desde que possua autorização para compartilhar.</p><canvas id="socialStoryCanvas" width="1080" height="1920" aria-label="Prévia vertical do story"></canvas><div class="story-actions"><button id="shareStoryImage" type="button">SALVAR / COMPARTILHAR CAPA</button><button id="shareStoryLink" type="button">COMPARTILHAR LINK</button></div><label class="story-consent"><input id="storyRights" type="checkbox"> Tenho direitos ou autorização para compartilhar este conteúdo musical no Instagram.</label><div class="story-actions"><label>Início do trecho (segundos) <input id="storyStartSeconds" type="number" min="0" value="0" step="1"></label><button id="renderStoryVideo" type="button">GERAR STORY COM ÁUDIO (15 S)</button><button id="shareStoryVideo" type="button" disabled>COMPARTILHAR VÍDEO</button><button id="downloadStoryVideo" type="button" disabled>BAIXAR VÍDEO</button></div><p id="storyStatus" role="status"></p><small>O Instagram não permite publicar automaticamente Stories com áudio a partir deste site. Compartilhe o arquivo criado pela função de compartilhamento do dispositivo ou pela galeria.</small></div></dialog>
+  <dialog id="storyDialog" class="social-dialog story-dialog" aria-label="Compartilhar nos stories"><div class="social-dialog-inner"><div class="social-dialog-header"><div><span class="text-eyebrow">PULSO STORIES</span><h2 id="storyPostHeading">STORY</h2></div><button type="button" id="storyClose" class="close-dialog">×</button></div><p class="social-story-info">Crie um Story com a capa da música. Em navegadores compatíveis, gere também um vídeo de até 60 segundos com áudio, desde que possua autorização para compartilhar.</p><canvas id="socialStoryCanvas" width="1080" height="1920" aria-label="Prévia vertical do story"></canvas><div class="story-actions"><button id="shareStoryImage" type="button">SALVAR / COMPARTILHAR CAPA</button><button id="shareStoryLink" type="button">COMPARTILHAR LINK</button></div><label class="story-consent"><input id="storyRights" type="checkbox"> Tenho direitos ou autorização para compartilhar este conteúdo musical no Instagram.</label><div class="story-actions"><label>Início do trecho (segundos) <input id="storyStartSeconds" type="number" min="0" value="0" step="1"></label><button id="renderStoryVideo" type="button">GERAR STORY COM ÁUDIO (60 S)</button><button id="shareStoryVideo" type="button" disabled>COMPARTILHAR VÍDEO</button><button id="downloadStoryVideo" type="button" disabled>BAIXAR VÍDEO</button></div><p id="storyStatus" role="status"></p><small>O Instagram não permite publicar automaticamente Stories com áudio a partir deste site. Compartilhe o arquivo criado pela função de compartilhamento do dispositivo ou pela galeria.</small></div></dialog>
   <dialog id="identifyDialog" class="social-dialog identify-dialog" aria-labelledby="identifyHeading"><div class="social-dialog-inner"><div class="social-dialog-header"><div><span class="text-eyebrow">✦ PULSO IDENTIFY</span><h2 id="identifyHeading">QUE FAIXA É ESSA?</h2></div><button type="button" id="identifyClose" class="close-dialog" aria-label="Fechar identificação">×</button></div><div class="identify-orbit"><div class="identify-ring"></div><span>✦</span></div><p id="identifyStatus" class="identify-status" role="status">Pronto para reconhecer uma faixa.</p><div id="identifyResult" aria-live="polite"></div><p class="identify-note">O reconhecimento usa cerca de 12 segundos do MP3 que está tocando. A música não é pausada. Não há garantia de reconhecimento, especialmente com remixes inéditos e transições.</p><p class="identify-note">Som do YouTube, SoundCloud ou Spotify embutido não pode ser capturado diretamente pelo navegador. O recurso requer sua conta PULSO e a ativação do serviço AudD pelo administrador.</p></div></dialog>
 
 
