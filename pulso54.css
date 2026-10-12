@@ -47,3 +47,10 @@
 .p54-archive-link small{color:#bcbfb7;font-size:12px}
 .p54-archive-go{margin-top:auto;font-size:10px;font-weight:800;color:#d1ff6b;letter-spacing:.07em}
 @media(max-width:540px){.p54-archives-grid{grid-template-columns:1fr 1fr;gap:8px}.p54-archive-link{min-height:160px;padding:13px}.p54-archive-link strong{font-size:13px}.p54-archive-link small{font-size:11px}}
+
+/* PULSO 5.5 · atalhos para artistas prioritários */
+.p54-artist-shortcuts{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:2px 0 18px}
+.p54-artist-shortcuts>span{font:700 10px 'Space Grotesk',sans-serif;letter-spacing:.11em;color:#abb99d;margin-right:4px}
+.p54-artist-shortcuts button{border:1px solid #5b7442;border-radius:999px;background:#15241a;color:#effce3;padding:10px 13px;font:700 11px 'Space Grotesk',sans-serif;cursor:pointer;white-space:nowrap}
+.p54-artist-shortcuts button[aria-pressed=true],.p54-artist-shortcuts button:hover{background:#d1ff6b;color:#10190e;border-color:#d1ff6b}
+@media(max-width:540px){.p54-artist-shortcuts{flex-wrap:nowrap;overflow-x:auto;padding:4px 0 12px}.p54-artist-shortcuts>span{flex:none}.p54-artist-shortcuts button{flex:none;padding:10px}}
