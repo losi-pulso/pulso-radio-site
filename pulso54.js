@@ -12,7 +12,7 @@ const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLo
 function djInstagram(p){
   // Links only for identified official artists; not the uploader's own profile.
   if(p?.instagram&&/^https:\/\/www\.instagram\.com\/[a-z0-9_.]+\/$/i.test(p.instagram))return p.instagram;
-  const handle=rankedInstagram[norm(p?.artist)]||insta[norm(p?.artist)];return handle?'https://www.instagram.com/'+handle+'/':'';
+  const handle=rankedInstagram[norm(p?.artist)]||Object.entries(rankedInstagram).find(([k])=>norm(k)===norm(p?.artist))?.[1]||insta[norm(p?.artist)];return handle?'https://www.instagram.com/'+handle+'/':'';
 }
 window.PULSO54={sets,ranking,djInstagram};
 let selectedEvent='Todos',selectedYear='Todos',selectedGenre='Todos',selectedArtist='Todos',search='';
