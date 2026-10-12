@@ -35,8 +35,12 @@
  };
  const whatsapp=()=>{
    const url='https://wa.me/?text='+encodeURIComponent(text());
-   const popup=window.open(url,'_blank','noopener,noreferrer');
-   if(!popup){status('Se o WhatsApp não abrir, use Copiar link e envie na conversa.');}
+   const link=document.createElement('a');
+   link.href=url;
+   link.target='_blank';
+   link.rel='noopener noreferrer';
+   link.click();
+   status('Se o WhatsApp não abrir, use Copiar link e envie na conversa.');
  };
  document.addEventListener('DOMContentLoaded',()=>{
    const shareButton=byId('pulsoShareButton');
