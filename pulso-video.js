@@ -90,7 +90,8 @@
     if(!closeButton||!sizeButton)return;
     closeButton.addEventListener('click',close);
     sizeButton.addEventListener('click',()=>setExpanded(!expanded));
-    $('pulsoVideoExpand')?.addEventListener('click',()=>setExpanded(true));
+    $('pulsoVideoPlay')?.addEventListener('click',()=>dispatchYoutube('playVideo'));
+    $('pulsoVideoPause')?.addEventListener('click',pause);
     // Avoid taking over keyboard focus or page scrolling when opening a video.
     // Media remains mounted and visible when navigating sections within the SPA.
   });
