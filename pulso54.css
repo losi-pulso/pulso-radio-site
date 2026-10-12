@@ -54,3 +54,30 @@
 .p54-artist-shortcuts button{border:1px solid #5b7442;border-radius:999px;background:#15241a;color:#effce3;padding:10px 13px;font:700 11px 'Space Grotesk',sans-serif;cursor:pointer;white-space:nowrap}
 .p54-artist-shortcuts button[aria-pressed=true],.p54-artist-shortcuts button:hover{background:#d1ff6b;color:#10190e;border-color:#d1ff6b}
 @media(max-width:540px){.p54-artist-shortcuts{flex-wrap:nowrap;overflow-x:auto;padding:4px 0 12px}.p54-artist-shortcuts>span{flex:none}.p54-artist-shortcuts button{flex:none;padding:10px}}
+
+/* PULSO 5.7 — assinatura dos DJs e DJ Mag clubs 2026. */
+.p54-signatures{padding:38px 0 12px;color:#f7f9f2}
+.p54-signatures h2,.p54-club-section h2{font:800 clamp(27px,4vw,45px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-.045em;margin:9px 0}
+.p54-signatures h2 em,.p54-club-section h2 em{font-style:normal;color:#d1ff6b}
+.p54-signatures>p,.p54-club-section>p{color:#b9c6b0;font-size:13px;line-height:1.6}
+.p54-signatures-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:20px 0}
+.p54-signature{border:1px solid #45543e;background:linear-gradient(125deg,#1f261e,#0e1512);border-radius:16px;min-height:145px;padding:16px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px;text-align:left;color:#edf6df;cursor:pointer;transition:transform .2s,border-color .2s}
+.p54-signature:hover,.p54-signature:focus-visible{border-color:#d1ff6b;transform:translateY(-2px)}
+.p54-signature strong{font:800 17px 'Space Grotesk',sans-serif}
+.p54-signature small{font:700 10px 'Space Grotesk',sans-serif;letter-spacing:.08em;color:#d1ff6b}
+.p54-duck{font-size:58px;filter:drop-shadow(0 0 10px #e8f75836)}
+.p54-monogram{font:900 46px 'Space Grotesk',sans-serif;color:#d1ff6b;letter-spacing:-.08em}
+.p54-vc{background:linear-gradient(135deg,#322420,#151710)}
+.p54-club-section{padding:24px 0 55px;color:#fff;scroll-margin-top:110px}
+.p54-club-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:22px}
+.p54-club-card{border:1px solid #47553b;border-radius:16px;overflow:hidden;background:#121a16;display:flex;flex-direction:column}
+.p54-club-picture{height:175px;position:relative;display:grid;place-items:center;background:linear-gradient(145deg,#26301f,#0b1014);overflow:hidden}
+.p54-club-picture img{height:100%;width:100%;object-fit:cover}
+.p54-club-placeholder{font:800 11px 'Space Grotesk',sans-serif;color:#a6be97}
+.p54-club-picture>strong{position:absolute;top:10px;left:10px;border-radius:30px;padding:7px 9px;background:#d1ff6b;color:#17210f;font:900 12px 'Space Grotesk',sans-serif}
+.p54-club-info{padding:15px}
+.p54-club-info h3{font:800 18px 'Space Grotesk',sans-serif;margin:0 0 7px}
+.p54-club-info p{font-size:12px;color:#a9b6a7;margin:0 0 13px}
+.p54-club-info a{display:inline-block;padding:8px 10px;border:1px solid #7a9758;border-radius:8px;color:#d1ff6b;text-decoration:none;font:800 10px 'Space Grotesk',sans-serif}
+@media(max-width:850px){.p54-club-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.p54-signatures-row{grid-template-columns:1fr 1fr;gap:8px}.p54-signature{min-height:130px;padding:12px}.p54-signature strong{font-size:13px}.p54-signature small{font-size:9px}.p54-club-grid{grid-template-columns:1fr 1fr;gap:8px}.p54-club-picture{height:135px}.p54-club-info h3{font-size:14px}.p54-club-info{padding:11px}}
