@@ -92,7 +92,34 @@ grid.innerHTML=list.length?list.map(card).join(''):'<div class="p54-empty">Nenhu
 function pickEvent(event){selectedEvent=event;selectedArtist='Todos';selectedYear='Todos';selectedGenre='Todos';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});}
 function renderRanking(){const el=$('p54Djs');if(!el)return;el.innerHTML=ranking.map((artist,i)=>{const l=djInstagram({artist}),p=rankedPhotos[i];return `<div class="p54-rank"><strong>${String(i+1).padStart(2,'0')}</strong><span class="p54-rank-avatar" title="Imagem: ${safe(p.credit)}"><img loading="lazy" decoding="async" src="${safe(p.src)}" alt="Foto de ${safe(artist)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="p54-avatar-fallback" hidden>${safe(artist).slice(0,2).toUpperCase()}</span></span><span class="p54-rank-name">${safe(artist)}</span><a href="${safe(l)}" target="_blank" rel="noopener noreferrer" aria-label="Instagram de ${safe(artist)}">IG ↗</a></div>`}).join('');}
 function renderClubRanking(){const el=$('p54Clubs');if(!el)return;el.innerHTML=clubs2026.map(c=>`<article class="p54-club-card"><div class="p54-club-picture"><img loading="lazy" decoding="async" src="${safe(c.img)}" alt="Foto de ${safe(c.name)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="p54-club-fallback" hidden>${safe(c.name)}</span><strong>#${c.rank}</strong></div><div class="p54-club-info"><h3>${safe(c.name)}</h3><p>${safe(c.location)}</p><small class="p54-photo-credit">Foto: ${safe(c.source)}</small><a href="https://djmag.com/top100clubs/2026" target="_blank" rel="noopener noreferrer">VER NA DJ MAG ↗</a></div></article>`).join('');}
-function renderSignatures(){const el=$('p54Signatures');if(!el)return;el.innerHTML=`<button type="button" class="p54-signature" data-p54-artist="Boris Brejcha"><img class="p54-duck-img" src="boris-joker-duck.svg" alt="Pato Joker Duck inspirado na máscara de Boris Brejcha" loading="lazy"><strong>BORIS BREJCHA</strong><small>JOKER DUCK · HIGH-TECH MINIMAL</small></button><button type="button" class="p54-signature p54-vc" data-p54-artist="Vintage Culture"><img class="p54-vintage-logo" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/4a34ab24441565.5633443901480.jpg" alt="Símbolo gráfico Vintage Culture, identidade de 2015" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="p54-monogram p54-logo-fallback" hidden>VC</span><strong>VINTAGE CULTURE</strong><small>SELEÇÃO DE SETS</small></button><button type="button" class="p54-signature" data-p54-event="Warung"><span class="p54-monogram">W</span><strong>WARUNG</strong><small>LONG SETS & CLASSICS</small></button>`;}
+/* PULSO — artistas em destaque (independente do ranking de DJs). */
+const featuredDjs=[
+  {artist:"Boris Brejcha",style:"HIGH-TECH MINIMAL",detail:"JOKER MASK · FCKNG SERIOUS",video:"vqz8c4ZP3Wg",instagram:"https://www.instagram.com/borisbrejcha/",hero:true},
+  {artist:"Michael Bibi",style:"TECH HOUSE",detail:"SOLID GROOVES · ONE LIFE",video:"ApDcQqOoUrE",instagram:"https://www.instagram.com/michael_bibi_/"},
+  {artist:"Vintage Culture",style:"PROGRESSIVE · HOUSE",detail:"AFFAIRS · WARUNG",video:"hrIfQluzCQw",instagram:"https://www.instagram.com/vintageculture/"},
+  {artist:"Solomun",style:"HOUSE · MELODIC",detail:"DIYNAMIC · PACHA +1",video:"I-DpOfxvz28",instagram:"https://www.instagram.com/solomun/"},
+  {artist:"Black Coffee",style:"AFRO HOUSE",detail:"MAYAN WARRIOR · BURNING MAN",video:"FH7lIOv1s3Q",instagram:"https://www.instagram.com/realblackcoffee/"},
+  {artist:"Charlotte de Witte",style:"TECHNO",detail:"KNTXT · TOMORROWLAND",video:"fjnSF0K70q4",instagram:"https://www.instagram.com/charlottedewittemusic/"}
+];
+function renderSignatures(){
+ const root=$('p54Signatures');if(!root)return;
+ root.classList.add('p54-featured-grid');
+ root.innerHTML=featuredDjs.map((dj,i)=>{
+   const amount=sets.filter(s=>norm(s.artist).includes(norm(dj.artist))).length;
+   const poster='https://i.ytimg.com/vi/'+dj.video+'/hqdefault.jpg';
+   return '<article class="p54-featured-card'+(dj.hero?' p54-featured-hero':'')+'" data-p54-featured="'+safe(norm(dj.artist))+'">'
+    +'<img class="p54-featured-cover" loading="'+(i===0?'eager':'lazy')+'" decoding="async" src="'+safe(poster)+'" alt="Apresentação de '+safe(dj.artist)+'" onerror="this.hidden=true">'
+    +(dj.hero?'<img class="p54-featured-duck" src="boris-joker-duck.svg" alt="Joker Duck de Boris Brejcha" loading="lazy">':'')
+    +'<div class="p54-featured-text">'
+    +(dj.hero?'<span class="p54-featured-badge">✦ ARTISTA PRINCIPAL</span>':'<span class="p54-featured-kicker">PULSO PICKS · '+String(i+1).padStart(2,'0')+'</span>')
+    +'<span class="p54-featured-style">'+safe(dj.style)+'</span>'
+    +'<h3>'+safe(dj.artist)+'</h3>'
+    +'<p>'+safe(dj.detail)+'</p>'
+    +'<div class="p54-featured-actions"><button type="button" data-p54-artist="'+safe(dj.artist)+'" aria-label="Mostrar sets de '+safe(dj.artist)+'">▶ VER '+amount+' SET'+(amount===1?'':'S')+'</button>'
+    +'<a href="'+safe(dj.instagram)+'" target="_blank" rel="noopener noreferrer" aria-label="Instagram de '+safe(dj.artist)+'">INSTAGRAM ↗</a></div>'
+    +'</div></article>';
+ }).join('');
+}
 document.addEventListener('DOMContentLoaded',()=>{
   renderRanking();renderClubRanking();renderSignatures();render();setHeroLocation('');setupHeroLocation();
   document.addEventListener('click',ev=>{
