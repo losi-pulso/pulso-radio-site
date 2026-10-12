@@ -29,7 +29,7 @@
   };
   const embedUrl=id=>{
     const options=new URLSearchParams({
-      autoplay:'1',playsinline:'1',controls:'1',rel:'0',modestbranding:'1',enablejsapi:'1',origin:location.origin
+      autoplay:'1',mute:'1',playsinline:'1',controls:'1',rel:'0',enablejsapi:'1',origin:location.origin
     });
     return playerUrl+id+'?'+options.toString();
   };
@@ -41,6 +41,11 @@
     }catch(err){console.info('Player PULSO:',err);}
   };
   function pause(){dispatchYoutube('pauseVideo');}
+  function playWithSound(){
+    // Um toque explícito permite pedir áudio mesmo quando o navegador bloqueia autoplay com som.
+    dispatchYoutube('unMute');
+    dispatchYoutube('playVideo');
+  }
   function close(){
     const dock=$('pulsoVideoDock'),frame=$('pulsoVideoIframe');
     if(!dock||!frame)return;
@@ -90,7 +95,14 @@
     if(!closeButton||!sizeButton)return;
     closeButton.addEventListener('click',close);
     sizeButton.addEventListener('click',()=>setExpanded(!expanded));
-    $('pulsoVideoPlay')?.addEventListener('click',()=>dispatchYoutube('playVideo'));
+    // A URL já pede autoplay sem som; reforça o play assim que o iframe carrega.
+    $('pulsoVideoIframe')?.addEventListener('load',()=>{
+      if(currentVideoId&&!$('pulsoVideoDock')?.hidden){
+        dispatchYoutube('mute');
+        dispatchYoutube('playVideo');
+      }
+    });
+    $('pulsoVideoPlay')?.addEventListener('click',playWithSound);
     $('pulsoVideoPause')?.addEventListener('click',pause);
     // Avoid taking over keyboard focus or page scrolling when opening a video.
     // Media remains mounted and visible when navigating sections within the SPA.
