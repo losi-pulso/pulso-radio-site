@@ -105,6 +105,7 @@
     if(opened){if(requestedId){const i=items.findIndex(p=>String(p.id)===String(requestedId));if(i>=0){track().children[i]?.scrollIntoView({block:'start'});activate(i);}}return;}
     const d=dialog();if(!d)return;
     app()?.pauseForReels?.();
+    window.PULSO_VIDEO?.pause?.(); // Se o usuário escolher Reels, evite áudio simultâneo.
     items=shuffled(getVideos());opened=true;render();d.showModal();document.querySelectorAll('[data-open-reels]').forEach(b=>b.setAttribute('aria-expanded','true'));
     const selected=requestedId?items.findIndex(p=>String(p.id)===String(requestedId)):-1;const start=selected>=0?selected:0;
     if(start&&track().children[start])track().scrollTop=track().children[start].offsetTop-track().offsetTop;
