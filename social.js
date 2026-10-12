@@ -161,7 +161,7 @@
     ctx.fillStyle='#c9f680';ctx.font='bold 29px system-ui';ctx.fillText('NOW PLAYING  /  PULSO RADIO',100,1388);
     let title=String(p.title||'');ctx.fillStyle='#fff';ctx.font='bold 67px system-ui';while(ctx.measureText(title).width>880 && title.length>4)title=title.slice(0,-2);if(title!==p.title)title+='…';ctx.fillText(title,100,1491);
     let artist=String(p.artist||'PULSO');ctx.font='38px system-ui';while(ctx.measureText(artist).width>870&&artist.length>4)artist=artist.slice(0,-2);ctx.fillStyle='#d4ddcb';ctx.fillText(artist,100,1560);
-    const width=time?Math.min(1,time/15):.28;
+    const width=time?Math.min(1,time/60):.28;
     ctx.fillStyle='#3c4b35';ctx.fillRect(100,1633,870,11);ctx.fillStyle='#c8ff70';ctx.fillRect(100,1633,width*870,11);
     ctx.fillStyle='#e8efe0';ctx.font='bold 29px system-ui';ctx.fillText('OUÇA NO PULSO',65,1805);
     ctx.font='25px system-ui';ctx.fillStyle='#bec8ba';ctx.fillText(location.host,65,1855);
@@ -203,10 +203,10 @@
     const media=document.createElement(p.type==='Videoclipe'||p.type==='Vídeo DJ Set'||p.type==='Live'?'video':'audio');
     media.crossOrigin='anonymous';media.preload='auto';media.src=url;media.muted=false;media.playsInline=true;
     let ac=null,raf=0,stream=null,recorder=null;
-    const btn=el('renderStoryVideo');btn.disabled=true;el('storyStatus').textContent='Preparando trecho de 15 segundos. Mantenha a tela aberta…';
+    const btn=el('renderStoryVideo');btn.disabled=true;el('storyStatus').textContent='Preparando trecho de até 60 segundos. Mantenha a tela aberta…';
     try{
       await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('Tempo de carregamento excedido.')),16000);media.onloadedmetadata=()=>{clearTimeout(t);resolve()};media.onerror=()=>{clearTimeout(t);reject(new Error('Não foi possível carregar a mídia. Verifique autorização de CORS do Worker.'))};media.load();});
-      let at=Number(el('storyStartSeconds').value)||0;at=Math.max(0,Math.min(at,Math.max(0,(media.duration||0)-15)));
+      let at=Number(el('storyStartSeconds').value)||0;at=Math.max(0,Math.min(at,Math.max(0,(media.duration||0)-60)));
       if(at>0){media.currentTime=at;await new Promise(r=>{media.onseeked=r;setTimeout(r,3000)});}
       const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)throw new Error('Captura de áudio não disponível.');
       ac=new AudioCtx();const source=ac.createMediaElementSource(media),destination=ac.createMediaStreamDestination();source.connect(destination);await ac.resume();
@@ -214,9 +214,9 @@
       recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:1800000,audioBitsPerSecond:128000});
       const parts=[];recorder.ondataavailable=ev=>{if(ev.data?.size)parts.push(ev.data)};
       const completed=new Promise((resolve,reject)=>{recorder.onerror=ev=>reject(ev.error||new Error('Falha na gravação.'));recorder.onstop=()=>resolve(new Blob(parts,{type:mime.split(';')[0]}));});
-      const started=performance.now();function frame(){drawStory(p,Math.min(15,(performance.now()-started)/1000),media.tagName==='VIDEO'?media:null);raf=requestAnimationFrame(frame);}frame();
+      const started=performance.now();function frame(){drawStory(p,Math.min(60,(performance.now()-started)/1000),media.tagName==='VIDEO'?media:null);raf=requestAnimationFrame(frame);}frame();
       recorder.start(1000);await media.play();
-      await new Promise(r=>setTimeout(r,15000));recorder.stop();media.pause();cancelAnimationFrame(raf);raf=0;
+      await Promise.race([new Promise(r=>setTimeout(r,60000)),new Promise(r=>{media.addEventListener('ended',r,{once:true})})]);recorder.stop();media.pause();cancelAnimationFrame(raf);raf=0;
       const file=await completed;if(file.size<1000)throw new Error('O trecho ficou vazio.');
       recordedBlob=file;recordedExt=mime.startsWith('video/mp4')?'mp4':'webm';
       el('storyStatus').textContent=`Vídeo gerado (${(file.size/1048576).toFixed(1)} MB, ${recordedExt.toUpperCase()}). Abra com o Instagram, se o formato for aceito.`;
