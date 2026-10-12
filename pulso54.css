@@ -136,3 +136,36 @@
 @media(max-width:570px){.p54-signatures-row.p54-featured-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.p54-featured-card,.p54-featured-card:nth-child(2),.p54-featured-card:nth-child(3){grid-column:span 1;min-height:245px;border-radius:14px}.p54-featured-card.p54-featured-hero{grid-column:span 2;min-height:315px}.p54-featured-text,.p54-featured-hero .p54-featured-text{padding:12px}.p54-featured-hero .p54-featured-text{padding:19px}.p54-featured-text h3{font-size:clamp(16px,4.2vw,22px)}.p54-featured-hero h3{font-size:32px}.p54-featured-text p{font-size:9px;min-height:2.4em}.p54-featured-actions{gap:5px}.p54-featured-actions button,.p54-featured-actions a{font-size:9px;padding:9px 7px}.p54-featured-duck{width:64px;height:64px}.p54-featured-kicker{font-size:8px}}
 @media(max-width:370px){.p54-featured-actions{flex-direction:column;align-items:stretch;width:100%}.p54-featured-actions button,.p54-featured-actions a{text-align:center}.p54-featured-card{min-height:270px}}
 @media(prefers-reduced-motion:reduce){.p54-featured-card,.p54-featured-cover{transition:none}}
+
+
+/* PULSO 5.10 · Interface vetorial nítida, sem glifos de emoji no iPhone. */
+.pulso-ui-icon{display:inline-block;width:19px;height:19px;flex:none;vertical-align:-.21em;overflow:visible;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.pulso-svg-play{display:block;width:22px;height:22px;flex:none;pointer-events:none;filter:drop-shadow(0 1px 0 #0c1c1020)}
+.p54-play{width:56px;height:56px;font-size:0;border:1px solid #fbffcbbe;background:linear-gradient(150deg,#e4ff91,#b5ee4f);box-shadow:0 7px 32px #000a,0 0 0 6px #d7ff681c;transition:box-shadow .2s,background .2s,transform .2s}
+.p54-card-art:hover .p54-play,.p54-card-art:focus-visible .p54-play{box-shadow:0 9px 36px #000b,0 0 0 10px #d7ff6842;background:#eeffae;transform:translate(-50%,-50%) scale(1.07)}
+.p54-card-art:focus-visible{outline:3px solid #d1ff6b;outline-offset:-3px}
+.p54-card-actions button,.p54-featured-actions button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:37px}
+.p54-card-actions button .pulso-svg-play,.p54-featured-actions button .pulso-svg-play{width:14px;height:14px}
+.p54-desert-actions button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px}
+.p54-desert-actions .pulso-ui-icon{width:18px;height:18px}
+.p54-eventnav button>.pulso-ui-icon,.p54-artist-shortcuts button>.pulso-ui-icon{width:14px;height:14px;margin-right:5px}
+.p54-archive-overline .pulso-ui-icon{width:14px;height:14px}
+.p54-featured-actions a:hover{color:#eaffb7}
+.p52-reels-kicker .pulso-ui-icon{width:17px;height:17px;vertical-align:-.3em}
+.pulso-reels-nav>.pulso-ui-icon{width:16px;height:16px}
+.mobile-nav button>.pulso-ui-icon{width:17px;height:17px}
+.media-chip>.pulso-ui-icon{width:15px;height:15px;margin-right:5px}
+#vinylRadioLabel{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+#vinylRadioLabel>.pulso-ui-icon,#vinylRadioLabel>.pulso-control-svg{height:15px;width:15px;vertical-align:middle}
+.pulso-app-tabs span.pulso-tab-icon{width:33px;height:31px;display:flex;justify-content:center;align-items:center;font-size:0;line-height:1;color:#d2fb63;transition:transform .18s}
+.pulso-app-tabs .pulso-tab-icon>.pulso-ui-icon{display:block;height:25px;width:25px;stroke-width:1.95;vertical-align:initial}
+.pulso-app-tabs button:active .pulso-tab-icon{transform:scale(.89)}
+.pulso-app-tabs button:focus-visible{outline:2px solid #d1ff6b;outline-offset:-3px;border-radius:9px}
+@media(max-width:760px){
+ .pulso-app-tabs{gap:0;justify-content:space-around;padding-left:max(3px,env(safe-area-inset-left));padding-right:max(3px,env(safe-area-inset-right))}
+ .pulso-app-tabs>button,.pulso-app-tabs>a{flex:1 1 0;min-width:0;width:0;padding:7px 1px;gap:2px;min-height:48px;line-height:1.1}
+ .pulso-app-tabs small{font-size:clamp(8px,2.25vw,10px);letter-spacing:0;white-space:nowrap}
+ .p54-card-actions button{min-height:42px}
+ .p54-play{width:55px;height:55px}
+}
+@media(prefers-reduced-motion:reduce){.p54-play,.pulso-app-tabs span.pulso-tab-icon{transition:none}}
