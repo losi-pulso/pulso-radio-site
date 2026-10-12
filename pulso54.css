@@ -272,3 +272,5 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 }
 @media(max-width:360px){.pulso-video-dock.is-mini{width:min(292px,calc(100vw - 20px))}.pulso-video-footer button,.pulso-video-footer a{padding:7px 9px}}
 @media(prefers-reduced-motion:reduce){.pulso-video-dock,.pulso-video-actions button{transition:none}}
+
+.pulso-video-footer button svg{display:inline-block;flex:none;width:14px;height:14px;vertical-align:middle;margin-right:5px}
