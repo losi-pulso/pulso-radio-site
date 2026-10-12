@@ -196,7 +196,7 @@
     const host=slide.querySelector('.p52-reel-media'),status=slide.querySelector('.p52-reel-status'),soundButton=slide.querySelector('[data-reel-action="sound"]');
     const s=source(items[index]);
     if(s.kind==='direct'){
-      const video=document.createElement('video');video.className='p52-reel-video';video.src=s.url;video.preload='metadata';video.playsInline=true;video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');video.muted=!soundWanted;video.loop=true;video.autoplay=false;video.poster=safeUrl(items[index].cover)||'';
+      const video=document.createElement('video');video.className='p52-reel-video';video.src=s.url;video.preload='metadata';video.playsInline=true;video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');video.muted=!soundWanted;video.loop=false; // O reel acompanha o vídeo até o fim; não corta em 15 segundos.video.autoplay=false;video.poster=safeUrl(items[index].cover)||'';
       video.addEventListener('loadeddata',()=>{if(active===index&&lastMedia===video){updateSoundButton(slide,video);if(!video.muted)status.textContent='Toque no vídeo para pausar ou reproduzir';}},{once:true});
       video.addEventListener('error',()=>{if(active===index&&lastMedia===video)status.textContent='Vídeo sem reprodução compatível. Prefira MP4/H.264 com áudio AAC.';});
       video.addEventListener('volumechange',()=>{if(active===index&&lastMedia===video)updateSoundButton(slide,video);});
