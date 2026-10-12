@@ -193,3 +193,40 @@
 .pulso-share-options .pulso-share-caption{font:500 11px/1.6 'DM Sans',sans-serif;color:#aabea5;text-align:center;margin:1px 0 0}
 @media(max-width:880px){.pulso-share-panel{grid-template-columns:1fr;gap:20px}.pulso-share-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.pulso-share-status,.pulso-share-link,.pulso-share-options .pulso-share-caption{grid-column:1/-1}}
 @media(max-width:510px){.pulso-share-panel{margin-top:14px;padding:19px 16px;border-radius:16px;gap:16px}.pulso-share-copy h2{font-size:29px}.pulso-share-copy p{font-size:13px}.pulso-share-options{grid-template-columns:1fr;gap:9px}.pulso-share-status,.pulso-share-link,.pulso-share-options .pulso-share-caption{grid-column:auto}.pulso-share-options button,.pulso-share-options a{min-height:46px}}
+
+
+/* PULSO 5.12 — compartilhar discretamente, semelhante ao botão flutuante AJUDA. */
+.pulso-share-fab{position:fixed;right:119px;bottom:94px;z-index:152;width:43px;height:43px;border:1px solid #7d9d65;border-radius:50%;display:grid;place-items:center;background:#16271c;color:#d1ff6b;cursor:pointer;box-shadow:0 7px 24px #000b;transition:background .18s,transform .18s,border-color .18s}
+.pulso-share-fab>.pulso-ui-icon{width:20px;height:20px}
+.pulso-share-fab:hover,.pulso-share-fab[aria-expanded=true]{background:#243b26;border-color:#d1ff6b;transform:translateY(-1px)}
+.pulso-share-fab:focus-visible{outline:2px solid #e2ffb5;outline-offset:3px}
+#pulsoSharePanel.pulso-share-panel{position:fixed;right:16px;bottom:147px;left:auto;top:auto;z-index:155;display:block;isolation:auto;width:min(376px,calc(100vw - 24px));max-height:min(625px,calc(100dvh - 165px));padding:0;margin:0;overflow:auto;overscroll-behavior:contain;background:#111c15;border:1px solid #637d51;border-radius:19px;box-shadow:0 20px 58px #000e;grid-template-columns:none;transform:none}
+#pulsoSharePanel[hidden]{display:none!important}
+#pulsoSharePanel:before{display:none}
+.pulso-share-header{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 16px;border-bottom:1px solid #3c5336;background:#1b2d1f}
+.pulso-share-header span{display:block;color:#d1ff6b;font:800 9px/1.4 'Space Grotesk',sans-serif;letter-spacing:.13em}
+.pulso-share-header strong{display:block;font:800 17px/1.3 'Space Grotesk',sans-serif;color:#f4ffeb;margin-top:3px}
+.pulso-share-header button{display:grid;place-items:center;flex:none;width:33px;height:33px;border-radius:50%;border:1px solid #637754;background:#14231a;color:#f3ffe7;font-size:23px;cursor:pointer}
+.pulso-share-header button:focus-visible{outline:2px solid #d1ff6b;outline-offset:2px}
+#pulsoSharePanel .pulso-share-copy{padding:14px 16px 12px}
+#pulsoSharePanel .pulso-share-copy h2{font-size:22px;letter-spacing:-.035em;margin:4px 0 9px}
+#pulsoSharePanel .pulso-share-copy p{font-size:12px;line-height:1.55;margin:0 0 12px}
+#pulsoSharePanel .pulso-share-eyebrow{font-size:9px}
+#pulsoSharePanel .pulso-share-browsing{padding:11px;border-radius:10px;gap:8px}
+#pulsoSharePanel .pulso-share-browsing span{font-size:11px}
+#pulsoSharePanel .pulso-share-browsing strong{font-size:11px}
+#pulsoSharePanel .pulso-share-options{display:flex;flex-direction:column;gap:8px;padding:0 16px 16px}
+#pulsoSharePanel .pulso-share-options button,#pulsoSharePanel .pulso-share-options a{min-height:42px;font-size:11px}
+#pulsoSharePanel .pulso-share-status,#pulsoSharePanel .pulso-share-link,#pulsoSharePanel .pulso-share-caption{grid-column:auto}
+#pulsoSharePanel .pulso-share-options .pulso-share-caption{font-size:10px;line-height:1.4}
+@media(max-width:760px){
+ .pulso-share-fab{right:112px;bottom:calc(149px + env(safe-area-inset-bottom,0px));width:41px;height:41px}
+ #pulsoSharePanel.pulso-share-panel{right:8px;bottom:calc(206px + env(safe-area-inset-bottom,0px));max-height:calc(100dvh - 223px - env(safe-area-inset-bottom,0px));width:min(372px,calc(100vw - 16px))}
+}
+@media(max-width:420px){
+ .pulso-share-fab{right:105px}
+ #pulsoSharePanel .pulso-share-copy{padding:12px 14px 10px}
+ #pulsoSharePanel .pulso-share-options{padding:0 14px 13px}
+ #pulsoSharePanel .pulso-share-copy h2{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){.pulso-share-fab{transition:none}}
