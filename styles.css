@@ -465,3 +465,14 @@
 :where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--lime);outline-offset:3px}
 img{max-width:100%}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* PULSO 5.30 — player fixo com rolagem interna no celular */
+.radio-dock[hidden]{display:none!important}
+@media(max-width:620px){
+  .radio-dock:not([hidden]){position:fixed!important;left:8px!important;right:8px!important;bottom:calc(82px + env(safe-area-inset-bottom,0px))!important;width:auto!important;max-height:calc(100dvh - 104px - env(safe-area-inset-bottom,0px))!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain; -webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:thin;z-index:1245!important;}
+  .radio-dock.is-minimized{height:auto!important;max-height:none!important;overflow:hidden!important;bottom:calc(82px + env(safe-area-inset-bottom,0px))!important;}
+  .radio-dock.is-minimized>:not(.radio-topbar){display:none!important}
+  .radio-dock .radio-topbar{position:sticky;top:0;z-index:2;touch-action:pan-y}
+  .radio-dock .radio-topbar button{position:relative;z-index:3;flex-shrink:0;touch-action:manipulation}
+}
