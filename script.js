@@ -160,16 +160,32 @@
       ${canDelete(p)?`<button class="icon-button delete-button" type="button" data-action="delete" aria-label="Excluir ${e(p.title)}" title="Excluir">${icons.trash}</button>`:''}
       </div></div>${window.PULSO_SOCIAL?.footer?.(p)||''}</article>`;
   }
+  function communityDownloadAvailable(p){
+    if(!p||!p.url)return false;
+    try{
+      const u=new URL(p.url);if(u.protocol!=='https:')return false;
+      const ext=u.pathname.toLowerCase().split('.').pop();
+      const video=videoTypes.has(p.type);
+      if(video&&['mp4','m4v','mov','webm','ogv'].includes(ext))return true;
+      const cfg=window.PULSO_CONFIG||{};
+      if(video&&cfg.r2WorkerUrl&&u.origin===new URL(cfg.r2WorkerUrl).origin)return true;
+      return false;
+    }catch{return false;}
+  }
   function renderCommunitySets(){
     const grid=$('communitySetGrid');if(!grid)return;
     const videos=posts.filter(p=>p.status==='approved'&&!p.demo&&videoTypes.has(p.type)&&p.url)
       .sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0)).slice(0,8);
     if(!videos.length){grid.innerHTML='<p class="community-sets-empty">Ainda não há sets ou vídeos aprovados da comunidade. Publica o teu primeiro set e ele aparecerá aqui após a aprovação.</p>';return;}
     grid.innerHTML=videos.map(p=>{
-      const cover=postCover(p);
-      return '<article class="community-set-card" data-community-post="'+escapeHtml(String(p.id))+'">'
-       +(cover?'<img class="community-set-cover" loading="lazy" src="'+escapeHtml(cover)+'" alt="">':'<div class="community-set-cover"></div>')
-       +'<div class="community-set-body"><small>'+escapeHtml(p.type||'SET DA COMUNIDADE').toUpperCase()+'</small><h3>'+escapeHtml(p.title||'Set sem título')+'</h3><p>'+escapeHtml(p.artist||'Artista da comunidade')+'</p><div class="community-set-actions"><button type="button" data-community-play="'+escapeHtml(String(p.id))+'">▶ OUVIR</button><button type="button" data-community-share="'+escapeHtml(String(p.id))+'">ENVIAR ↗</button></div></div></article>';
+      const id=escapeHtml(String(p.id)),cover=postCover(p),download=communityDownloadAvailable(p);
+      const preview=cover
+        ?'<img class="community-set-cover" loading="lazy" src="'+escapeHtml(cover)+'" alt="Prévia de '+escapeHtml(p.title||'vídeo da comunidade')+'">'
+        :'<div class="community-set-cover community-set-cover-empty" aria-hidden="true"></div>';
+      return '<article class="community-set-card" data-community-post="'+id+'">'
+       +'<div class="community-set-preview">'+preview+'<button type="button" class="community-set-play" data-community-play="'+id+'" aria-label="Reproduzir '+escapeHtml(p.title||'vídeo')+'" title="Reproduzir vídeo"><span aria-hidden="true">▶</span></button><span class="community-set-preview-label">PULSO COMMUNITY</span></div>'
+       +'<div class="community-set-body"><small>'+escapeHtml(p.type||'SET DA COMUNIDADE').toUpperCase()+'</small><h3>'+escapeHtml(p.title||'Set sem título')+'</h3><p>'+escapeHtml(p.artist||'Artista da comunidade')+'</p>'
+       +'<div class="community-set-actions">'+(download?'<button type="button" class="community-set-download" data-pulso-download="'+id+'" aria-label="Baixar vídeo para assistir offline">↓ BAIXAR</button>':'')+'<button type="button" class="community-set-share" data-community-share="'+id+'">↗ COMPARTILHAR</button></div></div></article>';
     }).join('');
   }
   function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
