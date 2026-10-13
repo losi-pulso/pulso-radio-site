@@ -4,6 +4,60 @@
  const KEY='pulso_capsula_v1',DAY_MS=86400000,MAX_AGE_DAYS=400;
  const $=id=>document.getElementById(id);
  let data={version:1,listens:[],tracks:[]},period='week';
+ let cloudRows=[],capsuleClient=null,capsuleUser=null,cloudReady=false,cloudTimer=null,cloudBusy=false;
+ const DEVICE_KEY='pulso_capsule_device_v1';
+ function deviceId(){
+   try{let id=localStorage.getItem(DEVICE_KEY);if(!id){id='dev_'+(crypto.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2));localStorage.setItem(DEVICE_KEY,id);}return id;}catch{return 'dev_'+location.hostname+'_'+navigator.userAgent.slice(0,35);}
+ }
+ const thisDevice=deviceId();
+ function initCloud(){
+   const cfg=window.PULSO_CONFIG||{};
+   if(!window.supabase?.createClient||!cfg.supabaseUrl||!cfg.supabaseAnonKey)return;
+   try{
+     capsuleClient=window.supabase.createClient(cfg.supabaseUrl.trim().replace(/\/$/,''),cfg.supabaseAnonKey.trim(),{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+     capsuleClient.auth.getUser().then(({data,error})=>{capsuleUser=error?null:data?.user||null;syncCloud();});
+     capsuleClient.auth.onAuthStateChange((_event,session)=>{capsuleUser=session?.user||null;syncCloud();});
+   }catch(err){console.warn('PULSO cápsula: sincronização indisponível',err);}
+ }
+ function mergedData(){
+   const listens=data.listens.map(x=>({...x,_device:thisDevice}));
+   const tracks=data.tracks.map(x=>({...x,_device:thisDevice}));
+   for(const r of cloudRows){
+     if(r.device_id===thisDevice)continue;
+     if(r.event_type==='listen')listens.push({day:String(r.day).slice(0,10),id:r.item_key,artist:r.artist,title:r.title,seconds:Number(r.seconds)||0,cover:r.cover||'',_device:r.device_id});
+     else tracks.push({day:String(r.day).slice(0,10),title:r.title,artist:r.artist,source:r.source==='identified'?'identified':'manual',count:Number(r.count)||1,setId:'',_device:r.device_id});
+   }
+   return {listens,tracks};
+ }
+ function scheduleCloudSync(){
+   if(!capsuleUser||!capsuleClient)return;
+   if(cloudTimer)clearTimeout(cloudTimer);
+   cloudTimer=setTimeout(()=>syncCloud(true),1800);
+ }
+ async function syncCloud(pushLocal=false){
+   if(!capsuleClient||!capsuleUser){cloudReady=false;draw();return;}
+   if(cloudBusy)return;
+   cloudBusy=true;
+   try{
+     if(pushLocal){
+       const rows=[
+         ...data.listens.map(r=>({user_id:capsuleUser.id,device_id:thisDevice,day:r.day,event_type:'listen',item_key:String(r.id),artist:r.artist,title:r.title||r.artist,seconds:Number(r.seconds)||0,count:0,source:'listen',cover:r.cover||null,updated_at:new Date().toISOString()})),
+         ...data.tracks.map(r=>({user_id:capsuleUser.id,device_id:thisDevice,day:r.day,event_type:'track',item_key:[r.artist,r.title,r.source].join('|').toLowerCase().slice(0,240),artist:r.artist,title:r.title,seconds:0,count:Number(r.count)||1,source:r.source==='identified'?'identified':'manual',cover:null,updated_at:new Date().toISOString()}))
+       ];
+       if(rows.length){
+         const {error}=await capsuleClient.from('pulso_capsule_events').upsert(rows,{onConflict:'user_id,device_id,day,event_type,item_key'});
+         if(error)throw error;
+       }
+     }
+     const {data:rows,error}=await capsuleClient.from('pulso_capsule_events').select('device_id,day,event_type,item_key,artist,title,seconds,count,source,cover,updated_at').eq('user_id',capsuleUser.id).order('day',{ascending:false}).limit(10000);
+     if(error)throw error;
+     cloudRows=rows||[];cloudReady=true;draw();
+   }catch(err){console.warn('PULSO cápsula: falha ao sincronizar histórico',err);setCloudStatus('Não foi possível sincronizar agora. Seu histórico continua salvo neste aparelho.');}
+   finally{cloudBusy=false;}
+ }
+ function setCloudStatus(message){
+   const el=$('pulsoCapsuleStatus');if(el)el.textContent=message;
+ }
  let ytPlayer=null,ytSet=null,ytPlaying=false,ytLastTime=null,ytTick=null;
  let nativeAudio=null,nativeSet=null,nativeLastTime=null,nativeTick=null;
  const escape=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -41,6 +95,7 @@
    if(!r){r={day,id,artist:norm(set.artist),title:norm(set.title)||norm(set.artist),seconds:0,cover:set.cover||''};data.listens.push(r);}
    r.seconds+=delta;
    save();
+   scheduleCloudSync();
    draw();
  }
  function observed(youtubePlayer,set){
@@ -87,11 +142,11 @@
    const todaySame=data.tracks.find(x=>x.day===cleaned.day&&x.title.toLowerCase()===cleaned.title.toLowerCase()&&x.artist.toLowerCase()===cleaned.artist.toLowerCase()&&x.source===cleaned.source);
    if(todaySame)todaySame.count=Math.min(999,(Number(todaySame.count)||1)+1);
    else data.tracks.push({...cleaned,count:1});
-   save();draw();
+   save();scheduleCloudSync();draw();
    return true;
  }
- const rangeRows=()=>{const cutoff=dayString(startDay(period));return data.listens.filter(x=>x.day>=cutoff);};
- const rangeTracks=()=>{const cutoff=dayString(startDay(period));return data.tracks.filter(x=>x.day>=cutoff);};
+ const rangeRows=()=>{const cutoff=dayString(startDay(period));return mergedData().listens.filter(x=>x.day>=cutoff);};
+ const rangeTracks=()=>{const cutoff=dayString(startDay(period));return mergedData().tracks.filter(x=>x.day>=cutoff);};
  const collect=(rows,key)=>{
    const m=new Map();
    for(const r of rows){const name=r[key];if(!name)continue;const a=m.get(name)||{name,seconds:0,cover:r.cover||'',times:0};a.seconds+=Number(r.seconds)||0;a.times++;m.set(name,a);}
@@ -152,7 +207,7 @@
    if(match?.title&&match?.artist)recordTrack({title:match.title,artist:match.artist,source:'identified'});
  }
  document.addEventListener('DOMContentLoaded',()=>{
-   load();draw();
+   load();draw();initCloud();
    document.querySelectorAll('[data-capsule-period]').forEach(button=>button.addEventListener('click',()=>{period=button.dataset.capsulePeriod;draw()}));
    $('pulsoCapsuleIdentify')?.addEventListener('click',()=>{$('identifyRadio')?.click();});
    $('pulsoCapsuleTrackForm')?.addEventListener('submit',event=>{
@@ -163,5 +218,5 @@
    document.addEventListener('pulso:track-identified',onIdentification);
    window.addEventListener('storage',event=>{if(event.key===KEY){load();draw();}});
  });
- window.PULSO_CAPSULE={observeYouTube:observed,onYouTubeState:ytState,detachYouTube,observeNative,recordTrack,getSnapshot:()=>({...(draw()||{artists:[],sets:[],tracks:[],total:0}),period,label:dateLabel(period)})};
+ window.PULSO_CAPSULE={observeYouTube:observed,onYouTubeState:ytState,detachYouTube,observeNative,recordTrack,getSnapshot:()=>({...(draw()||{artists:[],sets:[],tracks:[],total:0}),period,label:dateLabel(period)}),sync:()=>syncCloud(true)};
 })();
