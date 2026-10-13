@@ -406,3 +406,29 @@
  .community-set-body h3{font-size:16px}
  .community-set-actions button{font-size:10px;flex:1}
 }
+
+/* PULSO COMMUNITY 5.21 — ações com ícones vetoriais e hierarquia visual. */
+.community-set-play{width:auto;min-width:116px;height:54px;padding:0 19px;display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid #e4ffad;border-radius:999px;background:linear-gradient(135deg,#e0ff9a 0%,#b7ef51 100%);color:#11190d;box-shadow:0 10px 32px #0009,0 0 0 7px #d1ff6b1c;backdrop-filter:blur(8px)}
+.community-set-play svg{width:21px;height:21px;flex:0 0 auto}
+.community-set-play span{font:800 10px 'Space Grotesk',sans-serif;letter-spacing:.14em}
+.community-set-play:hover{background:#edffc7;box-shadow:0 12px 36px #000a,0 0 0 9px #d1ff6b2a}
+.community-set-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding-top:14px}
+.community-set-actions button{min-width:0;min-height:56px;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 12px;border:1px solid #384633;border-radius:12px;background:linear-gradient(145deg,#1b2419,#121812);color:#eef5e8;text-align:left;box-shadow:inset 0 1px #ffffff08;letter-spacing:normal}
+.community-set-actions button svg{width:21px;height:21px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.community-set-actions button span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.community-set-actions button strong{font:800 10px 'Space Grotesk',sans-serif;letter-spacing:.075em;white-space:nowrap}
+.community-set-actions button small{font:600 8px 'DM Sans',sans-serif;letter-spacing:.08em;opacity:.7;white-space:nowrap}
+.community-set-actions .community-set-download{border-color:#d1ff6b;background:linear-gradient(135deg,#dfff9c,#b9ee56);color:#10170c;box-shadow:0 5px 18px #b8ec4b18}
+.community-set-actions .community-set-download small{opacity:.72}
+.community-set-actions .community-set-share,.community-set-actions .community-set-share:first-child{border-color:#3c4a36;background:linear-gradient(145deg,#202a1d,#151b14);color:#edf5e7}
+.community-set-actions button:focus-visible,.community-set-play:focus-visible{outline:2px solid #f0ffc9;outline-offset:3px}
+.community-set-actions button:disabled{opacity:.6;cursor:wait}
+@media(max-width:760px){
+ .community-set-play{min-width:106px;height:49px;padding:0 16px;gap:8px}
+ .community-set-play svg{width:19px;height:19px}
+ .community-set-actions{gap:8px}
+ .community-set-actions button{min-height:54px;padding:9px 8px;gap:7px}
+ .community-set-actions button svg{width:18px;height:18px}
+ .community-set-actions button strong{font-size:9px}
+ .community-set-actions button small{font-size:7px}
+}
