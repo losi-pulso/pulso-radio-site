@@ -5,7 +5,7 @@
   const escape=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl=v=>{try{const u=new URL(String(v));return u.protocol==='https:'?u.href:''}catch{return''}};
   const movieTypes=new Set(['Videoclipe','Vídeo DJ Set','Live']);
-  let items=[],active=-1,opened=false,lastMedia=null,pendingScroll=false,linkedDismissed=false;
+  let items=[],active=-1,opened=false,lastMedia=null,pendingScroll=false,linkedDismissed=false,currentMode='all';
   let youtubePlayer=null,youtubeApiPromise=null,youtubeEpoch=0,youtubeMuted=true;
   // The YouTube IFrame API is used only for official embedded player commands.
   function youtubeApi(){
@@ -68,8 +68,9 @@
   function getVideos(){
     const approved=[...(app()?.posts?.()||[])].filter(p=>p.status==='approved'&&!p.demo&&movieTypes.has(p.type)&&safeUrl(p.url));
     const curated=window.PULSO54?.sets||[];
+    const pool=currentMode==='community'?approved:currentMode==='youtube'?curated:[...approved,...curated];
     const unique=[],seen=new Set();
-    for(const p of [...approved,...curated]){const key=videoKey(p);if(!key||seen.has(key))continue;seen.add(key);unique.push(p);}
+    for(const p of pool){const key=videoKey(p);if(!key||seen.has(key))continue;seen.add(key);unique.push(p);}
     return unique.slice(0,180);
   }
   function shuffled(list){
@@ -101,12 +102,13 @@
     }
     return {kind:'unsupported',url};
   }
-  function open(requestedId=null){
+  function open(requestedId=null,mode=null){
+    if(mode)currentMode=mode;
     if(opened){if(requestedId){const i=items.findIndex(p=>String(p.id)===String(requestedId));if(i>=0){track().children[i]?.scrollIntoView({block:'start'});activate(i);}}return;}
     const d=dialog();if(!d)return;
     app()?.pauseForReels?.();
     window.PULSO_VIDEO?.pause?.(); // Se o usuário escolher Reels, evite áudio simultâneo.
-    items=shuffled(getVideos());opened=true;render();d.showModal();document.querySelectorAll('[data-open-reels]').forEach(b=>b.setAttribute('aria-expanded','true'));
+    items=shuffled(getVideos());opened=true;render();d.showModal();document.querySelectorAll('[data-open-reels]').forEach(b=>b.setAttribute('aria-expanded','true'));document.querySelectorAll('[data-reels-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.reelsMode===currentMode)));
     const selected=requestedId?items.findIndex(p=>String(p.id)===String(requestedId)):-1;const start=selected>=0?selected:0;
     if(start&&track().children[start])track().scrollTop=track().children[start].offsetTop-track().offsetTop;
     activate(items.length?start:-1);
@@ -289,7 +291,7 @@
     active=-1;if(items.length){track().scrollTop=track().children[i].offsetTop-track().offsetTop;activate(i)}
   }
   document.addEventListener('DOMContentLoaded',()=>{
-    document.addEventListener('click',ev=>{const b=ev.target.closest('[data-open-reels]');if(b){ev.preventDefault();open();}});
+    document.addEventListener('click',ev=>{const modeButton=ev.target.closest('[data-reels-mode]');if(modeButton){if(modeButton.closest('#pulsoReelsDialog')){currentMode=modeButton.dataset.reelsMode;items=shuffled(getVideos());active=-1;cleanup();render();track().scrollTop=0;if(items.length)activate(0);document.querySelectorAll('[data-reels-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.reelsMode===currentMode)));}else{ev.preventDefault();open(null,modeButton.dataset.reelsMode);}return;}const b=ev.target.closest('[data-open-reels]');if(b){ev.preventDefault();open(null,b.dataset.reelsMode||null);}});
     $('p52ReelsClose')?.addEventListener('click',close);
     dialog()?.addEventListener('close',onClose);
     track()?.addEventListener('scroll',onScroll,{passive:true});
