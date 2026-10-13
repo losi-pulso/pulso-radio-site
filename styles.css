@@ -476,3 +476,24 @@ img{max-width:100%}
   .radio-dock .radio-topbar{position:sticky;top:0;z-index:2;touch-action:pan-y}
   .radio-dock .radio-topbar button{position:relative;z-index:3;flex-shrink:0;touch-action:manipulation}
 }
+
+
+/* PULSO 5.31 — no celular, a rádio vira a área de rolagem ativa */
+@media(max-width:620px){
+  html.radio-player-open,body.radio-player-open{overflow:hidden!important;overscroll-behavior:none!important;}
+  body.radio-player-open{touch-action:none!important;}
+  .radio-dock:not([hidden]):not(.is-minimized){
+    position:fixed!important;display:block!important;
+    top:auto!important;left:8px!important;right:8px!important;
+    bottom:calc(82px + env(safe-area-inset-bottom,0px))!important;
+    width:auto!important;height:auto!important;
+    max-height:calc(100dvh - 104px - env(safe-area-inset-bottom,0px))!important;
+    overflow-x:hidden!important;overflow-y:scroll!important;
+    overscroll-behavior-y:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-y!important;z-index:1245!important;
+  }
+  .radio-dock:not([hidden]):not(.is-minimized) .radio-topbar{position:sticky!important;top:0!important;z-index:5!important;}
+  .radio-dock:not([hidden]):not(.is-minimized) .radio-topbar button{touch-action:manipulation!important;}
+  html:not(.radio-player-open),body:not(.radio-player-open){touch-action:pan-y;}
+}
