@@ -276,6 +276,7 @@
     }
     user=authError?null:currentUser;
     if(user)await cloudPlaybackSync();
+    if(window.PULSO_APP)window.PULSO_APP.playbackReady=true;
     isAdmin=false;likes=new Set();
     if(user){
       const [membership,liked]=await Promise.all([
@@ -1582,7 +1583,7 @@
       if(connected)window.PULSO_SOCIAL.refresh().catch(console.warn);
     }
   });
-  window.PULSO_APP={client:()=>sb,user:()=>user,admin:()=>isAdmin,posts:()=>posts,playById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');if(p)playPost(p);},likeById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');return p?toggleLike(p):Promise.resolve();},isLiked:id=>likes.has(id),pauseForReels:()=>{if(radioActive)radioPause();const media=$('embedContainer')?.querySelector('audio,video');if(media)media.pause();},radio:()=>radioStart(),login:authDialog,toast,setSavedRemote:ids=>{try{if(!localStorage.getItem('pulso_saved_legacy_v1')){const previous=localStorage.getItem(savedKey);if(previous)localStorage.setItem('pulso_saved_legacy_v1',previous);}}catch{}saved=new Set(ids);store(savedKey,[...saved]);render();}};
+  window.PULSO_APP={playbackReady:false,client:()=>sb,user:()=>user,admin:()=>isAdmin,posts:()=>posts,playById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');if(p)playPost(p);},likeById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');return p?toggleLike(p):Promise.resolve();},isLiked:id=>likes.has(id),pauseForReels:()=>{if(radioActive)radioPause();const media=$('embedContainer')?.querySelector('audio,video');if(media)media.pause();},radio:()=>radioStart(),login:authDialog,toast,setSavedRemote:ids=>{try{if(!localStorage.getItem('pulso_saved_legacy_v1')){const previous=localStorage.getItem(savedKey);if(previous)localStorage.setItem('pulso_saved_legacy_v1',previous);}}catch{}saved=new Set(ids);store(savedKey,[...saved]);render();}};
   init().catch(err=>toast(`Falha ao iniciar o site: ${errorText(err)}`));
   $('cancelVideoUpload').addEventListener('click',()=>{if(activeVideoUpload){activeVideoUpload();$('cancelVideoUpload').disabled=true;}});
 })();
