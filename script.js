@@ -183,9 +183,9 @@
         ?'<img class="community-set-cover" loading="lazy" src="'+escapeHtml(cover)+'" alt="Prévia de '+escapeHtml(p.title||'vídeo da comunidade')+'">'
         :'<div class="community-set-cover community-set-cover-empty" aria-hidden="true"></div>';
       return '<article class="community-set-card" data-community-post="'+id+'">'
-       +'<div class="community-set-preview">'+preview+'<button type="button" class="community-set-play" data-community-play="'+id+'" aria-label="Reproduzir '+escapeHtml(p.title||'vídeo')+'" title="Reproduzir vídeo"><span aria-hidden="true">▶</span></button><span class="community-set-preview-label">PULSO COMMUNITY</span></div>'
+       +'<div class="community-set-preview">'+preview+'<button type="button" class="community-set-play" data-community-play="'+id+'" aria-label="Reproduzir '+escapeHtml(p.title||'vídeo')+'" title="Reproduzir vídeo"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5 19 12 8 18.5Z" fill="currentColor" stroke="none"/></svg><span>ASSISTIR</span></button><span class="community-set-preview-label">PULSO COMMUNITY</span></div>'
        +'<div class="community-set-body"><small>'+escapeHtml(p.type||'SET DA COMUNIDADE').toUpperCase()+'</small><h3>'+escapeHtml(p.title||'Set sem título')+'</h3><p>'+escapeHtml(p.artist||'Artista da comunidade')+'</p>'
-       +'<div class="community-set-actions">'+(download?'<button type="button" class="community-set-download" data-pulso-download="'+id+'" aria-label="Baixar vídeo para assistir offline">↓ BAIXAR</button>':'')+'<button type="button" class="community-set-share" data-community-share="'+id+'">↗ COMPARTILHAR</button></div></div></article>';
+       +'<div class="community-set-actions">'+(download?'<button type="button" class="community-set-download" data-pulso-download="'+id+'" aria-label="Salvar vídeo para assistir offline"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span><strong>BAIXAR</strong><small>PARA OFFLINE</small></span></button>':'')+'<button type="button" class="community-set-share" data-community-share="'+id+'"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/></svg><span><strong>COMPARTILHAR</strong><small>ENVIAR ESTE SET</small></span></button></div></div></article>';
     }).join('');
   }
   function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -1103,6 +1103,19 @@
     else out.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
     return out;
   }
+  // A rádio toca primeiro os arquivos de áudio diretos/armazenados, depois
+  // fontes de áudio externas e deixa os sets do YouTube para a segunda etapa.
+  function radioOrdered(list) {
+    const files=[], externalAudio=[], youtube=[], other=[];
+    for(const p of list){
+      const kind=radioSource(p)?.kind;
+      if(kind==='audio'||kind==='chunked-audio')files.push(p);
+      else if(kind==='youtube')youtube.push(p);
+      else if(kind==='soundcloud')externalAudio.push(p);
+      else other.push(p);
+    }
+    return [...radioRandomize(files),...radioRandomize(externalAudio),...radioRandomize(other),...radioRandomize(youtube)];
+  }
   function radioStatus(message) { $('radioStatus').textContent=message; }
   function radioUpdateUI() {
     $('radioDock').hidden=!radioActive;
@@ -1152,7 +1165,7 @@
     const byId=new Map(candidates.map(p=>[String(p.id),p]));
     const keep=radioQueue.filter(p=>byId.has(String(p.id))).map(p=>byId.get(String(p.id)));
     const known=new Set(keep.map(p=>String(p.id)));
-    const added=radioRandomize(candidates.filter(p=>!known.has(String(p.id))));
+    const added=radioOrdered(candidates.filter(p=>!known.has(String(p.id))));
     radioQueue=[...keep,...added];
     if(!radioQueue.length){radioStop();toast('A rádio ainda não tem músicas aprovadas para reproduzir.');return;}
     const nextIndex=radioQueue.findIndex(p=>String(p.id)===String(current));
@@ -1161,10 +1174,7 @@
   }
   function radioStart() {
     window.PULSO_VIDEO?.pause?.(); // Rádio e vídeo não devem tocar simultaneamente.
-    radioQueue=radioRandomize(radioCandidates());
-    // Dê preferência a fontes que permitem avançar automaticamente.
-    const firstAuto=radioQueue.findIndex(p=>radioSource(p)?.kind!=='spotify');
-    if(firstAuto>0) radioQueue.unshift(...radioQueue.splice(firstAuto,1));
+    radioQueue=radioOrdered(radioCandidates());
     if(!radioQueue.length){toast('Ainda não há faixas reproduzíveis aprovadas. Publique um link do SoundCloud, YouTube, Spotify ou MP3.');return;}
     dialogClose('playerDialog');$('embedContainer').replaceChildren();
     radioActive=true;radioPaused=false;radioFailures=0;radioIndex=0;
