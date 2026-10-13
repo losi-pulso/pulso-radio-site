@@ -96,7 +96,9 @@
         const artist=document.createElement('span');artist.textContent=data.match.artist;
         const card=document.createElement('div');card.className='identify-hit';card.append(artist,title);
         if(data.match.link){try{const u=new URL(data.match.link);if(u.protocol==='https:'){const a=document.createElement('a');a.href=u.href;a.textContent='OUVIR / VER DETALHES ↗';a.target='_blank';a.rel='noopener noreferrer';card.appendChild(a);}}catch{}}
-        el('identifyResult').append(card);output('Faixa encontrada! O set continua tocando.');
+        el('identifyResult').append(card);
+        document.dispatchEvent(new CustomEvent('pulso:track-identified',{detail:{title:data.match.title,artist:data.match.artist,source:'AudD'}}));
+        output('Faixa encontrada! Registrada na sua Cápsula Sonora. O set continua tocando.');
       }else output('Não houve correspondência. Remixes inéditos, mashups e transições podem não constar no catálogo.');
     }catch(err){output(err.name==='AbortError'?'Identificação demorou demais. Tente novamente.':(err.message||'Não foi possível identificar.'));}
     finally{busy=false;}
