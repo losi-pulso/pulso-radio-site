@@ -1034,6 +1034,32 @@
   let radioActive=false, radioPaused=false, radioShuffle=true, radioGenre='Todos', radioDockMinimized=false;
   let radioQueue=[], radioIndex=-1, radioEpoch=0, radioEngine=null;
   let radioTimeDrag=false,radioDurationKnown=0,radioCurrentKnown=0;
+  let radioResumePoint=null;
+  function playbackStorageKey(kind){
+    const account=window.PULSO_APP?.user?.()?.id;
+    return 'pulso-playback-'+kind+'-v1'+(account?'-'+String(account).replace(/[^a-z0-9_-]/gi,''):'-local');
+  }
+  function readPlayback(kind){
+    try{return JSON.parse(localStorage.getItem(playbackStorageKey(kind))||'null');}catch{return null;}
+  }
+  function saveRadioPlayback(){
+    if(!radioActive||!radioQueue[radioIndex])return;
+    const item=radioQueue[radioIndex];
+    const state={id:String(item.id),title:item.title||'',artist:item.artist||'',time:Math.max(0,Number(radioCurrentKnown)||0),savedAt:Date.now()};
+    try{localStorage.setItem(playbackStorageKey('radio'),JSON.stringify(state));}catch{}
+  }
+  function applyRadioResume(engine){
+    if(!radioResumePoint||!engine)return;
+    const point=Math.max(0,Number(radioResumePoint.time)||0);
+    if(point<3){radioResumePoint=null;return;}
+    try{
+      if(engine.kind==='audio'&&engine.player.readyState>=1)engine.player.currentTime=point;
+      else if(engine.kind==='youtube'&&engine.player.getDuration?.()>point)engine.player.seekTo(point,true);
+      else if(engine.kind==='soundcloud')engine.player.seekTo(Math.round(point*1000));
+      else return;
+      radioCurrentKnown=point;radioResumePoint=null;radioRefreshTime();
+    }catch{}
+  }
   function radioSeekEnabled(){return radioActive && !['spotify'].includes(radioEngine?.kind) && !!radioEngine && Number.isFinite(radioDurationKnown) && radioDurationKnown>0;}
   function radioDrawTimeline(){
     const ok=radioSeekEnabled();
@@ -1073,6 +1099,7 @@
         engine.player.getPosition?.(ms=>{if(radioEngine===engine&&Number.isFinite(ms)){radioCurrentKnown=ms/1000;radioDrawTimeline();}});
       }
       radioDrawTimeline();
+      saveRadioPlayback();
     }catch(err){console.warn('Tempo da faixa indisponível',err);}
   }
   let youtubeReadyPromise=null, radioFailures=0;
@@ -1181,9 +1208,12 @@
     window.PULSO_VIDEO?.pause?.(); // Rádio e vídeo não devem tocar simultaneamente.
     radioQueue=radioOrdered(radioCandidates());
     if(!radioQueue.length){toast('Ainda não há faixas reproduzíveis aprovadas. Publique um link do SoundCloud, YouTube, Spotify ou MP3.');return;}
+    const saved=readPlayback('radio');
+    const savedIndex=saved?radioQueue.findIndex(p=>String(p.id)===String(saved.id)):-1;
+    radioResumePoint=savedIndex>=0&&Number(saved.time)>0?saved:null;
     dialogClose('playerDialog');$('embedContainer').replaceChildren();
-    radioActive=true;radioPaused=false;radioFailures=0;radioIndex=0;
-    radioSelect(0);
+    radioActive=true;radioPaused=false;radioFailures=0;radioIndex=savedIndex>=0?savedIndex:0;
+    radioSelect(radioIndex);
   }
   function radioPause() {
     if(!radioActive||radioPaused)return;
@@ -1211,6 +1241,7 @@
     radioStatus('Tentando reproduzir…');radioUpdateUI();
   }
   function radioToggle() {
+    if(radioActive&&radioDockMinimized){radioDockMinimized=false;radioUpdateUI();return;}
     if(!radioActive){radioStart();return;}
     if(radioPaused)radioResume();else radioPause();
   }
@@ -1280,6 +1311,7 @@
       handle.audio.addEventListener('loadedmetadata',radioRefreshTime);
       handle.audio.addEventListener('durationchange',radioRefreshTime);
       handle.audio.addEventListener('timeupdate',radioRefreshTime);
+      handle.audio.addEventListener('loadedmetadata',()=>applyRadioResume(radioEngine));
       return;
     }
     if(src.kind==='audio'){
@@ -1292,6 +1324,7 @@
       window.PULSO5?.onAudioReady?.(p,audio,null,{radio:true});
       window.PULSO_BACKGROUND?.bind(audio,{title:p.title,artist:p.artist,cover:p.cover,previous:radioPrevious,next:()=>radioNext()});container.classList.add('is-audio');audio.controls=false;audio.classList.add('pulso-native-audio');container.appendChild(audio);
       ['loadedmetadata','durationchange','timeupdate','seeked'].forEach(evt=>audio.addEventListener(evt,radioRefreshTime));
+      audio.addEventListener('loadedmetadata',()=>applyRadioResume(radioEngine));
       audio.play().catch(()=>{if(epoch===radioEpoch)radioStatus('Clique em ▶ no player para liberar o áudio.');});
       return;
     }
@@ -1304,7 +1337,7 @@
           height:'205',width:'100%',videoId:src.videoId,
           playerVars:{autoplay:1,playsinline:1,rel:0,controls:1},
           events:{
-            onReady:()=>{if(epoch!==radioEpoch)return;if(!radioPaused)player.playVideo();radioStatus('YouTube • se não iniciar, toque no vídeo.');},
+            onReady:()=>{if(epoch!==radioEpoch)return;applyRadioResume(radioEngine);if(!radioPaused)player.playVideo();radioStatus('YouTube • se não iniciar, toque no vídeo.');},
             onStateChange:ev=>{
               if(epoch!==radioEpoch)return;
               if(ev.data===0)radioNext(true);
@@ -1370,6 +1403,8 @@
     $('radioToggle').addEventListener('click',radioToggle);
     $('radioClose').addEventListener('click',radioStop);
     $('radioMinimize').addEventListener('click',()=>{radioDockMinimized=!radioDockMinimized;radioUpdateUI();});
+    window.addEventListener('pagehide',saveRadioPlayback);
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveRadioPlayback();});
     $('radioNext').addEventListener('click',()=>radioNext());
     $('radioPrev').addEventListener('click',radioPrevious);
     $('radioShuffle').addEventListener('click',()=>{
