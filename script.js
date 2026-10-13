@@ -115,6 +115,7 @@
           cloudPlaybackSave(kind,local);
         }
       }
+      window.PULSO_VIDEO?.restore?.();
     }catch(err){console.warn('Falha ao sincronizar reprodução:',err);}
   }
   window.PULSO_PLAYBACK_CLOUD={save:cloudPlaybackSave,sync:cloudPlaybackSync};
