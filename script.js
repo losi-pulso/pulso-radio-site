@@ -177,7 +177,7 @@
   document.addEventListener('click',ev=>{
     const play=ev.target.closest('[data-community-play]');if(play){window.PULSO_APP?.playById?.(play.dataset.communityPlay);return;}
     const share=ev.target.closest('[data-community-share]');if(share){const p=posts.find(x=>String(x.id)===String(share.dataset.communityShare));if(!p)return;const u=new URL(location.href);u.searchParams.set('track',p.id);u.hash='';const data={title:(p.title||'Set')+' · PULSO',text:'Escuta este set no PULSO RADIO × LØSI',url:u.href};if(navigator.share)navigator.share(data).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(u.href).then(()=>toast('Link copiado!'));else prompt('Copie o link do set:',u.href);}
-    if(ev.target.closest('[data-open-composer]')){$('openComposer')?.click()||$('heroPublish')?.click();}
+    if(ev.target.closest('[data-open-composer]')){const trigger=$('openComposer')||$('heroPublish');trigger?.click();}
   });
   function render() {
     renderFilters();renderMediaFilters();const shown=visiblePosts();
