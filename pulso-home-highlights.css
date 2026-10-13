@@ -1,0 +1,28 @@
+/* PULSO HOME HIGHLIGHTS — premium editorial DJ-set cards */
+.phome{position:relative;margin:clamp(34px,5vw,76px) auto;padding:clamp(20px,3.5vw,42px);overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:26px;background:radial-gradient(ellipse at 8% 0%,rgba(105,255,173,.075),transparent 42%),linear-gradient(135deg,#101411 0%,#090b0a 72%);color:#f5f7f5}
+.phome-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:25px}
+.phome-eyebrow{display:block;margin-bottom:10px;color:#a8f4bf;font-size:10px;font-weight:800;letter-spacing:.2em}
+.phome-heading h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:clamp(25px,4vw,43px);font-weight:700;letter-spacing:-.055em;line-height:1.04}
+.phome-heading h2 em{color:#a7f2b7;font-style:normal}
+.phome-heading p{max-width:540px;margin:11px 0 0;color:#a8b0aa;font-size:14px;line-height:1.6}
+.phome-all{flex-shrink:0;display:inline-flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid rgba(255,255,255,.15);border-radius:99px;color:#f3f6f3;text-decoration:none;font-size:12px;font-weight:700;transition:background .2s,border-color .2s}
+.phome-all:hover{background:rgba(167,242,183,.1);border-color:rgba(167,242,183,.5)}
+.phome-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:15px}
+.phome-card{position:relative;isolation:isolate;display:block;min-height:330px;aspect-ratio:4/5;overflow:hidden;border-radius:17px;background:#171d19;color:#fff;text-decoration:none;box-shadow:0 12px 34px rgba(0,0,0,.22);transform:translateZ(0)}
+.phome-card-feature{aspect-ratio:auto;min-height:385px}
+.phome-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .55s cubic-bezier(.2,.7,.2,1),filter .3s;z-index:-2}
+.phome-card:hover img,.phome-card:focus-visible img{transform:scale(1.055);filter:saturate(1.12)}
+.phome-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.16) 0%,transparent 28%,rgba(0,0,0,.28) 48%,rgba(0,0,0,.88) 100%)}
+.phome-pill{position:absolute;top:15px;left:15px;padding:7px 10px;border:1px solid rgba(255,255,255,.28);border-radius:99px;background:rgba(5,9,6,.48);backdrop-filter:blur(12px);font-size:9px;font-weight:800;letter-spacing:.13em}
+.phome-play{position:absolute;top:50%;left:50%;display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(10,14,11,.4);backdrop-filter:blur(12px);font-size:14px;transform:translate(-50%,-50%);transition:background .2s,transform .2s}
+.phome-card:hover .phome-play{background:#a7f2b7;color:#0a110c;transform:translate(-50%,-50%) scale(1.08)}
+.phome-card-copy{position:absolute;right:17px;bottom:18px;left:17px;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.phome-location{color:#b9f5c7;font-size:9px;font-weight:800;letter-spacing:.16em}
+.phome-card-copy strong{font-family:'Space Grotesk',sans-serif;font-size:clamp(21px,2.2vw,29px);line-height:1.05;letter-spacing:-.04em}
+.phome-card-copy>span:last-child{color:rgba(255,255,255,.77);font-size:12px;line-height:1.4}
+.phome-bottomline{display:flex;justify-content:space-between;gap:16px;margin-top:20px;padding-top:15px;border-top:1px solid rgba(255,255,255,.1);color:#7d8980;font-size:9px;font-weight:800;letter-spacing:.14em}
+.phome-bottomline span:first-child{display:flex;align-items:center;gap:8px}
+.phome-bottomline i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#a7f2b7;box-shadow:0 0 12px #a7f2b7}
+@media(max-width:760px){.phome{padding:20px 15px;border-radius:20px}.phome-heading{align-items:flex-start;flex-direction:column;gap:16px}.phome-grid{grid-template-columns:1fr 1fr;gap:10px}.phome-card,.phome-card-feature{min-height:245px;aspect-ratio:3/4}.phome-card-feature{grid-column:1/-1;min-height:300px;aspect-ratio:16/10}.phome-card-copy{right:12px;bottom:13px;left:12px}.phome-card-copy strong{font-size:20px}.phome-card-copy>span:last-child{font-size:11px}.phome-play{width:42px;height:42px}.phome-bottomline{font-size:8px;letter-spacing:.08em}.phome-all{font-size:11px}}
+@media(max-width:380px){.phome-grid{grid-template-columns:1fr}.phome-card,.phome-card-feature{grid-column:auto;min-height:290px;aspect-ratio:4/5}.phome-bottomline span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){.phome-card img,.phome-play{transition:none}}
