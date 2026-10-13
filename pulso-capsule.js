@@ -125,9 +125,9 @@
  }
  function saveImage(){
    const summary=draw();if(!summary)return;
-   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1410;
+   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1650;
    const g=canvas.getContext('2d');if(!g)return;
-   const bg=g.createLinearGradient(0,0,1080,1410);bg.addColorStop(0,'#182b21');bg.addColorStop(1,'#0a100e');g.fillStyle=bg;g.fillRect(0,0,1080,1410);
+   const bg=g.createLinearGradient(0,0,1080,1410);bg.addColorStop(0,'#182b21');bg.addColorStop(1,'#0a100e');g.fillStyle=bg;g.fillRect(0,0,1080,1650);
    const txt=(t,x,y,size=30,color='#e8f4dc',weight=600)=>{g.fillStyle=color;g.font=weight+' '+size+'px Arial,sans-serif';g.fillText(String(t),x,y)};
    g.fillStyle='#d1ff6b';g.fillRect(66,72,7,64);
    txt('PULSO RADIO × LØSI',93,111,31,'#d1ff6b',800);
@@ -143,8 +143,8 @@
      else for(let i=0;i<Math.min(list.length,5);i++){let item=list[i];let label=item.name||item.title||'';if(label.length>40)label=label.slice(0,37)+'…';txt((i+1)+'. '+label,77,y,25,'#fff',600);y+=39;}
      y+=36;
    }
-   txt('Dados locais do PULSO · Faixas dos sets não são inferidas automaticamente',66,1330,20,'#8ca48c',500);
-   txt('pulso-radio-site.pages.dev',66,1367,21,'#d1ff6b',600);
+   txt('Dados locais do PULSO · Faixas dos sets não são inferidas automaticamente',66,1545,20,'#8ca48c',500);
+   txt('pulso-radio-site.pages.dev',66,1590,21,'#d1ff6b',600);
    const link=document.createElement('a');link.download='capsula-sonora-pulso-'+period+'.png';link.href=canvas.toDataURL('image/png');link.click();
  }
  function onIdentification(event){
@@ -155,7 +155,7 @@
    load();draw();
    document.querySelectorAll('[data-capsule-period]').forEach(button=>button.addEventListener('click',()=>{period=button.dataset.capsulePeriod;draw()}));
    $('pulsoCapsuleImage')?.addEventListener('click',saveImage);
-   $('pulsoCapsuleIdentify')?.addEventListener('click',()=>{$('identifyDialog')?.showModal?.()});
+   $('pulsoCapsuleIdentify')?.addEventListener('click',()=>{$('identifyRadio')?.click();});
    $('pulsoCapsuleTrackForm')?.addEventListener('submit',event=>{
      event.preventDefault();
      const form=event.currentTarget,title=form.elements.namedItem('trackTitle')?.value,artist=form.elements.namedItem('trackArtist')?.value;
