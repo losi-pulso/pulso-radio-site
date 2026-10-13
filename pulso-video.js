@@ -6,6 +6,25 @@
   const playerUrl='https://www.youtube-nocookie.com/embed/';
   let currentId='',currentVideoId='',expanded=true;
   let ytPlayer=null,ytInitStarted=false,ytApiPromise=null,activeSet=null;
+  let pendingRestore=null,restoredPaused=false,restoreAttempted=false;
+  const playbackKey=()=>{const id=window.PULSO_APP?.user?.()?.id;return 'pulso-playback-video-v1'+(id?'-'+String(id).replace(/[^a-z0-9_-]/gi,''):'-local');};
+  function savePlayback(){
+    if(!currentVideoId||!activeSet)return;
+    let time=0;try{time=Number(ytPlayer?.getCurrentTime?.())||0;}catch{}
+    const state={videoId:currentVideoId,setId:currentId,time:Math.max(0,time),set:{id:activeSet.id,url:activeSet.url,title:activeSet.title||'',artist:activeSet.artist||'',event:activeSet.event||'',year:activeSet.year||'',cover:activeSet.cover||''},savedAt:Date.now()};
+    try{localStorage.setItem(playbackKey(),JSON.stringify(state));}catch{}
+  }
+  function restoreSavedPlayback(){
+    if(restoreAttempted)return;
+    let state=null;try{state=JSON.parse(localStorage.getItem(playbackKey())||'null');}catch{}
+    if(!state?.set?.url||!videoIdFromUrl(state.set.url)||!Number.isFinite(Number(state.time)))return;
+    restoreAttempted=true;pendingRestore=state;restoredPaused=true;open(state.set);setExpanded(false);
+  }
+  function restorePlayerPosition(player,id){
+    if(!pendingRestore||pendingRestore.videoId!==id)return false;
+    const point=Math.max(0,Number(pendingRestore.time)||0);
+    try{player.mute?.();if(point>0)player.seekTo?.(point,true);player.pauseVideo?.();pendingRestore=null;restoredPaused=true;savePlayback();return true;}catch{return false;}
+  }
   const icon=(kind)=>{
     const d={
       shrink:'<path d="M8 3v5H3M16 21v-5h5"/><path d="m3 8 6-6M21 16l-6 6"/>',
@@ -28,9 +47,9 @@
       return /^[a-zA-Z0-9_-]{11}$/.test(id)?id:'';
     }catch{return '';}
   };
-  const embedUrl=id=>{
+  const embedUrl=(id,autoplay=true)=>{
     const options=new URLSearchParams({
-      autoplay:'1',mute:'1',playsinline:'1',controls:'1',rel:'0',enablejsapi:'1',origin:location.origin
+      autoplay:autoplay?'1':'0',mute:'1',playsinline:'1',controls:'1',rel:'0',enablejsapi:'1',origin:location.origin
     });
     return playerUrl+id+'?'+options.toString();
   };
@@ -65,11 +84,11 @@
               try{
                 const data=ytPlayer.getVideoData?.();
                 if(data?.video_id&&data.video_id!==currentVideoId)ytPlayer.loadVideoById(currentVideoId);
-                ytPlayer.mute();ytPlayer.playVideo();
+                if(!restorePlayerPosition(ytPlayer,currentVideoId)){ytPlayer.mute();ytPlayer.playVideo();}
               }catch(error){console.info('YouTube player:',error);}
             }
           },
-          onStateChange:evt=>window.PULSO_CAPSULE?.onYouTubeState?.(evt.data),
+          onStateChange:evt=>{if(evt.data===1||evt.data===2)savePlayback();window.PULSO_CAPSULE?.onYouTubeState?.(evt.data);},
           onError:()=>window.PULSO_CAPSULE?.onYouTubeState?.(-1)
         }
       });
@@ -87,15 +106,17 @@
       frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:command,args:[]}), 'https://www.youtube-nocookie.com');
     }catch(err){console.info('Player PULSO:',err);}
   };
-  function pause(){dispatchYoutube('pauseVideo');}
+  function pause(){dispatchYoutube('pauseVideo');savePlayback();}
   function playWithSound(){
     // Um toque explícito permite pedir áudio mesmo quando o navegador bloqueia autoplay com som.
+    restoredPaused=false;
     dispatchYoutube('unMute');
     dispatchYoutube('playVideo');
   }
   function close(){
     const dock=$('pulsoVideoDock'),frame=$('pulsoVideoIframe');
     if(!dock||!frame)return;
+    savePlayback();
     pause();
     if(ytPlayer){try{ytPlayer.stopVideo?.();}catch{}}
     else frame.removeAttribute('src');
@@ -126,6 +147,8 @@
     try{window.PULSO_APP?.pauseForReels?.();}catch{}
     try{window.PULSO_REELS?.close?.();}catch{}
     const isSame=currentId===String(set.id)&&currentVideoId===id&&!dock.hidden;
+    const restoring=!!pendingRestore&&pendingRestore.videoId===id;
+    if(!restoring)restoredPaused=false;
     currentId=String(set.id);currentVideoId=id;activeSet=set;
     $('pulsoVideoName').textContent=set.title||set.artist||'DJ SET';
     $('pulsoVideoArtist').textContent=[set.artist,set.event,set.year].filter(Boolean).join(' · ');
@@ -140,7 +163,7 @@
         window.PULSO_CAPSULE?.observeYouTube?.(ytPlayer,set);
         try{ytPlayer.mute?.();ytPlayer.loadVideoById?.(id);}catch{frame.src=embedUrl(id);}
       }else{
-        frame.src=embedUrl(id);
+        frame.src=embedUrl(id,!restoring);
         attachController();
       }
     }else dispatchYoutube('playVideo');
@@ -155,12 +178,16 @@
     $('pulsoVideoIframe')?.addEventListener('load',()=>{
       if(currentVideoId&&!$('pulsoVideoDock')?.hidden){
         dispatchYoutube('mute');
-        dispatchYoutube('playVideo');
+        if(!restoredPaused)dispatchYoutube('playVideo');
       }
     });
     $('pulsoVideoPlay')?.addEventListener('click',playWithSound);
     $('pulsoVideoPause')?.addEventListener('click',pause);
-    // Avoid taking over keyboard focus or page scrolling when opening a video.
+    window.setInterval(savePlayback,2500);
+    window.addEventListener('pagehide',savePlayback);
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePlayback();});
+    let restoreChecks=0;
+    const restoreTimer=window.setInterval(()=>{restoreChecks++;if(window.PULSO_APP?.user?.()||restoreChecks>=12){window.clearInterval(restoreTimer);restoreSavedPlayback();}},250);
     // Media remains mounted and visible when navigating sections within the SPA.
   });
   window.PULSO_VIDEO={open,close,pause,isOpen:()=>!!currentId&&!$('pulsoVideoDock')?.hidden};
