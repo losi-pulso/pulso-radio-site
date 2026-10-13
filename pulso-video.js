@@ -23,7 +23,7 @@
   function restorePlayerPosition(player,id){
     if(!pendingRestore||pendingRestore.videoId!==id)return false;
     const point=Math.max(0,Number(pendingRestore.time)||0);
-    try{player.mute?.();if(point>0)player.seekTo?.(point,true);player.pauseVideo?.();pendingRestore=null;restoredPaused=true;savePlayback();return true;}catch{return false;}
+    try{player.mute?.();if(point>0)player.seekTo?.(point,true);player.pauseVideo?.();pendingRestore=null;restoredPaused=true;return true;}catch{return false;}
   }
   const icon=(kind)=>{
     const d={
