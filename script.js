@@ -1031,7 +1031,7 @@
   // SoundCloud: Widget FINISH; YouTube: IFrame ENDED; arquivos de áudio: ended.
   // Spotify usa o player incorporado, sem promessa de troca automática.
   // ============================================================================
-  let radioActive=false, radioPaused=false, radioShuffle=true, radioGenre='Todos';
+  let radioActive=false, radioPaused=false, radioShuffle=true, radioGenre='Todos', radioDockMinimized=false;
   let radioQueue=[], radioIndex=-1, radioEpoch=0, radioEngine=null;
   let radioTimeDrag=false,radioDurationKnown=0,radioCurrentKnown=0;
   function radioSeekEnabled(){return radioActive && !['spotify'].includes(radioEngine?.kind) && !!radioEngine && Number.isFinite(radioDurationKnown) && radioDurationKnown>0;}
@@ -1133,6 +1133,11 @@
     $('radioToggle').disabled=!!spotify;
     $('radioToggle').title=spotify?'Use play/pausa dentro do Spotify':'Tocar / Pausar';
     $('radioCount').textContent=radioQueue.length+' '+(radioQueue.length===1?'MÚSICA':'MÚSICAS');
+    $('radioMiniTitle').textContent=radioQueue[radioIndex]?.title||'Sua frequência';
+    $('radioDock').classList.toggle('is-minimized',radioActive&&radioDockMinimized);
+    $('radioMinimize').innerHTML=radioDockMinimized?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>';
+    $('radioMinimize').setAttribute('aria-label',radioDockMinimized?'Expandir rádio':'Minimizar rádio');
+    $('radioMinimize').title=radioDockMinimized?'Expandir rádio':'Minimizar rádio';
     $('radioShuffle').setAttribute('aria-pressed',String(radioShuffle));
     $('radioShuffle').setAttribute('aria-label',radioShuffle?'Desativar modo aleatório':'Ativar modo aleatório');
   }
@@ -1154,7 +1159,7 @@
     $('radioSpeed').value='1';radioDrawTimeline();
   }
   function radioStop() {
-    radioDispose();radioActive=false;radioPaused=false;radioIndex=-1;radioQueue=[];
+    radioDispose();radioActive=false;radioPaused=false;radioDockMinimized=false;radioIndex=-1;radioQueue=[];
     setArtwork('heroRecordCover','');setArtwork('radioCoverImage','');
     radioUpdateUI();
   }
@@ -1364,6 +1369,7 @@
     $('waveRadioToggle').addEventListener('click',radioToggle);
     $('radioToggle').addEventListener('click',radioToggle);
     $('radioClose').addEventListener('click',radioStop);
+    $('radioMinimize').addEventListener('click',()=>{radioDockMinimized=!radioDockMinimized;radioUpdateUI();});
     $('radioNext').addEventListener('click',()=>radioNext());
     $('radioPrev').addEventListener('click',radioPrevious);
     $('radioShuffle').addEventListener('click',()=>{
