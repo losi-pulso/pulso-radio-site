@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
   <meta name="description" content="PULSO by LØSI — Descubra, compartilhe e publique músicas, videoclipes, sets e apresentações de DJs da cena eletrônica.">
-  <title>PULSO 5.15 by LØSI — Música eletrônica sem pausa</title>
+  <title>PULSO 5.16 by LØSI — Música eletrônica sem pausa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="pulso5.css?v=5.0">
   <link rel="stylesheet" href="pulso51.css?v=5.1">
   <link rel="stylesheet" href="pulso52.css?v=5.4">
-  <link rel="stylesheet" href="pulso54.css?v=5.15-capsule">
+  <link rel="stylesheet" href="pulso54.css?v=5.16-story-share">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="config.js"></script>
   <script defer src="https://w.soundcloud.com/player/api.js"></script>
@@ -44,7 +44,8 @@
   <script defer src="pulso54.js?v=5.13-video-final"></script>
   <script defer src="pulso52.js?v=5.13-videofocus"></script>
   <script defer src="pulso-video.js?v=5.15-tracking"></script>
-  <script defer src="pulso-capsule.js?v=5.15-recap"></script>
+  <script defer src="pulso-capsule.js?v=5.16-export"></script>
+  <script defer src="pulso-capsule-export.js?v=5.16-story-share"></script>
   <script defer src="pulso-share.js?v=5.12-fab"></script>
 </head>
 <body>
@@ -99,7 +100,7 @@
     <!-- PULSO 5.4.1 — DESERT FREQUENCIES: localização dinâmica e visual Burning Man mais realista -->
     <section id="desert" class="p54-desert container" aria-labelledby="p54Title">
       <div class="p54-desert-art" aria-hidden="true"><div class="p54-desert-dust"></div><div class="p54-laser p54-laser-1"></div><div class="p54-laser p54-laser-2"></div></div>
-      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.15</span>
+      <div class="p54-desert-content"><span class="p54-kicker">✳ PULSO RADIO / DESERT FREQUENCIES / EDIÇÃO 5.16</span>
       <h1 id="p54Title">ALÉM DO <span>AMANHECER.</span></h1>
       <p>Da poeira da playa aos templos da música eletrônica. Art cars, luzes, DJs e sets que atravessam a madrugada.</p>
       <div class="p54-desert-actions"><button type="button" data-open-desert>EXPLORAR SETS ↗</button><button type="button" data-open-reels><svg class="pulso-ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.6a1 1 0 0 1 1.52-.86l9.6 6.4a1.02 1.02 0 0 1 0 1.72l-9.6 6.4A1 1 0 0 1 8 18.4z" fill="currentColor" stroke="none"/></svg> ABRIR REELS ALEATÓRIOS</button></div>
@@ -165,7 +166,9 @@
         </div>
         <div class="capsule-controls">
           <div class="capsule-cta-row">
-            <button type="button" id="pulsoCapsuleImage" class="capsule-btn-primary">SALVAR CÁPSULA COMO IMAGEM ↗</button>
+            <button type="button" id="pulsoCapsuleInstagram" class="capsule-btn-primary">COMPARTILHAR STORY 9:16 ↗</button>
+            <button type="button" id="pulsoCapsuleStorySave" class="capsule-btn-secondary">SALVAR STORY 9:16</button>
+            <button type="button" id="pulsoCapsuleImage" class="capsule-btn-secondary">SALVAR IMAGEM QUADRADA</button>
             <button type="button" id="pulsoCapsuleIdentify" class="capsule-btn-secondary">IDENTIFICAR FAIXA MP3</button>
           </div>
           <details class="capsule-add-track">
@@ -177,6 +180,7 @@
             </form>
             <small id="pulsoCapsuleFormStatus" role="status"></small>
           </details>
+          <p id="pulsoCapsuleExportStatus" class="capsule-export-status" role="status" aria-live="polite"></p>
           <p id="pulsoCapsuleStatus" class="capsule-note" role="status"></p>
           <p class="capsule-disclaimer">O PULSO mede a reprodução audível nesta página; só contabiliza vídeo do YouTube quando o som está ligado e o player informa que está tocando. Dados salvos localmente neste navegador, não sincronizados entre dispositivos. O navegador não consegue identificar automaticamente cada música dentro de um set do YouTube. Faixas reconhecidas pelo PULSO IDENTIFY (MP3 próprio, com serviço habilitado) aparecem como identificadas; registros manuais são sinalizados.</p>
         </div>
@@ -193,7 +197,7 @@
 
     <!-- PULSO 5.0 integrates with existing media catalog and player; no duplicate audio engine. -->
     <section class="p5-shell container" id="pulso5" aria-labelledby="p5Title">
-      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.15</b> / BY LØSI</span></div>
+      <div class="p5-shell-intro"><div><span class="p5-overline">PERSONAL MUSIC EXPERIENCE</span><h2 id="p5Title">SUA MÚSICA. <em>SEU PULSO.</em></h2></div><span class="p5-edition">PULSO <b>5.16</b> / BY LØSI</span></div>
       <nav class="p5-tabs" aria-label="Navegação de descoberta, DJs e biblioteca">
         <button type="button" class="active" data-p5tab="home" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v11H3V10Z"/><path d="M9 21v-8h6v8"/></svg> PARA VOCÊ</button>
         <button type="button" data-p5tab="djs" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg> PERFIS DE DJs</button>
@@ -418,6 +422,21 @@
   </dialog>
   <dialog id="socialModerationDialog" class="social-dialog" aria-label="Moderação dos comentários"><div class="social-dialog-inner"><div class="social-dialog-header"><h2>MODERAÇÃO DE COMENTÁRIOS</h2><button id="socialModClose" type="button" class="close-dialog">×</button></div><div id="socialReportsList"></div></div></dialog>
   <dialog id="storyDialog" class="social-dialog story-dialog" aria-label="Compartilhar nos stories"><div class="social-dialog-inner"><div class="social-dialog-header"><div><span class="text-eyebrow">PULSO STORIES</span><h2 id="storyPostHeading">STORY</h2></div><button type="button" id="storyClose" class="close-dialog">×</button></div><p class="social-story-info">Crie um Story com a capa da música. Em navegadores compatíveis, gere também um vídeo de até 60 segundos com áudio, desde que possua autorização para compartilhar.</p><canvas id="socialStoryCanvas" width="1080" height="1920" aria-label="Prévia vertical do story"></canvas><div class="story-actions"><button id="shareStoryImage" type="button">SALVAR / COMPARTILHAR CAPA</button><button id="shareStoryLink" type="button">COMPARTILHAR LINK</button></div><label class="story-consent"><input id="storyRights" type="checkbox"> Tenho direitos ou autorização para compartilhar este conteúdo musical no Instagram.</label><div class="story-actions"><label>Início do trecho (segundos) <input id="storyStartSeconds" type="number" min="0" value="0" step="1"></label><button id="renderStoryVideo" type="button">GERAR STORY COM ÁUDIO (60 S)</button><button id="shareStoryVideo" type="button" disabled>COMPARTILHAR VÍDEO</button><button id="downloadStoryVideo" type="button" disabled>BAIXAR VÍDEO</button></div><p id="storyStatus" role="status"></p><small>O Instagram não permite publicar automaticamente Stories com áudio a partir deste site. Compartilhe o arquivo criado pela função de compartilhamento do dispositivo ou pela galeria.</small></div></dialog>
+  <!-- Preview opcional iOS: sem depender de download ou permissão de compartilhamento. -->
+  <dialog id="pulsoCapsulePreview" class="capsule-preview-dialog" aria-labelledby="pulsoCapsulePreviewTitle">
+    <div class="capsule-preview-inner">
+      <header class="capsule-preview-header">
+        <div><span>CAPSULA SONORA · PULSO RADIO</span><strong id="pulsoCapsulePreviewTitle">Sua imagem está pronta</strong></div>
+        <button type="button" id="pulsoCapsulePreviewClose" aria-label="Fechar prévia">×</button>
+      </header>
+      <div class="capsule-preview-art"><img id="pulsoCapsulePreviewImage" alt="Prévia da Cápsula Sonora para Instagram" /></div>
+      <div class="capsule-preview-bottom">
+        <p id="pulsoCapsulePreviewHelp">No iPhone, toque e segure a imagem para salvar em Fotos.</p>
+        <a id="pulsoCapsulePreviewSave" href="#" download="capsula-sonora.png">BAIXAR IMAGEM PNG</a>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="identifyDialog" class="social-dialog identify-dialog" aria-labelledby="identifyHeading"><div class="social-dialog-inner"><div class="social-dialog-header"><div><span class="text-eyebrow">✦ PULSO IDENTIFY</span><h2 id="identifyHeading">QUE FAIXA É ESSA?</h2></div><button type="button" id="identifyClose" class="close-dialog" aria-label="Fechar identificação">×</button></div><div class="identify-orbit"><div class="identify-ring"></div><span>✦</span></div><p id="identifyStatus" class="identify-status" role="status">Pronto para reconhecer uma faixa.</p><div id="identifyResult" aria-live="polite"></div><p class="identify-note">O reconhecimento usa cerca de 12 segundos do MP3 que está tocando. A música não é pausada. Não há garantia de reconhecimento, especialmente com remixes inéditos e transições.</p><p class="identify-note">Som do YouTube, SoundCloud ou Spotify embutido não pode ser capturado diretamente pelo navegador. O recurso requer sua conta PULSO e a ativação do serviço AudD pelo administrador.</p></div></dialog>
 
 
