@@ -208,7 +208,7 @@
      y+=36;
    }
    txt('Dados locais do PULSO · Faixas dos sets não são inferidas automaticamente',66,1545,20,'#8ca48c',500);
-   txt('pulso-radio-site.pages.dev',66,1590,21,'#d1ff6b',600);
+   txt('sunny-paletas-ca93b2.netlify.app',66,1590,21,'#d1ff6b',600);
    const link=document.createElement('a');link.download='capsula-sonora-pulso-'+period+'.png';link.href=canvas.toDataURL('image/png');link.click();
  }
  function onIdentification(event){
