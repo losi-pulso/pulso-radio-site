@@ -821,7 +821,7 @@
     const node=$('embedContainer');node.className=`embed-container ${embedInfo.kind}`;node.replaceChildren();
     if(embedInfo.kind==='chunked-audio'){if(activeLargeAudioPlayer)activeLargeAudioPlayer.dispose();activeLargeAudioPlayer=mountChunkedAudio(url,node);addBeautifulAudioControls(node,activeLargeAudioPlayer.audio,p.title,p.artist,p.cover,p);dialogOpen('playerDialog');return;}
     if(embedInfo.kind==='audio'){const audio=document.createElement('audio');audio.autoplay=true;audio.preload='metadata';audio.crossOrigin='anonymous';audio.src=embedInfo.url;addBeautifulAudioControls(node,audio,p.title,p.artist,p.cover,p);dialogOpen('playerDialog');audio.play().catch(()=>{});return;}
-    if(embedInfo.kind==='video'){const video=document.createElement('video');video.controls=true;video.autoplay=true;video.playsInline=true;video.preload='metadata';video.src=embedInfo.url;video.setAttribute('controlsList','nodownload');
+    if(embedInfo.kind==='video'){const video=document.createElement('video');video.controls=true;video.autoplay=true;video.playsInline=false;video.preload='metadata';video.src=embedInfo.url;video.setAttribute('controlsList','nodownload');
       video.addEventListener('error',()=>{
         if(node.querySelector('.mov-fallback'))return;
         const message=document.createElement('p');message.className='mov-fallback';
