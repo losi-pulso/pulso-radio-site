@@ -20,10 +20,17 @@
    }catch(err){console.warn('PULSO cápsula: sincronização indisponível',err);}
  }
  function mergedData(){
-   const listens=data.listens.map(x=>({...x,_device:thisDevice}));
-   const tracks=data.tracks.map(x=>({...x,_device:thisDevice}));
+   // O histórico remoto é a referência para todos os dispositivos; mantém também
+   // eventos locais que ainda não conseguiram sincronizar com a conta.
+   const cloudListenKeys=new Set(cloudRows.filter(r=>r.event_type==='listen').map(r=>String(r.device_id)+'|'+String(r.day).slice(0,10)+'|'+String(r.item_key)));
+   const cloudTrackKeys=new Set(cloudRows.filter(r=>r.event_type!=='listen').map(r=>String(r.device_id)+'|'+String(r.day).slice(0,10)+'|'+String(r.item_key)));
+   const listens=data.listens
+     .filter(x=>!cloudListenKeys.has(thisDevice+'|'+String(x.day).slice(0,10)+'|'+String(x.id)))
+     .map(x=>({...x,_device:thisDevice}));
+   const tracks=data.tracks
+     .filter(x=>!cloudTrackKeys.has(thisDevice+'|'+String(x.day).slice(0,10)+'|'+[x.artist,x.title,x.source].join('|').toLowerCase().slice(0,240)))
+     .map(x=>({...x,_device:thisDevice}));
    for(const r of cloudRows){
-     if(r.device_id===thisDevice)continue;
      if(r.event_type==='listen')listens.push({day:String(r.day).slice(0,10),id:r.item_key,artist:r.artist,title:r.title,seconds:Number(r.seconds)||0,cover:r.cover||'',_device:r.device_id});
      else tracks.push({day:String(r.day).slice(0,10),title:r.title,artist:r.artist,source:r.source==='identified'?'identified':'manual',count:Number(r.count)||1,setId:'',_device:r.device_id});
    }
@@ -106,14 +113,14 @@
    if(ytTick)clearInterval(ytTick);
    if(!ytPlayer||!ytSet)return;
    ytTick=setInterval(()=>{
-     if(!ytPlayer||!ytSet||document.hidden){ytLastTime=null;return;}
+     if(!ytPlayer||!ytSet){ytLastTime=null;return;}
      try{
        const state=ytPlayer.getPlayerState?.(),muted=ytPlayer.isMuted?.();
        const t=Number(ytPlayer.getCurrentTime?.());
        if(state!==1||muted!==false||!Number.isFinite(t)){ytLastTime=null;return;}
        if(ytLastTime!==null){
          const d=t-ytLastTime;
-         if(d>0&&d<=7)addSeconds(ytSet,Math.min(d,4.7));
+         if(d>0&&d<=45)addSeconds(ytSet,Math.min(d,30));
        }
        ytLastTime=t;
      }catch{ytLastTime=null}
@@ -129,10 +136,10 @@
    nativeAudio=audio;nativeSet=post;nativeLastTime=null;
    if(!audio||!post?.id)return;
    nativeTick=setInterval(()=>{
-     if(!nativeAudio||!nativeSet||document.hidden||nativeAudio.paused||nativeAudio.muted||nativeAudio.volume===0){nativeLastTime=null;return;}
+     if(!nativeAudio||!nativeSet||nativeAudio.paused||nativeAudio.muted||nativeAudio.volume===0){nativeLastTime=null;return;}
      const t=Number(nativeAudio.currentTime);
      if(!Number.isFinite(t)){nativeLastTime=null;return}
-     if(nativeLastTime!==null){const d=t-nativeLastTime;if(d>0&&d<=7)addSeconds(nativeSet,Math.min(d,4.7))}
+     if(nativeLastTime!==null){const d=t-nativeLastTime;if(d>0&&d<=45)addSeconds(nativeSet,Math.min(d,30))}
      nativeLastTime=t;
    },4000);
  }
