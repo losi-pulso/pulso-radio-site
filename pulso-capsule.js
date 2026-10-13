@@ -203,7 +203,7 @@
    let y=542;
    for(const [head,list] of cols){
      txt(head,66,y,28,'#e4ffbe',800);y+=50;
-     if(!list.length){txt('Sem dados nesta '+(period==='week'?'semana':'mês'),73,y,23,'#8da892',500);y+=43;}
+     if(!list.length){txt(period==='all'?'Sem dados no histórico disponível':'Sem dados nesta '+(period==='week'?'semana':'mês'),73,y,23,'#8da892',500);y+=43;}
      else for(let i=0;i<Math.min(list.length,5);i++){let item=list[i];let label=item.name||item.title||'';if(label.length>40)label=label.slice(0,37)+'…';txt((i+1)+'. '+label,77,y,25,'#fff',600);y+=39;}
      y+=36;
    }
