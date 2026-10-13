@@ -121,7 +121,7 @@
    $('pulsoCapsuleSets').innerHTML=sets.length?sets.map((a,i)=>'<div class="capsule-list-item"><span class="capsule-number">'+(i+1)+'</span><span class="capsule-list-name">'+escape(a.name)+'</span><span class="capsule-duration">'+dur(a.seconds)+'</span></div>').join(''):empty('Os sets mais reproduzidos aparecerão aqui.');
    $('pulsoCapsuleTracks').innerHTML=tracks.length?tracks.map((a,i)=>'<div class="capsule-list-item"><span class="capsule-number">'+(i+1)+'</span><span class="capsule-list-name">'+escape(a.title)+'<small>'+escape(a.artist)+' · '+(a.confirmed?'Identificada':'Registrada manualmente')+'</small></span><span class="capsule-duration">'+a.count+'×</span></div>').join(''):empty('Ainda não há faixas identificadas. O nome do DJ set não é considerado uma música.');
    $('pulsoCapsuleStatus').textContent=artists.length?'Tempo estimado de reprodução audível neste navegador.':'Os números começam do zero e registram apenas a reprodução acompanhada neste navegador.';
-   return {artists,sets,tracks,total};
+   return {artists,sets,tracks,total,setsCount:new Set(rows.map(r=>r.id)).size};
  }
  function saveImage(){
    const summary=draw();if(!summary)return;
