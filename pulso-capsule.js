@@ -91,7 +91,7 @@
  function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch{}}
  const dateLabel=p=>{
    const d=new Date();
-   return p==='month'?new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric'}).format(d):
+   return p==='all'?'Todo o histórico':p==='month'?new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric'}).format(d):
      'Semana de '+new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short'}).format(startDay('week'));
  };
  function addSeconds(set,seconds){
@@ -152,8 +152,8 @@
    save();scheduleCloudSync();draw();
    return true;
  }
- const rangeRows=()=>{const cutoff=dayString(startDay(period));return mergedData().listens.filter(x=>x.day>=cutoff);};
- const rangeTracks=()=>{const cutoff=dayString(startDay(period));return mergedData().tracks.filter(x=>x.day>=cutoff);};
+ const rangeRows=()=>{const cutoff=period==='all'?'0000-01-01':dayString(startDay(period));return mergedData().listens.filter(x=>x.day>=cutoff);};
+ const rangeTracks=()=>{const cutoff=period==='all'?'0000-01-01':dayString(startDay(period));return mergedData().tracks.filter(x=>x.day>=cutoff);};
  const collect=(rows,key)=>{
    const m=new Map();
    for(const r of rows){const name=r[key];if(!name)continue;const a=m.get(name)||{name,seconds:0,cover:r.cover||'',times:0};a.seconds+=Number(r.seconds)||0;a.times++;m.set(name,a);}
@@ -182,7 +182,9 @@
    $('pulsoCapsuleArtists').innerHTML=artists.length?artists.map((a,i)=>'<div class="capsule-list-item"><span class="capsule-number">'+(i+1)+'</span><span class="capsule-list-name">'+escape(a.name)+'</span><span class="capsule-duration">'+dur(a.seconds)+'</span></div>').join(''):empty('Seus DJs mais ouvidos aparecerão aqui assim que você ouvir um set com som.');
    $('pulsoCapsuleSets').innerHTML=sets.length?sets.map((a,i)=>'<div class="capsule-list-item"><span class="capsule-number">'+(i+1)+'</span><span class="capsule-list-name">'+escape(a.name)+'</span><span class="capsule-duration">'+dur(a.seconds)+'</span></div>').join(''):empty('Os sets mais reproduzidos aparecerão aqui.');
    $('pulsoCapsuleTracks').innerHTML=tracks.length?tracks.map((a,i)=>'<div class="capsule-list-item"><span class="capsule-number">'+(i+1)+'</span><span class="capsule-list-name">'+escape(a.title)+'<small>'+escape(a.artist)+' · '+(a.confirmed?'Identificada':'Registrada manualmente')+'</small></span><span class="capsule-duration">'+a.count+'×</span></div>').join(''):empty('Ainda não há faixas identificadas. O nome do DJ set não é considerado uma música.');
-   $('pulsoCapsuleStatus').textContent=artists.length?'Tempo estimado de reprodução audível neste navegador.':'Os números começam do zero e registram apenas a reprodução acompanhada neste navegador.';
+   const scope=$('pulsoCapsuleStatus');
+   if(scope)scope.textContent=cloudReady?'Histórico sincronizado da sua conta, reunindo os dispositivos que enviaram dados ao PULSO.':'Histórico local deste aparelho. Entre na conta e aguarde a sincronização para reunir dados de outros dispositivos.';
+   const personal=document.querySelector('.capsule-personal');if(personal)personal.textContent=cloudReady?'CONTA SINCRONIZADA · DISPOSITIVOS CONECTADOS':'DADOS LOCAIS · SINCRONIZAÇÃO PENDENTE';
    return {artists,sets,tracks,total,setsCount:new Set(rows.map(r=>r.id)).size};
  }
  function saveImage(){
