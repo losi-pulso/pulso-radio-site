@@ -89,7 +89,8 @@ grid.innerHTML=list.length?list.map(card).join(''):'<div class="p54-empty">Nenhu
  document.querySelectorAll('[data-p54-artist]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p54Artist===selectedArtist)));
  document.querySelectorAll('[data-p54-genre]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p54Genre===selectedGenre)));
 }
-function pickEvent(event){selectedEvent=event;selectedArtist='Todos';selectedYear='Todos';selectedGenre='Todos';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});}
+function setCatalogExpanded(expanded){const section=$('p54Catalog'),button=$('p54ExpandCatalog');if(!section||!button)return;section.classList.toggle('p54-catalog-expanded',expanded);button.setAttribute('aria-expanded',String(expanded));button.innerHTML=expanded?'MOSTRAR MENOS SETS <span aria-hidden="true">−</span>':'VER TODOS OS SETS <span aria-hidden="true">＋</span>';}
+function pickEvent(event){setCatalogExpanded(true);selectedEvent=event;selectedArtist='Todos';selectedYear='Todos';selectedGenre='Todos';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});}
 function renderRanking(){const el=$('p54Djs');if(!el)return;el.innerHTML=ranking.map((artist,i)=>{const l=djInstagram({artist}),p=rankedPhotos[i];return `<div class="p54-rank"><strong>${String(i+1).padStart(2,'0')}</strong><span class="p54-rank-avatar" title="Imagem: ${safe(p.credit)}"><img loading="lazy" decoding="async" src="${safe(p.src)}" alt="Foto de ${safe(artist)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="p54-avatar-fallback" hidden>${safe(artist).slice(0,2).toUpperCase()}</span></span><span class="p54-rank-name">${safe(artist)}</span><a href="${safe(l)}" target="_blank" rel="noopener noreferrer" aria-label="Instagram de ${safe(artist)}">IG ↗</a></div>`}).join('');}
 function renderClubRanking(){const el=$('p54Clubs');if(!el)return;el.innerHTML=clubs2026.map(c=>`<article class="p54-club-card"><div class="p54-club-picture"><img loading="lazy" decoding="async" src="${safe(c.img)}" alt="Foto de ${safe(c.name)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="p54-club-fallback" hidden>${safe(c.name)}</span><strong>#${c.rank}</strong></div><div class="p54-club-info"><h3>${safe(c.name)}</h3><p>${safe(c.location)}</p><small class="p54-photo-credit">Foto: ${safe(c.source)}</small><a href="https://djmag.com/top100clubs/2026" target="_blank" rel="noopener noreferrer">VER NA DJ MAG ↗</a></div></article>`).join('');}
 /* PULSO — artistas em destaque (independente do ranking de DJs). */
@@ -122,14 +123,17 @@ function renderSignatures(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   renderRanking();renderClubRanking();renderSignatures();render();setHeroLocation('');setupHeroLocation();
+  setCatalogExpanded(false);
+  $('p54ExpandCatalog')?.addEventListener('click',()=>setCatalogExpanded(!$('p54Catalog')?.classList.contains('p54-catalog-expanded')));
   document.addEventListener('click',ev=>{
+    if(ev.target.closest('a[href="#p54Catalog"]'))setCatalogExpanded(true);
     const e=ev.target.closest('[data-p54-event]');if(e){pickEvent(e.dataset.p54Event);return;}
-    const a=ev.target.closest('[data-p54-artist]');if(a){selectedArtist=a.dataset.p54Artist;selectedEvent='Todos';selectedYear='Todos';selectedGenre='Todos';search='';const input=$('p54Search');if(input)input.value='';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});return;}
-    const y=ev.target.closest('[data-p54-year]');if(y){selectedYear=y.dataset.p54Year;render();return;}
-    const g=ev.target.closest('[data-p54-genre]');if(g){selectedGenre=g.dataset.p54Genre;render();return;}
+    const a=ev.target.closest('[data-p54-artist]');if(a){setCatalogExpanded(true);selectedArtist=a.dataset.p54Artist;selectedEvent='Todos';selectedYear='Todos';selectedGenre='Todos';search='';const input=$('p54Search');if(input)input.value='';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});return;}
+    const y=ev.target.closest('[data-p54-year]');if(y){setCatalogExpanded(true);selectedYear=y.dataset.p54Year;render();return;}
+    const g=ev.target.closest('[data-p54-genre]');if(g){setCatalogExpanded(true);selectedGenre=g.dataset.p54Genre;render();return;}
     const r=ev.target.closest('[data-p54-video]');if(r){ev.preventDefault();const id=r.dataset.p54Video;if(!window.PULSO_VIDEO?.open?.(id))window.PULSO_REELS?.open?.(id);return;}
   });
   $('p54Search')?.addEventListener('input',ev=>{search=ev.target.value;render();});
-  document.querySelectorAll('[data-open-desert]').forEach(b=>b.addEventListener('click',()=>{$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});}));
+  document.querySelectorAll('[data-open-desert]').forEach(b=>b.addEventListener('click',()=>{setCatalogExpanded(true);$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});}));
 });
 })();
