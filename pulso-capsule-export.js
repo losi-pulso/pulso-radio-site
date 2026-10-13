@@ -48,7 +48,7 @@
    t(ctx,'TEMPO REPRODUZIDO COM SOM',77,labelY,'800 26px Arial,sans-serif','#b9e1ba');
    const value= num((snapshot.total||0)/60);
    t(ctx,value+' MINUTOS',74,isStory?698:573,'900 73px Arial,sans-serif','#80ebae',935);
-   t(ctx,'PESSOAL • '+(snapshot.period==='month'?'MENSAL':'SEMANAL')+' • '+new Set(snapshot.sets.map(x=>x.name)).size+' SETS',77,isStory?747:616,'700 21px Arial,sans-serif','#bcd5bb',900);
+   t(ctx,'PESSOAL • '+(snapshot.period==='month'?'MENSAL':'SEMANAL')+' • '+num(snapshot.setsCount??snapshot.sets.length)+' SETS',77,isStory?747:616,'700 21px Arial,sans-serif','#bcd5bb',900);
  }
  function rows(ctx,items,x,y,maxWidth,kind,limit=5){
    const rowH=kind==='story'?79:72;
