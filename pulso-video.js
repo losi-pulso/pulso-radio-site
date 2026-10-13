@@ -13,6 +13,7 @@
     let time=0;try{time=Number(ytPlayer?.getCurrentTime?.())||0;}catch{}
     const state={videoId:currentVideoId,setId:currentId,time:Math.max(0,time),set:{id:activeSet.id,url:activeSet.url,title:activeSet.title||'',artist:activeSet.artist||'',event:activeSet.event||'',year:activeSet.year||'',cover:activeSet.cover||''},savedAt:Date.now()};
     try{localStorage.setItem(playbackKey(),JSON.stringify(state));}catch{}
+    window.PULSO_PLAYBACK_CLOUD?.save?.('video',state);
   }
   function restoreSavedPlayback(){
     if(restoreAttempted)return;
@@ -187,7 +188,7 @@
     window.addEventListener('pagehide',savePlayback);
     document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePlayback();});
     let restoreChecks=0;
-    const restoreTimer=window.setInterval(()=>{restoreChecks++;if(window.PULSO_APP?.user?.()||restoreChecks>=12){window.clearInterval(restoreTimer);restoreSavedPlayback();}},250);
+    const restoreTimer=window.setInterval(()=>{restoreChecks++;if(window.PULSO_APP||restoreChecks>=40){window.clearInterval(restoreTimer);restoreSavedPlayback();}},250);
     // Media remains mounted and visible when navigating sections within the SPA.
   });
   window.PULSO_VIDEO={open,close,pause,isOpen:()=>!!currentId&&!$('pulsoVideoDock')?.hidden};
