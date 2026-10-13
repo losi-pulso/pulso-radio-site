@@ -5,6 +5,7 @@
   const iframeTitle='PULSO PLAYER · YouTube';
   const playerUrl='https://www.youtube-nocookie.com/embed/';
   let currentId='',currentVideoId='',expanded=true;
+  let ytPlayer=null,ytInitStarted=false,ytApiPromise=null,activeSet=null;
   const icon=(kind)=>{
     const d={
       shrink:'<path d="M8 3v5H3M16 21v-5h5"/><path d="m3 8 6-6M21 16l-6 6"/>',
@@ -33,10 +34,56 @@
     });
     return playerUrl+id+'?'+options.toString();
   };
+
+  function youtubeApi(){
+    if(window.YT?.Player)return Promise.resolve(window.YT);
+    if(ytApiPromise)return ytApiPromise;
+    ytApiPromise=new Promise((resolve,reject)=>{
+      const previous=window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady=()=>{try{if(typeof previous==='function')previous();}finally{resolve(window.YT);}};
+      if(!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')){
+        const script=document.createElement('script');script.src='https://www.youtube.com/iframe_api';script.async=true;
+        script.onerror=()=>{ytApiPromise=null;reject(new Error('API do YouTube indisponível'));};
+        document.head.append(script);
+      }
+    });
+    return ytApiPromise;
+  }
+  async function attachController(){
+    if(ytPlayer||ytInitStarted)return;
+    ytInitStarted=true;
+    try{
+      const api=await youtubeApi();
+      const frame=$('pulsoVideoIframe');
+      if(!frame||!currentVideoId||$('pulsoVideoDock')?.hidden){ytInitStarted=false;return;}
+      const player=new api.Player(frame,{
+        events:{
+          onReady:evt=>{
+            if(!$('pulsoVideoDock')?.hidden&&currentVideoId){
+              ytPlayer=evt.target;
+              window.PULSO_CAPSULE?.observeYouTube?.(ytPlayer,activeSet);
+              try{
+                const data=ytPlayer.getVideoData?.();
+                if(data?.video_id&&data.video_id!==currentVideoId)ytPlayer.loadVideoById(currentVideoId);
+                ytPlayer.mute();ytPlayer.playVideo();
+              }catch(error){console.info('YouTube player:',error);}
+            }
+          },
+          onStateChange:evt=>window.PULSO_CAPSULE?.onYouTubeState?.(evt.data),
+          onError:()=>window.PULSO_CAPSULE?.onYouTubeState?.(-1)
+        }
+      });
+      ytPlayer=player;
+    }catch(error){
+      ytInitStarted=false;
+      console.warn('O vídeo pode tocar sem estatísticas do YouTube:',error);
+    }
+  }
   const dispatchYoutube=command=>{
     const frame=$('pulsoVideoIframe');
     if(!frame?.src||!currentVideoId)return;
     try{
+      if(ytPlayer&&typeof ytPlayer[command]==='function'){ytPlayer[command]();return;}
       frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:command,args:[]}), 'https://www.youtube-nocookie.com');
     }catch(err){console.info('Player PULSO:',err);}
   };
@@ -50,8 +97,11 @@
     const dock=$('pulsoVideoDock'),frame=$('pulsoVideoIframe');
     if(!dock||!frame)return;
     pause();
-    frame.removeAttribute('src');
+    if(ytPlayer){try{ytPlayer.stopVideo?.();}catch{}}
+    else frame.removeAttribute('src');
+    window.PULSO_CAPSULE?.detachYouTube?.();
     dock.hidden=true;
+    activeSet=null;
     currentId='';currentVideoId='';
     document.body.classList.remove('pulso-video-active');
   }
@@ -76,7 +126,7 @@
     try{window.PULSO_APP?.pauseForReels?.();}catch{}
     try{window.PULSO_REELS?.close?.();}catch{}
     const isSame=currentId===String(set.id)&&currentVideoId===id&&!dock.hidden;
-    currentId=String(set.id);currentVideoId=id;
+    currentId=String(set.id);currentVideoId=id;activeSet=set;
     $('pulsoVideoName').textContent=set.title||set.artist||'DJ SET';
     $('pulsoVideoArtist').textContent=[set.artist,set.event,set.year].filter(Boolean).join(' · ');
     $('pulsoVideoExternal').href=set.url;
@@ -86,7 +136,13 @@
     // Preserve timestamp and current playback if they select the same item again.
     if(!isSame){
       frame.title=iframeTitle+' — '+(set.title||'DJ set');
-      frame.src=embedUrl(id);
+      if(ytPlayer){
+        window.PULSO_CAPSULE?.observeYouTube?.(ytPlayer,set);
+        try{ytPlayer.mute?.();ytPlayer.loadVideoById?.(id);}catch{frame.src=embedUrl(id);}
+      }else{
+        frame.src=embedUrl(id);
+        attachController();
+      }
     }else dispatchYoutube('playVideo');
     return true;
   }
