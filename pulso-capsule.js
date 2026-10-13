@@ -154,7 +154,6 @@
  document.addEventListener('DOMContentLoaded',()=>{
    load();draw();
    document.querySelectorAll('[data-capsule-period]').forEach(button=>button.addEventListener('click',()=>{period=button.dataset.capsulePeriod;draw()}));
-   $('pulsoCapsuleImage')?.addEventListener('click',saveImage);
    $('pulsoCapsuleIdentify')?.addEventListener('click',()=>{$('identifyRadio')?.click();});
    $('pulsoCapsuleTrackForm')?.addEventListener('submit',event=>{
      event.preventDefault();
@@ -164,5 +163,5 @@
    document.addEventListener('pulso:track-identified',onIdentification);
    window.addEventListener('storage',event=>{if(event.key===KEY){load();draw();}});
  });
- window.PULSO_CAPSULE={observeYouTube:observed,onYouTubeState:ytState,detachYouTube,observeNative,recordTrack};
+ window.PULSO_CAPSULE={observeYouTube:observed,onYouTubeState:ytState,detachYouTube,observeNative,recordTrack,getSnapshot:()=>({...(draw()||{artists:[],sets:[],tracks:[],total:0}),period,label:dateLabel(period)})};
 })();
