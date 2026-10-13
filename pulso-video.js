@@ -6,10 +6,12 @@
   const playerUrl='https://www.youtube-nocookie.com/embed/';
   let currentId='',currentVideoId='',expanded=true;
   let ytPlayer=null,ytInitStarted=false,ytApiPromise=null,activeSet=null;
-  let pendingRestore=null,restoredPaused=false,restoreAttempted=false;
+  let pendingRestore=null,restoredPaused=false,restoreAttempted=false,lastPersistAt=0;
   const playbackKey=()=>{const id=window.PULSO_APP?.user?.()?.id;return 'pulso-playback-video-v1'+(id?'-'+String(id).replace(/[^a-z0-9_-]/gi,''):'-local');};
-  function savePlayback(){
+  function savePlayback(force=false){
     if(!currentVideoId||!activeSet)return;
+    if(!force&&Date.now()-lastPersistAt<8000)return;
+    lastPersistAt=Date.now();
     let time=0;try{time=Number(ytPlayer?.getCurrentTime?.())||0;}catch{}
     const state={videoId:currentVideoId,setId:currentId,time:Math.max(0,time),set:{id:activeSet.id,url:activeSet.url,title:activeSet.title||'',artist:activeSet.artist||'',event:activeSet.event||'',year:activeSet.year||'',cover:activeSet.cover||''},savedAt:Date.now()};
     try{localStorage.setItem(playbackKey(),JSON.stringify(state));}catch{}
@@ -107,7 +109,7 @@
       frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:command,args:[]}), 'https://www.youtube-nocookie.com');
     }catch(err){console.info('Player PULSO:',err);}
   };
-  function pause(){dispatchYoutube('pauseVideo');savePlayback();}
+  function pause(){dispatchYoutube('pauseVideo');savePlayback(true);}
   function playWithSound(){
     // Um toque explícito permite pedir áudio mesmo quando o navegador bloqueia autoplay com som.
     restoredPaused=false;
@@ -117,7 +119,7 @@
   function close(){
     const dock=$('pulsoVideoDock'),frame=$('pulsoVideoIframe');
     if(!dock||!frame)return;
-    savePlayback();
+    savePlayback(true);
     pause();
     if(ytPlayer){try{ytPlayer.stopVideo?.();}catch{}}
     else frame.removeAttribute('src');
@@ -185,11 +187,11 @@
     $('pulsoVideoPlay')?.addEventListener('click',playWithSound);
     $('pulsoVideoPause')?.addEventListener('click',pause);
     window.setInterval(savePlayback,2500);
-    window.addEventListener('pagehide',savePlayback);
-    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePlayback();});
+    window.addEventListener('pagehide',()=>savePlayback(true));
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePlayback(true);});
     let restoreChecks=0;
-    const restoreTimer=window.setInterval(()=>{restoreChecks++;if(window.PULSO_APP||restoreChecks>=40){window.clearInterval(restoreTimer);restoreSavedPlayback();}},250);
+    const restoreTimer=window.setInterval(()=>{restoreChecks++;if(window.PULSO_APP?.user?.()||restoreChecks>=40){window.clearInterval(restoreTimer);restoreSavedPlayback();}},250);
     // Media remains mounted and visible when navigating sections within the SPA.
   });
-  window.PULSO_VIDEO={open,close,pause,isOpen:()=>!!currentId&&!$('pulsoVideoDock')?.hidden};
+  window.PULSO_VIDEO={open,close,pause,restore:restoreSavedPlayback,isOpen:()=>!!currentId&&!$('pulsoVideoDock')?.hidden};
 })();
