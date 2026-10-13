@@ -1563,7 +1563,7 @@
     $('importBackup').addEventListener('change',importBackup);
     $('exportPosts').addEventListener('click',exportPosts);
     $('previewDismiss').addEventListener('click',()=>$('previewBanner').hidden=true);
-    $('appRadioButton')?.addEventListener('click',()=>{if(!radioActive)radioStart();else $('radioDock').scrollIntoView({block:'nearest'});});
+    $('appRadioButton')?.addEventListener('click',()=>{if(!radioActive){radioStart();return;}radioDockMinimized=false;radioUpdateUI();$('radioDock').scrollIntoView({behavior:'smooth',block:'nearest'});});
     $('appPublishButton')?.addEventListener('click',()=>openComposer());
     $('appAccountButton')?.addEventListener('click',authDialog);
     wireRadioEvents();
