@@ -824,7 +824,7 @@
   function playPost(p) {
     window.PULSO_VIDEO?.pause?.(); // Pausa o vídeo flutuante antes de abrir outra publicação.
     if(p.demo){toast('Exemplo de layout. Publique um link real para ativar o player.');return;}
-    if (radioActive) radioStop(); // Evita dois players reproduzindo ao mesmo tempo.
+    if (radioActive) radioPause(); // Ao abrir outra mídia, pausa a rádio sem perder a fila nem o ponto de escuta.
     const url=safeUrl(p.url);if(!url){toast('Esta publicação não tem link válido.');return;}
     const embedInfo=mediaEmbed(url);
     if(!embedInfo){window.open(url,'_blank','noopener,noreferrer');return;}
@@ -1219,6 +1219,7 @@
   }
   function radioPause() {
     if(!radioActive||radioPaused)return;
+    saveRadioPlayback(true);
     const source=radioSource(radioQueue[radioIndex]);
     if(source?.kind==='spotify'){toast('Use o botão de pausa dentro do player do Spotify.');return;}
     radioPaused=true;
