@@ -81,14 +81,14 @@
      t(ctx,'SEUS SETS MAIS OUVIDOS',87,1411,'900 30px Arial,sans-serif','#c7ff97');
      rows(ctx,snapshot.sets,89,1478,865,kind,3);
      t(ctx,'Dados estimados de reprodução neste navegador',81,1825,'500 22px Arial,sans-serif','#9fbaa3');
-     t(ctx,'pulso-radio-site.pages.dev',81,1870,'700 25px Arial,sans-serif','#c7ff97');
+     t(ctx,'sunny-paletas-ca93b2.netlify.app',81,1870,'700 25px Arial,sans-serif','#c7ff97');
    }else{
      rect(ctx,57,674,966,335,22,'rgba(19,37,28,.8)');
      t(ctx,'DJS FAVORITOS',79,723,'900 29px Arial,sans-serif','#c7ff97');
      t(ctx,'FAIXAS REGISTRADAS',544,723,'900 28px Arial,sans-serif','#c7ff97');
      rows(ctx,snapshot.artists,81,774,437,kind,3);
      rows(ctx,snapshot.tracks,547,774,425,kind,3);
-     t(ctx,'pulso-radio-site.pages.dev',74,1046,'700 23px Arial,sans-serif','#c7ff97');
+     t(ctx,'sunny-paletas-ca93b2.netlify.app',74,1046,'700 23px Arial,sans-serif','#c7ff97');
    }
    return canvas;
  }
