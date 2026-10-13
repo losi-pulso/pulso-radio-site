@@ -1100,6 +1100,7 @@
         engine.player.getDuration?.(ms=>{if(radioEngine===engine && ms>0){radioDurationKnown=ms/1000;radioDrawTimeline();}});
         engine.player.getPosition?.(ms=>{if(radioEngine===engine&&Number.isFinite(ms)){radioCurrentKnown=ms/1000;radioDrawTimeline();}});
       }
+      if(radioResumePoint)applyRadioResume(engine);
       radioDrawTimeline();
       saveRadioPlayback();
     }catch(err){console.warn('Tempo da faixa indisponível',err);}
