@@ -95,8 +95,8 @@ self.addEventListener('fetch',evt=>{
 
 
 /* PWA shell: guarda a interface para abrir sem conexão, não baixa músicas/vídeos. */
-const PWA_CACHE='pulso-pwa-v54';
-const PWA_FILES=['./','./index.html','./styles.css','./script.js','./pulso5.js','./pulso51.js','./pulso52.js','./pulso54.js','./pulso5.css','./pulso51.css','./pulso52.css','./pulso54.css','./desert-artcar.webp','./background.js','./notifications.js','./social.js','./identify.js','./config.js','./manifest.webmanifest','./favicon.svg','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
+const PWA_CACHE='pulso-pwa-v55-visual';
+const PWA_FILES=['./','./index.html','./styles.css','./pulso-visual-refresh.css','./script.js','./pulso5.js','./pulso51.js','./pulso52.js','./pulso54.js','./pulso-capsule.js','./pulso-capsule-export.js','./pulso-insights.js','./pulso-media-actions.js','./pulso-share.js','./pulso-video.js','./pulso5.css','./pulso51.css','./pulso52.css','./pulso54.css','./desert-artcar.webp','./burningman-real.webp','./background.js','./notifications.js','./social.js','./identify.js','./config.js','./manifest.webmanifest','./favicon.svg','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(PWA_CACHE).then(cache=>cache.addAll(PWA_FILES)).catch(()=>{}));
 });
@@ -113,7 +113,7 @@ self.addEventListener('fetch',event=>{
       const copy=response.clone();event.waitUntil(caches.open(PWA_CACHE).then(cache=>cache.put(request,copy)).catch(()=>{}));
     }
     return response;
-  }).catch(()=>caches.match(request).then(r=>r||new Response('Sem conexão. Conecte-se para ouvir músicas.',{status:503}))));
+  }).catch(()=>caches.match(request,{ignoreSearch:true}).then(r=>r||new Response('Sem conexão. Conecte-se para ouvir músicas.',{status:503}))));
 });
 
 /* Alertas push PULSO: só exibir quando o usuário autorizou o app. */
