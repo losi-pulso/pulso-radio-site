@@ -356,3 +356,33 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 .capsule-preview-bottom a:hover{background:#ecffb8}
 .capsule-preview-header button:focus-visible,.capsule-preview-bottom a:focus-visible,.capsule-cta-row button:focus-visible{outline:2px solid #d1ff6b;outline-offset:3px}
 @media(max-width:690px){.capsule-cta-row{display:grid;grid-template-columns:1fr;gap:9px}.capsule-cta-row button{width:100%;font-size:11px;min-height:46px}.capsule-preview-dialog{width:calc(100% - 20px)}.capsule-preview-art{padding:10px}.capsule-preview-art img{max-height:57dvh}}
+
+
+/* PULSO 5.18 — catálogo compacto na página inicial; filtros e arquivo completos sob demanda. */
+#p54Catalog:not(.p54-catalog-expanded) .p54-eventnav,
+#p54Catalog:not(.p54-catalog-expanded) .p54-artist-shortcuts,
+#p54Catalog:not(.p54-catalog-expanded) .capsule-shortcut-line,
+#p54Catalog:not(.p54-catalog-expanded) .p54-toolbar,
+#p54Catalog:not(.p54-catalog-expanded) #p54OfficialPlaylists{display:none!important}
+#p54Catalog:not(.p54-catalog-expanded) .p54-heading{margin-top:18px;margin-bottom:14px}
+#p54Catalog:not(.p54-catalog-expanded) .p54-heading p{max-width:600px}
+#p54Catalog:not(.p54-catalog-expanded) .p54-grid>.p54-card:nth-child(n+4){display:none!important}
+.p54-expand-catalog{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:46px;margin:18px 0 0;padding:12px 18px;border:1px solid #62794d;border-radius:12px;background:linear-gradient(120deg,#1a291b,#101711);color:#d9ff9b;font:800 11px 'Space Grotesk',sans-serif;letter-spacing:.1em;cursor:pointer;transition:background .18s,border-color .18s}
+.p54-expand-catalog span{font-size:18px;line-height:1}
+.p54-expand-catalog:hover{background:#263b22;border-color:#d1ff6b}
+#p54Catalog.p54-catalog-expanded .p54-expand-catalog{background:#d1ff6b;color:#10190c;border-color:#d1ff6b}
+#p54Catalog.p54-catalog-expanded .p54-expand-catalog span{transform:rotate(45deg)}
+@media(max-width:570px){
+ #p54Catalog.p54-section{padding-top:30px;padding-bottom:24px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-over{padding-bottom:9px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-heading h2{font-size:31px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-heading p{font-size:12px;line-height:1.45;margin-bottom:0}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-livebadge{font-size:8px;padding:7px 9px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-card-art{height:112px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-card-info{padding:10px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-card h3{font-size:13px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-card p{font-size:11px}
+ #p54Catalog:not(.p54-catalog-expanded) .p54-card:nth-child(3){display:none!important}
+ .p54-expand-catalog{margin-top:12px}
+}
