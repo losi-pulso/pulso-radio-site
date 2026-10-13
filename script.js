@@ -90,6 +90,34 @@
   let likes = new Set();
   let saved = new Set(Array.isArray(stored(savedKey, [])) ? stored(savedKey,[]) : []);
   let user = null, isAdmin = false, reports = [], reportLoading = false;
+  async function cloudPlaybackSave(kind,state){
+    if(!connected||!sb||!user?.id||!['radio','video'].includes(kind)||!state)return;
+    try{
+      const {data:existing}=await sb.from('pulso_playback_state').select('radio_state,video_state').eq('user_id',user.id).maybeSingle();
+      const row={user_id:user.id,radio_state:existing?.radio_state||null,video_state:existing?.video_state||null,updated_at:new Date().toISOString()};
+      row[kind+'_state']=state;
+      const {error}=await sb.from('pulso_playback_state').upsert(row,{onConflict:'user_id'});
+      if(error)console.warn('Falha ao sincronizar ponto de reprodução:',error.message);
+    }catch(err){console.warn('Sincronização do ponto de reprodução indisponível:',err);}
+  }
+  async function cloudPlaybackSync(){
+    if(!connected||!sb||!user?.id)return;
+    try{
+      const {data,error}=await sb.from('pulso_playback_state').select('radio_state,video_state').eq('user_id',user.id).maybeSingle();
+      if(error){console.warn('Não foi possível recuperar os pontos de reprodução:',error.message);return;}
+      for(const kind of ['radio','video']){
+        const remote=data?.[kind+'_state'];if(!remote)continue;
+        const key='pulso-playback-'+kind+'-v1-'+String(user.id).replace(/[^a-z0-9_-]/gi,'');
+        let local=null;try{local=JSON.parse(localStorage.getItem(key)||'null');}catch{}
+        if(!local||Number(remote.savedAt||0)>Number(local.savedAt||0)){
+          try{localStorage.setItem(key,JSON.stringify(remote));}catch{}
+        }else if(Number(local.savedAt||0)>Number(remote.savedAt||0)){
+          cloudPlaybackSave(kind,local);
+        }
+      }
+    }catch(err){console.warn('Falha ao sincronizar reprodução:',err);}
+  }
+  window.PULSO_PLAYBACK_CLOUD={save:cloudPlaybackSave,sync:cloudPlaybackSync};
   let activeGenre = 'Todos', mediaFilter = 'all', mode = 'all', query = '', sort = 'recent';
   let authMode = 'login', adminTab = 'pending', editingId = null;
   let pendingComposer = false, currentRefresh = 0, initialDeepLinkChecked = false;
@@ -246,6 +274,7 @@
       }catch(err){console.warn('MFA indisponível:',err);}
     }
     user=authError?null:currentUser;
+    if(user)await cloudPlaybackSync();
     isAdmin=false;likes=new Set();
     if(user){
       const [membership,liked]=await Promise.all([
@@ -1036,7 +1065,7 @@
   let radioTimeDrag=false,radioDurationKnown=0,radioCurrentKnown=0;
   let radioResumePoint=null,radioLastPersist=0;
   function playbackStorageKey(kind){
-    const account=window.PULSO_APP?.user?.()?.id;
+    const account=user?.id||window.PULSO_APP?.user?.()?.id;
     return 'pulso-playback-'+kind+'-v1'+(account?'-'+String(account).replace(/[^a-z0-9_-]/gi,''):'-local');
   }
   function readPlayback(kind){
@@ -1049,6 +1078,7 @@
     const item=radioQueue[radioIndex];
     const state={id:String(item.id),title:item.title||'',artist:item.artist||'',time:Math.max(0,Number(radioCurrentKnown)||0),savedAt:Date.now()};
     try{localStorage.setItem(playbackStorageKey('radio'),JSON.stringify(state));}catch{}
+    window.PULSO_PLAYBACK_CLOUD?.save?.('radio',state);
   }
   function applyRadioResume(engine){
     if(!radioResumePoint||!engine)return;
