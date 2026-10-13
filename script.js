@@ -1197,6 +1197,8 @@
     $('radioCount').textContent=radioQueue.length+' '+(radioQueue.length===1?'MÚSICA':'MÚSICAS');
     $('radioMiniTitle').textContent=radioQueue[radioIndex]?.title||'Sua frequência';
     $('radioDock').classList.toggle('is-minimized',radioActive&&radioDockMinimized);
+    document.documentElement.classList.toggle('radio-player-open',radioActive&&!radioDockMinimized);
+    document.body.classList.toggle('radio-player-open',radioActive&&!radioDockMinimized);
     $('radioMinimize').innerHTML=radioDockMinimized?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>';
     $('radioMinimize').setAttribute('aria-label',radioDockMinimized?'Expandir rádio':'Minimizar rádio');
     $('radioMinimize').title=radioDockMinimized?'Expandir rádio':'Minimizar rádio';
