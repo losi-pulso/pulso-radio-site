@@ -326,3 +326,11 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 .capsule-disclaimer{font:500 10px/1.6 'DM Sans',sans-serif;color:#97af99;margin:0}
 @media(max-width:1060px){.capsule-columns{grid-template-columns:repeat(2,minmax(0,1fr))}.capsule-columns>section:last-child{grid-column:1/-1}}
 @media(max-width:680px){.capsule-section{margin-top:21px}.capsule-card{border-radius:17px}.capsule-header{padding:22px 17px 13px;align-items:stretch;flex-direction:column;gap:16px}.capsule-head-copy h2{font-size:31px}.capsule-head-copy p{font-size:12px}.capsule-period-tabs{align-self:flex-start}.capsule-daterow{padding:13px 17px;align-items:flex-start;flex-direction:column;gap:5px}.capsule-metrics{margin:0 17px 14px}.capsule-metrics>div{padding:12px}.capsule-metrics strong{font-size:30px}.capsule-metrics strong small{font-size:11px}.capsule-columns{padding:0 17px 17px;grid-template-columns:1fr;gap:10px}.capsule-columns>section:last-child{grid-column:auto}.capsule-controls{padding:16px 17px 21px}.capsule-cta-row button{width:100%}.capsule-add-track form{grid-template-columns:1fr}.capsule-personal{font-size:8px}}
+
+
+/* Acesso rápido à cápsula, sem alterar a navegação principal. */
+.capsule-shortcut-line{display:flex;align-items:center;justify-content:flex-end;margin:11px 0 17px}
+.capsule-shortcut-line a{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #8ecf83;border-radius:999px;background:#163022;color:#c9ffb3;padding:11px 14px;text-decoration:none;font:900 10px/1.3 'Space Grotesk',sans-serif;letter-spacing:.045em}
+.capsule-shortcut-line a:hover{background:#23432d;border-color:#d1ff6b}
+.capsule-shortcut-line a:focus-visible{outline:2px solid #d1ff6b;outline-offset:3px}
+@media(max-width:570px){.capsule-shortcut-line{justify-content:stretch}.capsule-shortcut-line a{width:100%;min-height:42px}}
