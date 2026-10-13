@@ -45,3 +45,18 @@
  .pulso-deck-actions .pulso-mmss-deck.pulso-hhmmss{width:178px}
 }
 @media(max-width:340px){.pulso-deck-actions .pulso-mmss-deck.pulso-hhmmss{width:160px}.pulso-hhmmss{padding-inline:4px;gap:2px}}
+
+/* PULSO 5.19 — filtros nativos do Reels, comunidade e YouTube separados. */
+.p52-reels-header>div{max-width:calc(100% - 60px)}
+.p52-reels-modes{display:flex;align-items:center;gap:5px;margin-top:9px;flex-wrap:wrap}
+.p52-reels-modes button{border:1px solid #81947688;border-radius:999px;background:#101a13d9;color:#d9e7d0;padding:7px 10px;font:800 8px 'Space Grotesk',sans-serif;letter-spacing:.05em;cursor:pointer}
+.p52-reels-modes button[aria-pressed=true]{background:#d1ff6b;color:#10180c;border-color:#d1ff6b}
+.p52-reels-modes button:focus-visible{outline:2px solid white;outline-offset:2px}
+@media(max-width:560px){
+ .p52-reels-header{align-items:flex-start;padding-left:12px;padding-right:12px;gap:8px}
+ .p52-reels-header>div{gap:7px;max-width:calc(100% - 45px)}
+ .p52-reels-header strong{font-size:15px}
+ .p52-reels-modes{gap:4px;margin-top:7px}
+ .p52-reels-modes button{font-size:7px;padding:7px 8px}
+ .p52-reels-header>span{font-size:10px;padding-top:4px}
+}
