@@ -15,8 +15,8 @@
    if(!window.supabase?.createClient||!cfg.supabaseUrl||!cfg.supabaseAnonKey)return;
    try{
      capsuleClient=window.supabase.createClient(cfg.supabaseUrl.trim().replace(/\/$/,''),cfg.supabaseAnonKey.trim(),{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-     capsuleClient.auth.getUser().then(({data,error})=>{capsuleUser=error?null:data?.user||null;syncCloud();});
-     capsuleClient.auth.onAuthStateChange((_event,session)=>{capsuleUser=session?.user||null;syncCloud();});
+     capsuleClient.auth.getUser().then(({data,error})=>{capsuleUser=error?null:data?.user||null;syncCloud(true);});
+     capsuleClient.auth.onAuthStateChange((_event,session)=>{capsuleUser=session?.user||null;syncCloud(true);});
    }catch(err){console.warn('PULSO cápsula: sincronização indisponível',err);}
  }
  function mergedData(){
@@ -35,7 +35,7 @@
    cloudTimer=setTimeout(()=>syncCloud(true),1800);
  }
  async function syncCloud(pushLocal=false){
-   if(!capsuleClient||!capsuleUser){cloudReady=false;draw();return;}
+   if(!capsuleClient||!capsuleUser){cloudRows=[];cloudReady=false;draw();return;}
    if(cloudBusy)return;
    cloudBusy=true;
    try{
