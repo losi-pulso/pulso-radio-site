@@ -334,3 +334,25 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 .capsule-shortcut-line a:hover{background:#23432d;border-color:#d1ff6b}
 .capsule-shortcut-line a:focus-visible{outline:2px solid #d1ff6b;outline-offset:3px}
 @media(max-width:570px){.capsule-shortcut-line{justify-content:stretch}.capsule-shortcut-line a{width:100%;min-height:42px}}
+
+
+/* PULSO 5.16 — Stories 9:16 com alternativa de download no Safari. */
+.capsule-cta-row .capsule-btn-primary{background:linear-gradient(105deg,#a0ffab,#d1ff6b);border-color:#c5ff92;box-shadow:0 5px 22px #a5ffad20}
+.capsule-cta-row .capsule-btn-primary:hover{background:#d7ffc0}
+.capsule-export-status{font:700 12px/1.5 'DM Sans',sans-serif;color:#c0ffbc;margin:11px 0}
+.capsule-export-status:empty{display:none}
+.capsule-preview-dialog{border:1px solid #698f74;border-radius:19px;background:#111b16;color:#f1ffef;padding:0;width:min(470px,calc(100% - 24px));max-height:calc(100dvh - 30px);overflow:hidden;box-shadow:0 25px 75px #000d}
+.capsule-preview-dialog::backdrop{background:#000d;backdrop-filter:blur(5px)}
+.capsule-preview-inner{display:flex;flex-direction:column;max-height:calc(100dvh - 35px)}
+.capsule-preview-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 17px;border-bottom:1px solid #426345;background:#16271d}
+.capsule-preview-header span{display:block;color:#a7edab;letter-spacing:.11em;font:800 9px 'Space Grotesk',sans-serif}
+.capsule-preview-header strong{display:block;margin-top:3px;font:800 19px 'Space Grotesk',sans-serif}
+.capsule-preview-header button{height:35px;width:35px;flex:none;background:#24372b;color:#ebffe2;border:1px solid #6e996b;border-radius:50%;cursor:pointer;font-size:22px}
+.capsule-preview-art{display:flex;justify-content:center;min-height:0;flex:1 1 auto;overflow:auto;overscroll-behavior:contain;padding:12px 18px;background:#08120e}
+.capsule-preview-art img{display:block;max-height:min(61dvh,710px);max-width:100%;height:auto;width:auto;border-radius:8px;object-fit:contain;box-shadow:0 10px 26px #000b;-webkit-touch-callout:default;user-select:auto;-webkit-user-select:auto}
+.capsule-preview-bottom{padding:12px 17px 17px;display:grid;gap:10px;background:#142319}
+.capsule-preview-bottom p{margin:0;color:#d1e9cc;font:500 12px/1.5 'DM Sans',sans-serif}
+.capsule-preview-bottom a{display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center;border-radius:11px;min-height:44px;padding:10px 14px;background:#d1ff6b;color:#102312;font:900 11px/1.35 'Space Grotesk',sans-serif}
+.capsule-preview-bottom a:hover{background:#ecffb8}
+.capsule-preview-header button:focus-visible,.capsule-preview-bottom a:focus-visible,.capsule-cta-row button:focus-visible{outline:2px solid #d1ff6b;outline-offset:3px}
+@media(max-width:690px){.capsule-cta-row{display:grid;grid-template-columns:1fr;gap:9px}.capsule-cta-row button{width:100%;font-size:11px;min-height:46px}.capsule-preview-dialog{width:calc(100% - 20px)}.capsule-preview-art{padding:10px}.capsule-preview-art img{max-height:57dvh}}
