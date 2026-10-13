@@ -376,3 +376,33 @@
 .community-sets-foot a{color:#d1ff6b;font:800 10px 'Space Grotesk',sans-serif;letter-spacing:.06em}
 .community-sets-foot button{background:transparent;color:#d1ff6b}
 @media(max-width:760px){.community-sets-section{padding-top:18px;padding-bottom:25px}.community-sets-head{align-items:flex-start;flex-direction:column}.community-reels-button{padding:10px 14px}.community-set-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.community-set-body{padding:9px}.community-set-body h3{font-size:12px}.community-set-body p{font-size:10px}.community-set-actions button{font-size:8px;padding:9px 3px}.community-sets-foot{align-items:flex-start;flex-direction:column}}
+
+
+/* PULSO COMMUNITY 5.20 — player preview em destaque e ações de mídia. */
+.community-set-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+.community-set-card{border-color:#303d2e;border-radius:16px;box-shadow:0 12px 32px #0003;transition:border-color .2s,transform .2s}
+.community-set-card:hover{border-color:#617d4b;transform:translateY(-2px)}
+.community-set-preview{position:relative;isolation:isolate;overflow:hidden;background:#0b100c;aspect-ratio:16/9}
+.community-set-preview .community-set-cover{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;transition:transform .35s,filter .25s}
+.community-set-card:hover .community-set-cover{transform:scale(1.025);filter:brightness(.76)}
+.community-set-cover-empty{background:radial-gradient(ellipse at center,#283b25 0,#101710 70%)}
+.community-set-play{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:68px;height:68px;display:grid;place-items:center;border:1px solid #ffffffad;border-radius:50%;background:#d1ff6b;color:#10190d;box-shadow:0 5px 28px #0008;cursor:pointer;transition:transform .18s,background .18s}
+.community-set-play span{font-size:25px;line-height:1;margin-left:4px}
+.community-set-play:hover{transform:translate(-50%,-50%) scale(1.08);background:#e2ff9d}
+.community-set-preview-label{position:absolute;z-index:1;left:12px;top:12px;border:1px solid #ffffff38;border-radius:4px;background:#090d0bcc;color:#e9ffd4;padding:6px 8px;font:800 9px 'Space Grotesk',sans-serif;letter-spacing:.1em}
+.community-set-body{padding:15px 16px 16px}
+.community-set-body h3{font-size:clamp(15px,1.6vw,19px);line-height:1.3;margin:8px 0 5px}
+.community-set-body p{font-size:12px;margin-bottom:14px}
+.community-set-actions{display:flex;align-items:center;gap:9px;padding-top:12px;border-top:1px solid #293328}
+.community-set-actions button{min-height:42px;padding:10px 14px;border-radius:9px;font-size:10px;letter-spacing:.035em;cursor:pointer;transition:filter .18s,transform .18s}
+.community-set-actions button:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.community-set-actions .community-set-share{background:#182019;border-color:#465442;color:#eef5e8}
+.community-set-actions .community-set-download{background:#d1ff6b;border-color:#d1ff6b;color:#11190d}
+@media(max-width:760px){
+ .community-set-grid{grid-template-columns:minmax(0,1fr);gap:15px}
+ .community-set-preview{aspect-ratio:16/9}
+ .community-set-play{width:60px;height:60px}
+ .community-set-body{padding:13px}
+ .community-set-body h3{font-size:16px}
+ .community-set-actions button{font-size:10px;flex:1}
+}
