@@ -1277,6 +1277,8 @@
     radioStatus('Tentando reproduzir…');radioUpdateUI();
   }
   function radioToggle() {
+    // Se a rádio estiver recolhida, o primeiro toque serve para reabrir o player,
+    // sem alterar o estado de reprodução nem pausar a música.
     if(radioActive&&radioDockMinimized){radioDockMinimized=false;radioUpdateUI();return;}
     if(!radioActive){radioStart();return;}
     if(radioPaused)radioResume();else radioPause();
@@ -1439,6 +1441,18 @@
     $('radioToggle').addEventListener('click',radioToggle);
     $('radioClose').addEventListener('click',radioStop);
     $('radioMinimize').addEventListener('click',()=>{radioDockMinimized=!radioDockMinimized;radioUpdateUI();});
+    // No modo minimizado, tocar na própria barra (nome/faixa/espaço vazio)
+    // também expande o player. Os botões de minimizar e desligar mantêm suas ações.
+    const radioTopbar=$('radioDock').querySelector('.radio-topbar');
+    radioTopbar.addEventListener('click',ev=>{
+      if(!radioActive||!radioDockMinimized||ev.target.closest('button'))return;
+      radioDockMinimized=false;
+      radioUpdateUI();
+    });
+    radioTopbar.addEventListener('keydown',ev=>{
+      if(!radioActive||!radioDockMinimized||ev.target.closest('button'))return;
+      if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();radioDockMinimized=false;radioUpdateUI();}
+    });
     window.addEventListener('pagehide',()=>saveRadioPlayback(true));
     document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveRadioPlayback(true);});
     $('radioNext').addEventListener('click',()=>radioNext());
