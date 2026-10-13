@@ -190,7 +190,7 @@
     window.addEventListener('pagehide',()=>savePlayback(true));
     document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePlayback(true);});
     let restoreChecks=0;
-    const restoreTimer=window.setInterval(()=>{restoreChecks++;if(window.PULSO_APP?.user?.()||restoreChecks>=40){window.clearInterval(restoreTimer);restoreSavedPlayback();}},250);
+    const restoreTimer=window.setInterval(()=>{restoreChecks++;if(window.PULSO_APP?.playbackReady||restoreChecks>=40){window.clearInterval(restoreTimer);restoreSavedPlayback();}},250);
     // Media remains mounted and visible when navigating sections within the SPA.
   });
   window.PULSO_VIDEO={open,close,pause,restore:restoreSavedPlayback,isOpen:()=>!!currentId&&!$('pulsoVideoDock')?.hidden};
