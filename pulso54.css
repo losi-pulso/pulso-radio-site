@@ -274,3 +274,55 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 @media(prefers-reduced-motion:reduce){.pulso-video-dock,.pulso-video-actions button{transition:none}}
 
 .pulso-video-footer button svg{display:inline-block;flex:none;width:14px;height:14px;vertical-align:middle;margin-right:5px}
+
+
+/* PULSO 5.15 · Cápsula Sonora — estatísticas pessoais reais, semana e mês. */
+.capsule-section{margin-top:36px;margin-bottom:54px;scroll-margin-top:105px}
+.capsule-card{background:radial-gradient(ellipse at 81% 3%,#3e735a60,transparent 45%),linear-gradient(140deg,#1a2923,#101713 66%,#151e18);border:1px solid #50765b;border-radius:24px;color:#f3fff4;overflow:hidden;box-shadow:0 12px 44px #0005;position:relative}
+.capsule-card:before{position:absolute;content:"";width:360px;height:360px;top:-200px;right:-60px;border:1px solid #b4ffbc18;box-shadow:0 0 0 60px #b4ffbc0a,0 0 0 112px #b4ffbc06;border-radius:50%;pointer-events:none}
+.capsule-header{position:relative;display:flex;justify-content:space-between;gap:25px;align-items:flex-end;padding:32px 36px 15px}
+.capsule-label{color:#a6ffb4;font:800 10px/1.4 'Space Grotesk',sans-serif;letter-spacing:.16em}
+.capsule-head-copy h2{margin:10px 0 9px;font:900 clamp(28px,4.4vw,50px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-.05em}
+.capsule-head-copy h2 em{color:#86efad;font-style:normal}
+.capsule-head-copy p{max-width:580px;color:#b4ccba;font:500 13px/1.6 'DM Sans',sans-serif;margin:0}
+.capsule-period-tabs{display:flex;gap:5px;flex-shrink:0;background:#0e1d16;border:1px solid #5b7e61;padding:5px;border-radius:999px}
+.capsule-period-tabs button{padding:10px 12px;border:0;border-radius:99px;color:#c1d6ba;background:transparent;cursor:pointer;font:800 11px/1 'Space Grotesk',sans-serif}
+.capsule-period-tabs button[aria-pressed="true"]{background:#d1ff6b;color:#142214}
+.capsule-period-tabs button:focus-visible{outline:2px solid #d1ff6b;outline-offset:2px}
+.capsule-daterow{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #3b5345;padding:15px 36px;color:#d4f6da}
+.capsule-daterow>span:first-child{font:800 15px 'Space Grotesk',sans-serif;text-transform:capitalize}
+.capsule-personal{font:800 9px 'Space Grotesk',sans-serif;letter-spacing:.09em;color:#95bba1}
+.capsule-metrics{display:flex;gap:11px;margin:0 36px 24px}
+.capsule-metrics>div{flex:1;min-width:0;background:#0a180e88;border:1px solid #426348;border-radius:14px;padding:17px 19px}
+.capsule-metrics>div:first-child{flex:1.5}
+.capsule-metrics span{display:block;color:#b8ceb9;font:800 11px 'Space Grotesk',sans-serif;letter-spacing:.07em;text-transform:uppercase}
+.capsule-metrics strong{display:block;font:900 clamp(30px,3.8vw,49px)/1.25 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#82e5aa;margin-top:5px}
+.capsule-metrics strong span{display:inline-block;font:inherit;letter-spacing:inherit;color:inherit}
+.capsule-metrics strong small{font-size:15px;font-weight:700;letter-spacing:0;color:#daf4da}
+.capsule-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:0 36px 26px}
+.capsule-columns>section{min-width:0;background:#0a120e7a;border:1px solid #34533c;border-radius:15px;padding:16px 15px}
+.capsule-columns h3{margin:0 0 16px;color:#d8f8e0;letter-spacing:.04em;font:900 12px/1.35 'Space Grotesk',sans-serif}
+.capsule-ranked{display:flex;flex-direction:column;gap:11px}
+.capsule-list-item{display:grid;grid-template-columns:25px minmax(0,1fr) auto;gap:8px;align-items:start;min-width:0;font:600 12px/1.5 'DM Sans',sans-serif}
+.capsule-number{font:800 15px 'Space Grotesk',sans-serif;color:#b3ecb4}
+.capsule-list-name{min-width:0;overflow-wrap:anywhere}
+.capsule-list-name small{display:block;margin-top:3px;font:500 10px/1.3 'DM Sans',sans-serif;color:#a4bba4}
+.capsule-duration{font:800 11px/1.6 'Space Grotesk',sans-serif;white-space:nowrap;color:#9de6ad}
+.capsule-empty{font:500 12px/1.55 'DM Sans',sans-serif;color:#92aa94}
+.capsule-controls{padding:18px 36px 26px;border-top:1px solid #37513c}
+.capsule-cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.capsule-cta-row button{min-height:41px;border-radius:10px;padding:11px 16px;cursor:pointer;font:900 11px/1.3 'Space Grotesk',sans-serif}
+.capsule-btn-primary{background:#a5ffa2;border:1px solid #a5ffa2;color:#0f2617}
+.capsule-btn-secondary{background:#172e20;border:1px solid #588d61;color:#d8ffe1}
+.capsule-cta-row button:hover{filter:brightness(1.13)}
+.capsule-add-track{margin:17px 0 9px;background:#0b170ea3;border:1px solid #334f3c;padding:13px 15px;border-radius:12px}
+.capsule-add-track summary{font:800 10px/1.4 'Space Grotesk',sans-serif;letter-spacing:.06em;color:#ceffc7;cursor:pointer}
+.capsule-add-track form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) auto;gap:10px;align-items:end;margin-top:13px}
+.capsule-add-track label{display:block;font:700 10px/1.4 'DM Sans',sans-serif;color:#d4eacb}
+.capsule-add-track input{width:100%;min-width:0;background:#121d16;border:1px solid #54715a;border-radius:8px;padding:10px;color:#fff;margin-top:4px;font-size:13px}
+.capsule-add-track form button{min-height:39px;border:0;border-radius:8px;background:#d1ff6b;color:#112116;font:800 10px 'Space Grotesk',sans-serif;padding:10px;cursor:pointer}
+.capsule-add-track>small{display:block;font-size:11px;color:#b4eeb6;margin-top:10px}
+.capsule-note{font:700 11px/1.5 'DM Sans',sans-serif;color:#cbf4bb;margin:15px 0 8px}
+.capsule-disclaimer{font:500 10px/1.6 'DM Sans',sans-serif;color:#97af99;margin:0}
+@media(max-width:1060px){.capsule-columns{grid-template-columns:repeat(2,minmax(0,1fr))}.capsule-columns>section:last-child{grid-column:1/-1}}
+@media(max-width:680px){.capsule-section{margin-top:21px}.capsule-card{border-radius:17px}.capsule-header{padding:22px 17px 13px;align-items:stretch;flex-direction:column;gap:16px}.capsule-head-copy h2{font-size:31px}.capsule-head-copy p{font-size:12px}.capsule-period-tabs{align-self:flex-start}.capsule-daterow{padding:13px 17px;align-items:flex-start;flex-direction:column;gap:5px}.capsule-metrics{margin:0 17px 14px}.capsule-metrics>div{padding:12px}.capsule-metrics strong{font-size:30px}.capsule-metrics strong small{font-size:11px}.capsule-columns{padding:0 17px 17px;grid-template-columns:1fr;gap:10px}.capsule-columns>section:last-child{grid-column:auto}.capsule-controls{padding:16px 17px 21px}.capsule-cta-row button{width:100%}.capsule-add-track form{grid-template-columns:1fr}.capsule-personal{font-size:8px}}
