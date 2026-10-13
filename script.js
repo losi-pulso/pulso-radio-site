@@ -1034,7 +1034,7 @@
   let radioActive=false, radioPaused=false, radioShuffle=true, radioGenre='Todos', radioDockMinimized=false;
   let radioQueue=[], radioIndex=-1, radioEpoch=0, radioEngine=null;
   let radioTimeDrag=false,radioDurationKnown=0,radioCurrentKnown=0;
-  let radioResumePoint=null;
+  let radioResumePoint=null,radioLastPersist=0;
   function playbackStorageKey(kind){
     const account=window.PULSO_APP?.user?.()?.id;
     return 'pulso-playback-'+kind+'-v1'+(account?'-'+String(account).replace(/[^a-z0-9_-]/gi,''):'-local');
@@ -1042,8 +1042,10 @@
   function readPlayback(kind){
     try{return JSON.parse(localStorage.getItem(playbackStorageKey(kind))||'null');}catch{return null;}
   }
-  function saveRadioPlayback(){
+  function saveRadioPlayback(force=false){
     if(!radioActive||!radioQueue[radioIndex])return;
+    if(!force&&Date.now()-radioLastPersist<5000)return;
+    radioLastPersist=Date.now();
     const item=radioQueue[radioIndex];
     const state={id:String(item.id),title:item.title||'',artist:item.artist||'',time:Math.max(0,Number(radioCurrentKnown)||0),savedAt:Date.now()};
     try{localStorage.setItem(playbackStorageKey('radio'),JSON.stringify(state));}catch{}
@@ -1403,8 +1405,8 @@
     $('radioToggle').addEventListener('click',radioToggle);
     $('radioClose').addEventListener('click',radioStop);
     $('radioMinimize').addEventListener('click',()=>{radioDockMinimized=!radioDockMinimized;radioUpdateUI();});
-    window.addEventListener('pagehide',saveRadioPlayback);
-    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveRadioPlayback();});
+    window.addEventListener('pagehide',()=>saveRadioPlayback(true));
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveRadioPlayback(true);});
     $('radioNext').addEventListener('click',()=>radioNext());
     $('radioPrev').addEventListener('click',radioPrevious);
     $('radioShuffle').addEventListener('click',()=>{
