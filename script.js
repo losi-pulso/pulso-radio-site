@@ -1440,7 +1440,7 @@
     $('waveRadioToggle').addEventListener('click',radioToggle);
     $('radioToggle').addEventListener('click',radioToggle);
     $('radioClose').addEventListener('click',radioStop);
-    $('radioMinimize').addEventListener('click',()=>{radioDockMinimized=!radioDockMinimized;radioUpdateUI();});
+    $('radioMinimize').addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();if(!radioActive)return;radioDockMinimized=!radioDockMinimized;radioUpdateUI();$('radioDock').scrollTop=0;});
     // No modo minimizado, tocar na própria barra (nome/faixa/espaço vazio)
     // também expande o player. Os botões de minimizar e desligar mantêm suas ações.
     const radioTopbar=$('radioDock').querySelector('.radio-topbar');
@@ -1563,7 +1563,7 @@
     $('importBackup').addEventListener('change',importBackup);
     $('exportPosts').addEventListener('click',exportPosts);
     $('previewDismiss').addEventListener('click',()=>$('previewBanner').hidden=true);
-    $('appRadioButton')?.addEventListener('click',()=>{if(!radioActive){radioStart();return;}radioDockMinimized=false;radioUpdateUI();$('radioDock').scrollIntoView({behavior:'smooth',block:'nearest'});});
+    $('appRadioButton')?.addEventListener('click',()=>{if(!radioActive){radioStart();return;}radioDockMinimized=false;radioUpdateUI();$('radioDock').scrollTop=0;});
     $('appPublishButton')?.addEventListener('click',()=>openComposer());
     $('appAccountButton')?.addEventListener('click',authDialog);
     wireRadioEvents();
