@@ -160,8 +160,28 @@
       ${canDelete(p)?`<button class="icon-button delete-button" type="button" data-action="delete" aria-label="Excluir ${e(p.title)}" title="Excluir">${icons.trash}</button>`:''}
       </div></div>${window.PULSO_SOCIAL?.footer?.(p)||''}</article>`;
   }
+  function renderCommunitySets(){
+    const grid=$('communitySetGrid');if(!grid)return;
+    const videos=posts.filter(p=>p.status==='approved'&&!p.demo&&videoTypes.has(p.type)&&p.url)
+      .sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0)).slice(0,8);
+    if(!videos.length){grid.innerHTML='<p class="community-sets-empty">Ainda não há sets ou vídeos aprovados da comunidade. Publica o teu primeiro set e ele aparecerá aqui após a aprovação.</p>';return;}
+    grid.innerHTML=videos.map(p=>{
+      const cover=postCover(p);
+      return '<article class="community-set-card" data-community-post="'+escapeHtml(String(p.id))+'">'
+       +(cover?'<img class="community-set-cover" loading="lazy" src="'+escapeHtml(cover)+'" alt="">':'<div class="community-set-cover"></div>')
+       +'<div class="community-set-body"><small>'+escapeHtml(p.type||'SET DA COMUNIDADE').toUpperCase()+'</small><h3>'+escapeHtml(p.title||'Set sem título')+'</h3><p>'+escapeHtml(p.artist||'Artista da comunidade')+'</p><div class="community-set-actions"><button type="button" data-community-play="'+escapeHtml(String(p.id))+'">▶ OUVIR</button><button type="button" data-community-share="'+escapeHtml(String(p.id))+'">ENVIAR ↗</button></div></div></article>';
+    }).join('');
+  }
+  function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function postCover(p){if(p.cover&&/^https:\/\//i.test(p.cover))return p.cover;const m=String(p.url||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([\w-]{11})/);return m?'https://img.youtube.com/vi/'+m[1]+'/hqdefault.jpg':'';}
+  document.addEventListener('click',ev=>{
+    const play=ev.target.closest('[data-community-play]');if(play){window.PULSO_APP?.playById?.(play.dataset.communityPlay);return;}
+    const share=ev.target.closest('[data-community-share]');if(share){const p=posts.find(x=>String(x.id)===String(share.dataset.communityShare));if(!p)return;const u=new URL(location.href);u.searchParams.set('track',p.id);u.hash='';const data={title:(p.title||'Set')+' · PULSO',text:'Escuta este set no PULSO RADIO × LØSI',url:u.href};if(navigator.share)navigator.share(data).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(u.href).then(()=>toast('Link copiado!'));else prompt('Copie o link do set:',u.href);}
+    if(ev.target.closest('[data-open-composer]')){$('openComposer')?.click()||$('heroPublish')?.click();}
+  });
   function render() {
     renderFilters();renderMediaFilters();const shown=visiblePosts();
+    renderCommunitySets();
     $('cardsGrid').innerHTML=shown.map(card).join('');
     $('emptyState').classList.toggle('hidden',shown.length!==0);
     $('cardsGrid').classList.toggle('hidden',shown.length===0);
