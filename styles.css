@@ -432,3 +432,28 @@
  .community-set-actions button strong{font-size:9px}
  .community-set-actions button small{font-size:7px}
 }
+
+
+/* PULSO 5.22 — rádio minimizável para navegar sem interromper a reprodução. */
+.radio-topbar{gap:9px}
+.radio-mini-title{display:block;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#c8d7bf;font-size:10px;letter-spacing:.02em}
+.radio-minimize{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;padding:0;border:1px solid #526448;border-radius:10px;background:#202c1e;color:#d1ff6b;cursor:pointer;transition:background .18s,transform .18s}
+.radio-minimize svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.radio-minimize:hover{background:#304329;transform:translateY(-1px)}
+.radio-dock.is-minimized{width:min(390px,calc(100vw - 28px));max-height:none;overflow:visible;border-radius:999px;bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+.radio-dock.is-minimized:before{height:2px;border-radius:999px}
+.radio-dock.is-minimized .radio-topbar{min-height:58px;padding:9px 12px 9px 17px;border:0;border-radius:999px;gap:10px}
+.radio-dock.is-minimized .radio-live-dot{flex:0 0 7px}
+.radio-dock.is-minimized .radio-topbar strong{font-size:11px;letter-spacing:1.2px;white-space:nowrap}
+.radio-dock.is-minimized .radio-count{display:none}
+.radio-dock.is-minimized .radio-mini-title{font-size:11px;color:#f0f7e9}
+.radio-dock.is-minimized .radio-minimize{background:#d1ff6b;color:#11190d;border-color:#d1ff6b}
+.radio-dock.is-minimized .radio-close{margin-left:0;font-size:22px;padding:0 3px}
+.radio-dock.is-minimized>:not(.radio-topbar){display:none!important}
+@media(max-width:620px){
+ .radio-mini-title{font-size:10px}
+ .radio-dock.is-minimized{left:8px;right:8px;bottom:calc(83px + env(safe-area-inset-bottom,0px));width:auto}
+ .radio-dock.is-minimized .radio-topbar{min-height:54px;padding:8px 10px 8px 13px;gap:8px}
+ .radio-dock.is-minimized .radio-topbar strong{font-size:10px}
+ .radio-dock.is-minimized .radio-minimize{width:32px;height:32px;flex-basis:32px}
+}
