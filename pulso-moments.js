@@ -36,7 +36,7 @@
  }
  function watch(id=null){
    const app=window.PULSO_APP;const videos=approvedMoments();
-   if(!videos.length){app?.toast?.('Ainda não há vídeos da comunidade aprovados. Seja o primeiro a publicar!');publish();return;}
+   if(!videos.length){app?.toast?.('Ainda não há vídeos da comunidade aprovados. Seja o primeiro a publicar!');return;}
    if(window.PULSO_REELS?.open){window.PULSO_REELS.open(id||videos[0].id,'community');return;}
    app?.toast?.('O feed de vídeos está carregando. Tente novamente em instantes.');
  }
