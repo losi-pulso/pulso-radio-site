@@ -855,18 +855,7 @@
   let jumpActivePost = null;
   let jumpYoutubePlayer = null;
   let jumpYoutubeReady = false;
-  function jumpYoutubeAPI(){
-    if(window.YT?.Player)return Promise.resolve(window.YT);
-    return new Promise((resolve,reject)=>{
-      const previous=window.onYouTubeIframeAPIReady;
-      const timer=setTimeout(()=>reject(new Error('YouTube API timeout')),12000);
-      window.onYouTubeIframeAPIReady=()=>{if(typeof previous==='function')previous();clearTimeout(timer);resolve(window.YT);};
-      if(!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')){
-        const tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';tag.async=true;
-        tag.onerror=()=>{clearTimeout(timer);reject(new Error('YouTube API indisponível'));};document.head.appendChild(tag);
-      }
-    });
-  }
+  function jumpYoutubeAPI(){ return radioYouTubeAPI(); }
   function playPost(p) {
     jumpActivePost = p;
     window.PULSO_VIDEO?.pause?.(); // Pausa o vídeo flutuante antes de abrir outra publicação.
