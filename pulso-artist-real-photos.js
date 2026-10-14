@@ -26,6 +26,16 @@ const photos={
 'kiko franco':'https://s3.playbpm.com.br/images/Kiko_Fr.7e4a96c8.fill-800x450.format-jpeg.jpegquality-85.jpg',
 'boris brejcha':'https://www.time-warp.de/imgdb/boris-brejcha.jpg',
 'michael bibi':'https://i.scdn.co/image/ab6761610000e5eb5da9a30b4ebb31ba1212adb9',
+'rufus du sol':'https://venueeventartist.com/imateq/artist/97/230341/g500SC0/428819.jpg',
+'jord':'https://geo-media.beatport.com/image_size/590x404/944d9ec0-d62c-46be-82c6-471ceca36887.jpg',
+'anotr':'https://geo-static.traxsource.com/files/artists/256799.jpg',
+'artbat':'https://cdn.prod.website-files.com/5fc4ae7214179129b5354a52/695f64a9519edf6aadf30983_ARTBAT-p-800.png',
+'miss monique':'https://mi4l.s3.amazonaws.com/uploads/2021/11/MissMonique-scaled.jpg',
+'antdot':'https://assets.beatportal.com/images/transforms/artist/_2668x2668_crop_center-center_none/920987/Antdot_artist_cover.webp',
+'john summit':'https://iscale.iheart.com/v3/surl/aHR0cDovL2ltYWdlLmloZWFydC5jb20vaW1hZ2VzL2FydGlzdHMvMzEvNTcvNDAxOS82N2Q0NWQ5NDExYTNjOTBhNmUyMjNlOTAuanBn?sn=eGtleWJhc2UyMDIxMTExMDqS3duv0XvBZ5Ia5l-eyhSvr5iUegDV59L-btXSDsjgqQ%3D%3D&surrogate=1cOXl179JY-syhxYSCX6Q1a_Mcu6UO8d-F4oJzpZf1hcUbJr4aImxdQOFUfqwAxaHVBp0956GB-X_PLGLYCtFZqS0PuCh0uuj2en-xSlGoeRLTNduB8w4oy-T2VtZbadPRZUgnTvmwascNiULRTkJTClA_JDwWIW3NIVqvWg8_xEMAhoXSFwMohk9FDcBnqPgUqLXjxFAKLfNyQgpTdcDXDyCAiO3Fj4gDjC8ZtkuFsF9YWWXjvNxyDy',
+'solomun':'https://geo-static.traxsource.com/files/artists/6185.jpg',
+'pawsa':'https://i.iheart.com/v3/catalog/artist/31768102?ops=fit%28720%2C720%29',
+'tiesto':'https://media.zaiko.io/zaiko/1_4984xaghoumyewm4jkrjq',
 'kshmr':'https://rollingstoneindia.com/wp-content/uploads/2023/04/KSHMR-2023-web-photo-e1681284870312.jpg',
 'w w':'https://viberate-upload.ams3.cdn.digitaloceanspaces.com/prod/entity/artist/wandw.jpg'
 };
