@@ -386,3 +386,43 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
  #p54Catalog:not(.p54-catalog-expanded) .p54-card:nth-child(3){display:none!important}
  .p54-expand-catalog{margin-top:12px}
 }
+
+
+/* TIME WARP — industrial warehouse / dark techno */
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]{
+  position:relative;isolation:isolate;overflow:hidden;
+  border:1px solid #625b5b;
+  color:#e7e0dc;
+  background:
+    repeating-linear-gradient(135deg,rgba(184,42,38,.10) 0 2px,transparent 2px 8px),
+    linear-gradient(180deg,#242122 0%,#111011 52%,#1b1718 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -3px 0 rgba(0,0,0,.65),0 3px 12px rgba(0,0,0,.28);
+  letter-spacing:.11em;
+  text-shadow:0 1px 4px #000;
+}
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]::before,
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]::after{
+  content:"";position:absolute;z-index:-1;top:50%;width:21px;height:8px;
+  border:2px solid #8e8580;border-radius:7px;
+  transform:translateY(-50%) rotate(-34deg);
+  opacity:.78;pointer-events:none;
+  box-shadow:inset 0 0 0 1px #272324,0 0 5px rgba(190,45,40,.16);
+}
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]::before{left:5px}
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]::after{right:5px}
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]{padding-left:34px;padding-right:34px}
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]:hover,
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"][aria-pressed="true"]{
+  color:#fff4ef;border-color:#b33b35;
+  background:
+    repeating-linear-gradient(135deg,rgba(230,53,45,.16) 0 2px,transparent 2px 8px),
+    linear-gradient(180deg,#54201f 0%,#241415 54%,#151112 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(179,59,53,.18),0 0 17px rgba(179,35,31,.2);
+}
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]:hover::before,
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]:hover::after,
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"][aria-pressed="true"]::before,
+#p54Catalog .p54-eventnav button[data-p54-event="Time Warp"][aria-pressed="true"]::after{border-color:#d8a19b;opacity:1}
+@media(max-width:570px){
+ #p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]{padding-left:30px;padding-right:30px}
+}
