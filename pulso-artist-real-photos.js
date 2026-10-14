@@ -19,6 +19,14 @@ const photos={
 'fred again':'https://press.atlanticrecords.com/sites/g/files/g2000014001/files/2023-10/Fred%20again..%20ten%20Press%20Photo_0.jpg',
 'lost frequencies':'https://www.radiocontact.be/app/uploads/2023/08/frequ.jpg',
 'steve aoki':'https://live-production.wcms.abc-cdn.net.au/5bd8972769447d764cf5dd04b86b0780?cropH=2500&cropW=2500&height=862&impolicy=wcms_crop_resize&width=862&xPos=883&yPos=0',
+'carl cox':'https://carlcox.com/wp-content/uploads/2023/04/carl-cox.jpg',
+'kiko franco':'https://ugc.production.linktr.ee/8f8e4e17-8c1b-4f88-bf13-8e46d5c8c2f0_kiko-franco.jpg',
+'joris voorn':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2024-05/Joris%20Voorn.jpg',
+'hardwell':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2024-02/Hardwell.jpg',
+'boris brejcha':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2024-05/Boris%20Brejcha.jpg',
+'michael bibi':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2024-04/Michael%20Bibi.jpg',
+'solomun':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2024-05/Solomun.jpg',
+'keinemusik':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2024-04/Keinemusik.jpg',
 'kshmr':'https://rollingstoneindia.com/wp-content/uploads/2023/04/KSHMR-2023-web-photo-e1681284870312.jpg',
 'w w':'https://viberate-upload.ams3.cdn.digitaloceanspaces.com/prod/entity/artist/wandw.jpg'
 };
