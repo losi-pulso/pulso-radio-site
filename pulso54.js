@@ -103,17 +103,37 @@ const featuredDjs=[
   {artist:"Charlotte de Witte",style:"TECHNO",detail:"KNTXT · TOMORROWLAND",video:"fjnSF0K70q4",instagram:"https://www.instagram.com/charlottedewittemusic/"}
 ];
 
-/* PULSO ARTIST RIBBON — artistas do catálogo */
+/* PULSO DISCOVERY — artistas, clubes e festivais, derivados do catálogo atual. */
+let parCategory='artists',parPaused=false;
 function renderArtistRibbon(){
  const root=document.getElementById('pulsoArtistRibbonTrack');if(!root)return;
- const catalog=Array.isArray(sets)?sets:[];const artists=[];
- catalog.forEach(s=>{
-  const names=String(s.artist||'').split(/\s+b2b\s+/i).map(x=>x.trim()).filter(Boolean);
-  const match=String(s.url||'').match(/[?&]v=([^&]+)/)||String(s.url||'').match(/youtu\.be\/([^?&]+)/);const video=match?match[1]:'';
-  names.forEach(name=>{if(!artists.some(a=>a.name.toLowerCase()===name.toLowerCase()))artists.push({name,video});});
- });
- const makeCard=(a,i)=>'<button class="par-card" type="button" data-p54-artist="'+safe(a.name)+'" aria-label="Ver sets de '+safe(a.name)+'" tabindex="0"><span class="par-avatar"><img src="https://i.ytimg.com/vi/'+safe(a.video||'vqz8c4ZP3Wg')+'/hqdefault.jpg" alt="" loading="lazy" decoding="async" onerror="this.style.opacity=0"></span><span class="par-name">'+safe(a.name)+'</span></button>';
- const all=artists.map(makeCard).join('');root.innerHTML=all+artists.map(makeCard).join('');root.setAttribute('aria-label',artists.length+' artistas cadastrados. Selecione um artista para ver seus sets.');
+ const catalog=Array.isArray(sets)?sets:[],unique=(items,key)=>items.filter((item,i)=>items.findIndex(x=>key(x).toLowerCase()===key(item).toLowerCase())===i);
+ const videoOf=s=>{const m=String(s.url||'').match(/[?&]v=([^&]+)/)||String(s.url||'').match(/youtu\.be\/([^?&]+)/);return m?m[1]:'';};
+ const artists=[];
+ catalog.forEach(s=>String(s.artist||'').split(/\s+b2b\s+/i).map(x=>x.trim()).filter(Boolean).forEach(name=>{if(!artists.some(a=>a.name.toLowerCase()===name.toLowerCase()))artists.push({name,video:videoOf(s)});}));
+ const clubs=unique(clubs2026.map(c=>({name:c.name,location:c.location,image:c.img,rank:c.rank})),x=>x.name);
+ const events=unique(catalog.filter(s=>s.event&&s.event!=='Sets especiais').map(s=>({name:s.event,video:videoOf(s)})),x=>x.name).sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
+ const artistCard=a=>'<button class="par-card" type="button" data-p54-artist="'+safe(a.name)+'" aria-label="Ver sets de '+safe(a.name)+'"><span class="par-avatar"><img src="https://i.ytimg.com/vi/'+safe(a.video||'vqz8c4ZP3Wg')+'/hqdefault.jpg" alt="" loading="lazy" decoding="async" onerror="this.style.opacity=0"></span><span class="par-name">'+safe(a.name)+'</span></button>';
+ const clubCard=c=>'<button class="par-card par-club-card" type="button" data-p54-club="'+safe(c.name)+'" aria-label="Ver informações de '+safe(c.name)+'"><span class="par-avatar"><img src="'+safe(c.image)+'" alt="" loading="lazy" decoding="async" onerror="this.style.opacity=0"></span><span class="par-name">'+safe(c.name)+'</span><span class="par-subname">'+safe(c.location)+'</span></button>';
+ const eventCard=e=>'<button class="par-card par-festival-card" type="button" data-p54-event="'+safe(e.name)+'" aria-label="Ver sets de '+safe(e.name)+'"><span class="par-avatar"><img src="https://i.ytimg.com/vi/'+safe(e.video||'v-lHC_vCrJc')+'/hqdefault.jpg" alt="" loading="lazy" decoding="async" onerror="this.style.opacity=0"></span><span class="par-name">'+safe(e.name)+'</span><span class="par-subname">FESTIVAL / EVENTO</span></button>';
+ const items=parCategory==='clubs'?clubs:parCategory==='festivals'?events:artists,maker=parCategory==='clubs'?clubCard:parCategory==='festivals'?eventCard:artistCard;
+ root.innerHTML=items.map(maker).join('')+items.map(maker).join('');
+ root.classList.toggle('par-is-static',items.length<2);root.dataset.category=parCategory;
+ root.setAttribute('aria-label',items.length+' '+(parCategory==='clubs'?'clubes':parCategory==='festivals'?'festivais e eventos':'artistas')+'. Deslize para navegar.');
+ document.querySelectorAll('[data-par-category]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.parCategory===parCategory)));
+ const viewport=document.getElementById('parViewport');if(viewport)viewport.scrollLeft=0;
+ const toggle=document.getElementById('parMotionToggle');if(toggle){toggle.textContent=parPaused?'▶ RETOMAR':'Ⅱ PAUSAR';toggle.setAttribute('aria-pressed',String(parPaused));}
+}
+function setParPaused(paused){parPaused=paused;const track=document.getElementById('pulsoArtistRibbonTrack');if(track)track.classList.toggle('par-paused',paused);const b=document.getElementById('parMotionToggle');if(b){b.textContent=paused?'▶ RETOMAR':'Ⅱ PAUSAR';b.setAttribute('aria-pressed',String(paused));}}
+function setupParRibbon(){
+ document.querySelectorAll('[data-par-category]').forEach(b=>b.addEventListener('click',()=>{parCategory=b.dataset.parCategory;renderArtistRibbon();setParPaused(false);}));
+ document.getElementById('parMotionToggle')?.addEventListener('click',()=>setParPaused(!parPaused));
+ const viewport=document.getElementById('parViewport');if(!viewport)return;
+ let down=false,startX=0,startScroll=0;
+ viewport.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;down=true;startX=e.clientX;startScroll=viewport.scrollLeft;setParPaused(true);viewport.classList.add('par-dragging');if(e.pointerType==='mouse')viewport.setPointerCapture?.(e.pointerId);});
+ viewport.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-startX;if(Math.abs(dx)>3)e.preventDefault();viewport.scrollLeft=startScroll-dx;});
+ const finish=()=>{if(!down)return;down=false;viewport.classList.remove('par-dragging');};
+ viewport.addEventListener('pointerup',finish);viewport.addEventListener('pointercancel',finish);viewport.addEventListener('lostpointercapture',finish);
 }
 function renderSignatures(){
  const root=$('p54Signatures');if(!root)return;
@@ -135,11 +155,12 @@ function renderSignatures(){
  }).join('');
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  renderRanking();renderClubRanking();renderSignatures();renderArtistRibbon();render();setHeroLocation('');setupHeroLocation();
+  renderRanking();renderClubRanking();renderSignatures();renderArtistRibbon();setupParRibbon();render();setHeroLocation('');setupHeroLocation();
   setCatalogExpanded(false);
   $('p54ExpandCatalog')?.addEventListener('click',()=>setCatalogExpanded(!$('p54Catalog')?.classList.contains('p54-catalog-expanded')));
   document.addEventListener('click',ev=>{
     if(ev.target.closest('a[href="#p54Catalog"]'))setCatalogExpanded(true);
+    const club=ev.target.closest('[data-p54-club]');if(club){const target=Array.from(document.querySelectorAll('.p54-club-card')).find(card=>norm(card.querySelector('h3')?.textContent)===norm(club.dataset.p54Club));document.getElementById('p54Clubs')?.scrollIntoView({block:'start',behavior:'smooth'});if(target){target.classList.add('par-club-selected');setTimeout(()=>target.classList.remove('par-club-selected'),1800);target.scrollIntoView({block:'center',behavior:'smooth'});}return;}
     const e=ev.target.closest('[data-p54-event]');if(e){pickEvent(e.dataset.p54Event);return;}
     const a=ev.target.closest('[data-p54-artist]');if(a){setCatalogExpanded(true);selectedArtist=a.dataset.p54Artist;selectedEvent='Todos';selectedYear='Todos';selectedGenre='Todos';search='';const input=$('p54Search');if(input)input.value='';render();$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});return;}
     const y=ev.target.closest('[data-p54-year]');if(y){setCatalogExpanded(true);selectedYear=y.dataset.p54Year;render();return;}
