@@ -45,7 +45,7 @@
    if(ev.target.closest('#pmomWatch')){watch();return;}
    const card=ev.target.closest('[data-pmom-watch]');if(card){watch(card.dataset.pmomWatch);return;}
  });
- document.addEventListener('DOMContentLoaded',()=>{render();setTimeout(render,900);setTimeout(render,2500);});
+ document.addEventListener('DOMContentLoaded',()=>{render();setTimeout(render,900);setTimeout(render,2500);const source=$('communitySetGrid');if(source){new MutationObserver(()=>render()).observe(source,{childList:true,subtree:true});}});
  window.addEventListener('pulso:posts-updated',render);
  const observer=new MutationObserver(()=>{if(window.PULSO_APP)render();});
  document.addEventListener('DOMContentLoaded',()=>{const grid=$('pmomGrid');if(grid)observer.observe(grid,{childList:true,subtree:true});});
