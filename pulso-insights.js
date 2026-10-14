@@ -21,9 +21,9 @@ function updateLivePanel(){
  const count=$('piOnlineCount');if(count)count.textContent=String(sessions.length);
  const status=$('piLiveStatus');if(status)status.textContent=liveChannel?'Conexão ao vivo · atualização automática':'Conectando ao serviço em tempo real…';
  const list=$('piLiveSessions');
- if(list)list.innerHTML=sessions.length?sessions.map(s=>'<div class="pi-offline-row"><div><strong>Sessão ativa</strong><small>'+esc(({mobile:'Celular',tablet:'Tablet',desktop:'Computador',unknown:'Dispositivo'})[s.device]||'Dispositivo')+' · '+esc(s.page||'/')+'</small></div><span class="pi-live-dot" aria-label="Online"></span></div>').join(''):'<p class="pi-muted">Nenhuma sessão conectada neste instante.</p>';
+ if(list)list.innerHTML=sessions.length?sessions.map(()=>'<div class="pi-offline-row"><div><strong>Visitante conectado</strong><small>Site ou aplicativo PULSO</small></div><span class="pi-live-dot" aria-label="Online"></span></div>').join(''):'<p class="pi-muted">Nenhuma sessão conectada neste instante.</p>';
  const recent=$('piLiveRecent');
- if(recent)recent.innerHTML=liveRecent.length?liveRecent.slice(0,8).map(r=>'<div class="pi-offline-row"><div><strong>Novo acesso detectado</strong><small>'+esc(({mobile:'Celular',tablet:'Tablet',desktop:'Computador',unknown:'Dispositivo'})[r.device]||'Dispositivo')+' · '+esc(r.time)+'</small></div><span class="pi-live-dot"></span></div>').join(''):'<p class="pi-muted">Os próximos acessos aparecerão aqui enquanto este painel estiver conectado.</p>';
+ if(recent)recent.innerHTML=liveRecent.length?liveRecent.slice(0,8).map(r=>'<div class="pi-offline-row"><div><strong>Novo acesso detectado</strong><small>Site ou aplicativo · '+esc(r.time)+'</small></div><span class="pi-live-dot"></span></div>').join(''):'<p class="pi-muted">Os próximos acessos aparecerão aqui enquanto este painel estiver conectado.</p>';
  const alertButton=$('piLiveAlerts');
  if(alertButton)alertButton.textContent=liveAlertsEnabled?'Avisos ativados neste aparelho':'Ativar avisos neste aparelho';
 }
@@ -52,7 +52,7 @@ function setupPresence(){
      if(!isAdmin||key===session||liveSeen.has(key))return;
      liveSeen.add(key);
      const item=(newPresences||[])[0]||{};
-     liveRecent.unshift({device:item.device||'unknown',time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
+     liveRecent.unshift({time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
      liveRecent=liveRecent.slice(0,8);
      if(panel?.open&&activeTab==='live'){
        updateLivePanel();
@@ -67,7 +67,7 @@ function setupPresence(){
    .on('presence',{event:'leave'},()=>updateLivePanel())
    .subscribe(async status=>{
      if(status==='SUBSCRIBED'){
-       try{await liveChannel.track({session_id:session,device:device(),page:location.pathname||'/',entered_at:new Date().toISOString()})}
+       try{await liveChannel.track({online:true})}
        catch(e){console.debug('PULSO live presence indisponível',e);liveChannel=null;updateLivePanel()}
      }else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){
        console.debug('PULSO live presence status:',status);updateLivePanel()
