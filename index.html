@@ -56,8 +56,8 @@
   <script defer src="pulso-insights.js?v=1.4-live-analytics"></script>
   <script defer src="pulso-media-actions.js?v=1.0-fullscreen-offline"></script>
   <script defer src="pulso-moments.js?v=1.5-svg-hero-play"></script>
-  <link rel="stylesheet" href="pulso-jump.css?v=1.0">
-  <script defer src="pulso-jump.js?v=1.0"></script>
+  <link rel="stylesheet" href="pulso-jump.css?v=1.1">
+  <script defer src="pulso-jump.js?v=1.1"></script>
 </head>
 <body>
   <a class="skip-link" href="#explorar">Pular para o conteúdo</a>
@@ -438,7 +438,7 @@
     </div>
   </dialog>
 
-  <dialog class="player-dialog" id="playerDialog" aria-labelledby="playerTitle"><div class="player-dialog-inner"><div class="player-header"><div><span class="text-eyebrow">◉ AGORA TOCANDO</span><h2 id="playerTitle">PLAYER</h2><p id="playerArtist"></p></div><button type="button" id="closePlayer" class="close-dialog" aria-label="Fechar player">×</button></div><div class="embed-container" id="embedContainer"></div><div class="pulso-identify-spot"><button id="identifyPlayer" type="button" class="identify-trigger"><span class="identify-icon">✦</span> QUE MÚSICA É ESSA? <span class="identify-badge">IA</span></button><small>O set continua tocando durante a identificação</small></div><a class="player-external" id="playerExternal" href="#" target="_blank" rel="noopener noreferrer">Abrir na plataforma original ↗</a><p id="youtubePlayerHint" class="auth-hint" hidden>Para continuar com a tela bloqueada, abra no aplicativo oficial YouTube. O recurso de segundo plano é do YouTube Premium.</p></div></dialog>
+  <dialog class="player-dialog" id="playerDialog" aria-labelledby="playerTitle"><div class="player-dialog-inner"><div class="player-header"><div><span class="text-eyebrow">◉ AGORA TOCANDO</span><h2 id="playerTitle">PLAYER</h2><p id="playerArtist"></p></div><button type="button" id="closePlayer" class="close-dialog" aria-label="Fechar player">×</button></div><div class="embed-container" id="embedContainer"></div><button type="button" id="playerJumpButton"><span class="pj-player-orb" aria-hidden="true">↗</span><span>OUVIR JUNTO · PULSO JUMP<small>Sincronize este set com outra pessoa</small></span></button><div class="pulso-identify-spot"><button id="identifyPlayer" type="button" class="identify-trigger"><span class="identify-icon">✦</span> QUE MÚSICA É ESSA? <span class="identify-badge">IA</span></button><small>O set continua tocando durante a identificação</small></div><a class="player-external" id="playerExternal" href="#" target="_blank" rel="noopener noreferrer">Abrir na plataforma original ↗</a><p id="youtubePlayerHint" class="auth-hint" hidden>Para continuar com a tela bloqueada, abra no aplicativo oficial YouTube. O recurso de segundo plano é do YouTube Premium.</p></div></dialog>
 
 
   <dialog class="auth-dialog" id="authDialog" aria-labelledby="authTitle">
