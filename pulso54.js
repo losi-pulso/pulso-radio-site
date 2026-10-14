@@ -108,8 +108,8 @@ function renderArtistRibbon(){
  const root=document.getElementById('pulsoArtistRibbonTrack');if(!root)return;
  const catalog=Array.isArray(sets)?sets:[];const artists=[];
  catalog.forEach(s=>{
-  const names=String(s.artist||'').split(/\\s+b2b\\s+/i).map(x=>x.trim()).filter(Boolean);
-  const match=String(s.url||'').match(/[?&]v=([^&]+)/)||String(s.url||'').match(/youtu\\.be\\/([^?&]+)/);const video=match?match[1]:'';
+  const names=String(s.artist||'').split(/\s+b2b\s+/i).map(x=>x.trim()).filter(Boolean);
+  const match=String(s.url||'').match(/[?&]v=([^&]+)/)||String(s.url||'').match(/youtu\.be\/([^?&]+)/);const video=match?match[1]:'';
   names.forEach(name=>{if(!artists.some(a=>a.name.toLowerCase()===name.toLowerCase()))artists.push({name,video});});
  });
  const makeCard=(a,i)=>'<button class="par-card" type="button" data-p54-artist="'+safe(a.name)+'" aria-label="Ver sets de '+safe(a.name)+'" tabindex="0"><span class="par-avatar"><img src="https://i.ytimg.com/vi/'+safe(a.video||'vqz8c4ZP3Wg')+'/hqdefault.jpg" alt="" loading="lazy" decoding="async" onerror="this.style.opacity=0"></span><span class="par-name">'+safe(a.name)+'</span></button>';
