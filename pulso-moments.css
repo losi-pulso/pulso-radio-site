@@ -82,3 +82,8 @@
 .pmom-player-stage video,.pmom-player-stage iframe{width:100%;height:100%;max-height:none;object-fit:contain}
 .pmom-player-foot{position:relative;z-index:2;flex:none;padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(0deg,#080c0af5,#080c0acc);border-top:1px solid #ffffff13}
 @media(max-width:600px){.pmom-player-head{padding-left:15px;padding-right:12px}.pmom-player-stage{aspect-ratio:auto;max-height:none}.pmom-player-stage video,.pmom-player-stage iframe{max-height:none}.pmom-player-foot{padding-left:15px;padding-right:15px}}
+
+/* Replace the text glyph with a crisp custom play icon in the hero image */
+.pmom-hero-play-icon{padding:0;display:grid;place-items:center}
+.pmom-hero-play-icon svg{display:block;width:25px;height:25px;fill:currentColor;margin-left:3px;filter:drop-shadow(0 1px 1px #0002)}
+.pmom-hero-play{appearance:none;-webkit-appearance:none}
