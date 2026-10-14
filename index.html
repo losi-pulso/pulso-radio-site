@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="pulso54.css?v=5.18-compact-catalog">
   <link rel="stylesheet" href="pulso-visual-refresh.css?v=5.25-premium-mobile">
   <link rel="stylesheet" href="pulso-home-highlights.css?v=1.1">
-  <link rel="stylesheet" href="pulso-artist-ribbon.css?v=1.0">
+  <link rel="stylesheet" href="pulso-artist-ribbon.css?v=1.1">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="config.js"></script>
   <script defer src="https://w.soundcloud.com/player/api.js"></script>
@@ -104,9 +104,11 @@
 
   <main id="inicio">
 
-    <section class="pulso-artist-ribbon" aria-label="Artistas do PULSO">
-      <div class="par-heading"><span>EXPLORE PELOS ARTISTAS</span><span class="par-live"><i></i> PULSO ARTISTS</span></div>
-      <div class="par-viewport"><div id="pulsoArtistRibbonTrack" class="par-track" role="group" aria-label="Artistas cadastrados"></div></div>
+    <section class="pulso-artist-ribbon" aria-label="Explore artistas, clubes e festivais">
+      <div class="par-heading"><span>EXPLORE PELA SUA FREQUÊNCIA</span><span class="par-live"><i></i> PULSO DISCOVERY</span></div>
+      <div class="par-toolbar"><div class="par-tabs" role="group" aria-label="Escolher categoria"><button type="button" data-par-category="artists" aria-pressed="true">ARTISTAS</button><button type="button" data-par-category="clubs" aria-pressed="false">CLUBES</button><button type="button" data-par-category="festivals" aria-pressed="false">FESTIVAIS</button></div><button type="button" class="par-motion-toggle" id="parMotionToggle" aria-pressed="false">Ⅱ PAUSAR</button></div>
+      <div class="par-viewport" id="parViewport"><div id="pulsoArtistRibbonTrack" class="par-track" role="group" aria-label="Artistas cadastrados"></div></div>
+      <div class="par-hint">DESLIZE PARA EXPLORAR <span aria-hidden="true">↔</span> · TOQUE PARA ABRIR</div>
     </section>
 
     <!-- PULSO 5.4.1 — DESERT FREQUENCIES: localização dinâmica e visual Burning Man mais realista -->
