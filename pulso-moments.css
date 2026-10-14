@@ -1,0 +1,39 @@
+/* PULSO MOMENTS — premium community drop-in */
+.pmom{position:relative;isolation:isolate;overflow:hidden;margin-top:34px;margin-bottom:34px;padding:clamp(22px,4vw,48px);border:1px solid rgba(207,255,103,.2);border-radius:28px;background:radial-gradient(ellipse at 12% 12%,rgba(209,255,107,.12),transparent 38%),radial-gradient(ellipse at 88% 40%,rgba(224,96,255,.13),transparent 36%),linear-gradient(135deg,#111512 0%,#080a09 62%,#17111a 100%);color:#f8f8f2}
+.pmom *{box-sizing:border-box}.pmom-glow{position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.025) 50%,transparent 70%)}
+.pmom-head{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:clamp(24px,5vw,70px);align-items:center}
+.pmom-eyebrow,.pmom-feed-kicker{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.16em;font-weight:800;color:#d1ff6b}
+.pmom-live-dot{width:7px;height:7px;border-radius:50%;background:#d1ff6b;box-shadow:0 0 12px #d1ff6b;flex:none}
+.pmom-copy h2{font-size:clamp(35px,5.3vw,66px);letter-spacing:-.065em;line-height:.91;margin:18px 0 16px;font-weight:850}
+.pmom-copy h2 em,.pmom-feed-head h3 em{font-style:normal;color:#d1ff6b}
+.pmom-copy>p{max-width:520px;color:#b4bbb5;font-size:14px;line-height:1.7;margin:0 0 22px}
+.pmom-actions{display:flex;flex-wrap:wrap;gap:10px}
+.pmom-actions button,.pmom-empty button{min-height:45px;border-radius:999px;padding:0 17px;font-size:10px;font-weight:850;letter-spacing:.06em;cursor:pointer;transition:transform .2s,background .2s}
+.pmom-publish{display:inline-flex;align-items:center;gap:9px;background:#d1ff6b;color:#10150b;border:1px solid #d1ff6b}
+.pmom-publish>span{font-size:20px;line-height:1}.pmom-watch{background:#ffffff08;color:#f6f7f1;border:1px solid #ffffff30}
+.pmom-actions button:hover,.pmom-empty button:hover{transform:translateY(-2px)}
+.pmom-note{display:flex;gap:8px;align-items:center;color:#929b93;font-size:10px;margin-top:16px;line-height:1.5}.pmom-note span{color:#d1ff6b}
+.pmom-collage{height:clamp(250px,32vw,370px);position:relative;min-width:0}
+.pmom-frame{position:absolute;overflow:hidden;border:1px solid #ffffff32;background:#1b201b;box-shadow:0 20px 50px #0007}
+.pmom-frame img{width:100%;height:100%;display:block;object-fit:cover;filter:saturate(.86)}
+.pmom-frame-main{inset:0 9% 6% 4%;border-radius:18px;transform:rotate(-2.5deg)}
+.pmom-frame-main:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#050706c9,transparent 58%)}
+.pmom-frame-tag{position:absolute;z-index:1;bottom:15px;left:16px;font-size:9px;letter-spacing:.13em;font-weight:800;color:#d1ff6b}
+.pmom-play-mark{position:absolute;z-index:1;right:17px;bottom:12px;display:grid;place-items:center;width:39px;height:39px;border-radius:50%;background:#d1ff6b;color:#11170b;font-size:14px}
+.pmom-frame-small{width:35%;height:43%;right:0;top:0;border-radius:14px;transform:rotate(5deg);border:3px solid #0d100d}
+.pmom-stamp{position:absolute;z-index:2;left:0;bottom:0;display:flex;flex-direction:column;gap:5px;padding:13px 16px;border-radius:12px;background:#d1ff6b;color:#10160a;transform:rotate(-4deg);box-shadow:0 10px 24px #0006}
+.pmom-stamp strong{font-size:17px;letter-spacing:-.04em;line-height:.92}.pmom-stamp span{font-size:8px;font-weight:900;letter-spacing:.13em}
+.pmom-feed-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-top:36px;padding-top:24px;border-top:1px solid #ffffff20}
+.pmom-feed-head h3{font-size:clamp(20px,3vw,28px);letter-spacing:-.045em;margin:8px 0 0}.pmom-count{color:#929b93;font-size:9px;letter-spacing:.12em;font-weight:800}
+.pmom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:17px}
+.pmom-card{position:relative;min-width:0;overflow:hidden;aspect-ratio:4/4.6;border-radius:15px;background:#1b211b;border:1px solid #ffffff1a;cursor:pointer;text-align:left;padding:0;color:#fff}
+.pmom-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .35s;filter:saturate(.9)}
+.pmom-card:hover img{transform:scale(1.05)}.pmom-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#070907ed,transparent 70%)}
+.pmom-card-play{position:absolute;z-index:1;right:12px;top:12px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#d1ff6b;color:#10150b}
+.pmom-card-copy{position:absolute;z-index:1;left:13px;right:13px;bottom:13px;display:flex;flex-direction:column;gap:5px}
+.pmom-card-copy strong{font-size:14px;line-height:1.2}.pmom-card-copy span{font-size:10px;color:#d1ff6b;font-weight:800;letter-spacing:.05em}.pmom-card-copy small{font-size:10px;color:#c2c7c1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pmom-empty{grid-column:1/-1;display:flex;align-items:center;flex-direction:column;text-align:center;padding:28px 18px;border:1px dashed #ffffff2d;border-radius:16px;background:#ffffff04}
+.pmom-empty>span{font-size:24px;color:#d1ff6b}.pmom-empty strong{font-size:12px;letter-spacing:.07em;margin-top:8px}.pmom-empty p{max-width:420px;color:#9ca49d;font-size:12px;line-height:1.6;margin:8px 0 15px}.pmom-empty button{background:transparent;border:1px solid #d1ff6b;color:#d1ff6b}
+.pmom-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px;color:#788079;font-size:8px;font-weight:800;letter-spacing:.12em}
+@media(max-width:680px){.pmom{padding:22px 17px;border-radius:22px;margin-top:24px}.pmom-head{grid-template-columns:1fr;gap:18px}.pmom-copy h2{font-size:43px}.pmom-copy>p{font-size:13px}.pmom-collage{height:250px;margin:0 5px}.pmom-frame-main{inset:0 9% 5% 4%}.pmom-feed-head{align-items:start;flex-direction:column;gap:8px;margin-top:25px}.pmom-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.pmom-card{aspect-ratio:4/5}.pmom-card-copy{left:10px;right:10px;bottom:10px}.pmom-card-copy strong{font-size:12px}.pmom-foot{line-height:1.5}.pmom-foot span:last-child{max-width:180px;text-align:right}}
+@media(prefers-reduced-motion:reduce){.pmom *{transition:none!important;scroll-behavior:auto!important}}
