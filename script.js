@@ -1603,7 +1603,7 @@
   });
   function jumpState(){
     let p=null, media=null, radio=false;
-    if(radioActive && radioQueue[radioIndex]){
+    if(radioActive && !radioPaused && radioQueue[radioIndex]){
       p=radioQueue[radioIndex];radio=true;
       media=radioEngine?.kind==='audio'?radioEngine.player:null;
     }else{
