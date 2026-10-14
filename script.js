@@ -853,6 +853,20 @@
     const p=s.split(':').map(Number);return p.reduce((acc,v)=>acc*60+v,0);
   }
   let jumpActivePost = null;
+  let jumpYoutubePlayer = null;
+  let jumpYoutubeReady = false;
+  function jumpYoutubeAPI(){
+    if(window.YT?.Player)return Promise.resolve(window.YT);
+    return new Promise((resolve,reject)=>{
+      const previous=window.onYouTubeIframeAPIReady;
+      const timer=setTimeout(()=>reject(new Error('YouTube API timeout')),12000);
+      window.onYouTubeIframeAPIReady=()=>{if(typeof previous==='function')previous();clearTimeout(timer);resolve(window.YT);};
+      if(!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')){
+        const tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';tag.async=true;
+        tag.onerror=()=>{clearTimeout(timer);reject(new Error('YouTube API indisponível'));};document.head.appendChild(tag);
+      }
+    });
+  }
   function playPost(p) {
     jumpActivePost = p;
     window.PULSO_VIDEO?.pause?.(); // Pausa o vídeo flutuante antes de abrir outra publicação.
@@ -878,6 +892,11 @@
         const a=document.createElement('a');a.href=embedInfo.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Abrir arquivo original ↗';
         message.append(a);node.appendChild(message);
       });node.appendChild(video);dialogOpen('playerDialog');return;}
+    if(embedInfo.kind==='youtube'){
+      const videoId=youtubeVideoId(url);const holder=document.createElement('div');holder.id='pulsoJumpYoutubePlayer';holder.className='pulso-jump-youtube-player';node.appendChild(holder);dialogOpen('playerDialog');
+      jumpYoutubePlayer=null;jumpYoutubeReady=false;
+      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,origin:location.origin},events:{onReady:()=>{jumpYoutubeReady=true;},onError:()=>{jumpYoutubeReady=false;}}});}).catch(err=>console.warn('PULSO JUMP YouTube API:',err));return;
+    }
     const iframe=document.createElement('iframe');iframe.src=embedInfo.url;iframe.title=embedInfo.title;
     iframe.allow='autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture';
     iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allowFullscreen=true;
@@ -1602,34 +1621,39 @@
     }
   });
   function jumpState(){
-    let p=null, media=null, radio=false;
-    if(radioActive && !radioPaused && radioQueue[radioIndex]){
+    let p=null,media=null,radio=false,kind='audio',time=0,duration=0,playing=false;
+    if(radioActive&&radioQueue[radioIndex]){
       p=radioQueue[radioIndex];radio=true;
-      media=radioEngine?.kind==='audio'?radioEngine.player:null;
+      if(radioEngine?.kind==='youtube'){kind='youtube';const y=radioEngine.player;time=Number(y?.getCurrentTime?.())||0;duration=Number(y?.getDuration?.())||0;playing=y?.getPlayerState?.()===1;}
+      else media=radioEngine?.kind==='audio'?radioEngine.player:null;
     }else{
       p=jumpActivePost;
-      media=$('embedContainer')?.querySelector('audio,video')||null;
+      if(mediaEmbed(p?.url||'')?.kind==='youtube'&&jumpYoutubePlayer&&jumpYoutubeReady){kind='youtube';time=Number(jumpYoutubePlayer.getCurrentTime?.())||0;duration=Number(jumpYoutubePlayer.getDuration?.())||0;playing=jumpYoutubePlayer.getPlayerState?.()===1;}
+      else media=$('embedContainer')?.querySelector('audio,video')||null;
     }
-    if(!p||!media||!p.url||!/^https:\/\//i.test(p.url))return null;
-    const info=mediaEmbed(p.url);
-    if(!info||!['audio','chunked-audio'].includes(info.kind))return null;
-    return {id:String(p.id),title:String(p.title||'PULSO'),artist:String(p.artist||''),url:String(p.url),cover:String(p.cover||''),time:Number(media.currentTime)||0,duration:Number(media.duration)||0,playing:!media.paused,radio};
+    if(!p||!p.url||!/^https:\/\//i.test(p.url))return null;
+    const info=mediaEmbed(p.url);if(!info||!['audio','chunked-audio','youtube'].includes(info.kind))return null;
+    if(info.kind==='youtube'&&kind!=='youtube')return null;
+    if(media){time=Number(media.currentTime)||0;duration=Number(media.duration)||0;playing=!media.paused;kind=info.kind;}
+    return {id:String(p.id),title:String(p.title||'PULSO'),artist:String(p.artist||''),url:String(p.url),cover:String(p.cover||''),time,duration,playing,radio,kind,videoId:info.kind==='youtube'?youtubeVideoId(p.url):''};
   }
   function jumpPlay(id,time=0){
     const p=posts.find(x=>String(x.id)===String(id)&&x.status==='approved');
     if(!p)return false;
     const info=mediaEmbed(p.url||'');
-    if(!info||!['audio','chunked-audio'].includes(info.kind))return false;
+    if(!info||!['audio','chunked-audio','youtube'].includes(info.kind))return false;
     if(radioActive){
       radioQueue=radioOrdered(radioCandidates());
       const index=radioQueue.findIndex(x=>String(x.id)===String(id));
       if(index<0)return false;
       radioActive=true;radioPaused=false;radioSelect(index);
-      const apply=()=>{if(radioEngine?.kind==='audio'&&Number.isFinite(radioEngine.player.duration))radioEngine.player.currentTime=Math.max(0,Math.min(Number(time)||0,radioEngine.player.duration-0.1));};
-      if(radioEngine?.kind==='audio'){radioEngine.player.addEventListener('loadedmetadata',apply,{once:true});apply();}
+      const apply=()=>{if(info.kind==='youtube'&&radioEngine?.kind==='youtube'){radioEngine.player.seekTo(Math.max(0,Number(time)||0),true);return;}if(radioEngine?.kind==='audio'&&Number.isFinite(radioEngine.player.duration))radioEngine.player.currentTime=Math.max(0,Math.min(Number(time)||0,radioEngine.player.duration-0.1));};
+      if(info.kind==='youtube'){const until=Date.now()+12000;const poll=()=>{if(radioEngine?.kind==='youtube'){apply();return;}if(Date.now()<until)setTimeout(poll,200);};poll();}
+      else if(radioEngine?.kind==='audio'){radioEngine.player.addEventListener('loadedmetadata',apply,{once:true});apply();}
       return true;
     }
     playPost(p);
+    if(info.kind==='youtube'){const until=Date.now()+15000;const poll=()=>{if(jumpYoutubePlayer&&jumpYoutubeReady){jumpYoutubePlayer.seekTo(Math.max(0,Number(time)||0),true);return;}if(Date.now()<until)setTimeout(poll,200);};poll();return true;}
     const apply=()=>{const m=$('embedContainer')?.querySelector('audio');if(m&&Number.isFinite(m.duration))m.currentTime=Math.max(0,Math.min(Number(time)||0,m.duration-0.1));};
     const m=$('embedContainer')?.querySelector('audio');
     if(m){m.addEventListener('loadedmetadata',apply,{once:true});apply();}
