@@ -31,7 +31,7 @@ const photos={
 'anotr':'https://geo-static.traxsource.com/files/artists/256799.jpg',
 'artbat':'https://cdn.prod.website-files.com/5fc4ae7214179129b5354a52/695f64a9519edf6aadf30983_ARTBAT-p-800.png',
 'miss monique':'https://mi4l.s3.amazonaws.com/uploads/2021/11/MissMonique-scaled.jpg',
-'cat dealers':'https://catdealers.com.br/wp-content/uploads/2025/02/cat-dealers-press-photo.jpg',
+'cat dealers':'https://catdealers.com.br/wp-content/uploads/2024/03/%40theclayprice-Toronto-4-scaled-e1710249690752.jpg',
 'laurent garnier':'https://www.kdbuzz.com/images/garnier_electrochoc.jpg',
 'peggy gou':'https://i.scdn.co/image/ab6761610000e5ebd8b998e4e7d0a9efb0d6e8c4',
 'antdot':'https://assets.beatportal.com/images/transforms/artist/_2668x2668_crop_center-center_none/920987/Antdot_artist_cover.webp',
