@@ -2,7 +2,7 @@
 (()=>{'use strict';
 const cfg=window.PULSO_CONFIG||{}, DB='pulso-offline-v1', STORE='tracks', MAX=400*1024*1024;
 let sb=null,user=null,isAdmin=false,posts=new Map(),panel=null,offlineUrl=null;
-let liveChannel=null,liveRecent=[],liveSeen=new Set(),activeTab='analytics',liveAlertsEnabled=false;
+let liveChannel=null,liveRecent=[],liveSeen=new Set(),activeTab='analytics',liveAlertsEnabled=(()=>{try{return localStorage.getItem('pulso_live_alerts')==='1'}catch{return false}})();
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key=(k)=>'pulso_insights_'+k;
@@ -35,6 +35,7 @@ function renderLiveTab(){
    try{
      const permission=Notification.permission==='default'?await Notification.requestPermission():Notification.permission;
      liveAlertsEnabled=permission==='granted';
+     try{localStorage.setItem('pulso_live_alerts',liveAlertsEnabled?'1':'0')}catch{}
      if(!liveAlertsEnabled)toast('Permita notificações nos ajustes do navegador ou do iPhone.');
      updateLivePanel();
    }catch{toast('Não foi possível ativar os avisos neste aparelho.')}
@@ -54,14 +55,12 @@ function setupPresence(){
      const item=(newPresences||[])[0]||{};
      liveRecent.unshift({time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
      liveRecent=liveRecent.slice(0,8);
-     if(panel?.open&&activeTab==='live'){
-       updateLivePanel();
-       if(liveAlertsEnabled&&'Notification'in window&&Notification.permission==='granted'){
-        const title='Novo acesso ao PULSO';
-        const options={body:'Uma nova sessão entrou no site ou aplicativo.',tag:'pulso-live-entry'};
-        if('serviceWorker'in navigator)navigator.serviceWorker.ready.then(reg=>reg.showNotification(title,options)).catch(()=>{try{new Notification(title,options)}catch{}});
-        else try{new Notification(title,options)}catch{}
-       }
+     if(panel?.open&&activeTab==='live')updateLivePanel();
+     if(liveAlertsEnabled&&'Notification'in window&&Notification.permission==='granted'){
+       const title='Novo acesso ao PULSO';
+       const options={body:'Uma nova sessão entrou no site ou aplicativo.',tag:'pulso-live-entry'};
+       if('serviceWorker'in navigator)navigator.serviceWorker.ready.then(reg=>reg.showNotification(title,options)).catch(()=>{try{new Notification(title,options)}catch{}});
+       else try{new Notification(title,options)}catch{}
      }
    })
    .on('presence',{event:'leave'},()=>updateLivePanel())
