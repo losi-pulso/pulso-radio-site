@@ -15,7 +15,7 @@
    const grid=$('pmomGrid');if(!grid)return;
    const items=approvedMoments();
    $('pmomCount').textContent=items.length?items.length+' VÍDEO'+(items.length===1?'':'S')+' APROVADO'+(items.length===1?'':'S'):'SEJA O PRIMEIRO A COMPARTILHAR';
-   if(!items.length){grid.innerHTML='<div class="pmom-empty"><span>✳</span><strong>SEU MOMENTO PODE SER O PRIMEIRO.</strong><p>Foi a uma festa inesquecível? Compartilhe a energia com a comunidade PULSO.</p><button type="button" data-pmom-publish>PUBLICAR O PRIMEIRO VÍDEO ↗</button></div>';return;}
+   if(!items.length){grid.innerHTML='<div class="pmom-empty"><span>✳</span><strong>SEU MOMENTO PODE SER O PRIMEIRO.</strong><p>Foi a uma festa inesquecível? Compartilhe a energia com a comunidade PULSO.</p><button type="button" data-pmom-publish>PUBLICAR O PRIMEIRO VÍDEO</button></div>';return;}
    grid.innerHTML=items.slice(0,6).map(p=>'<button type="button" class="pmom-card" data-pmom-watch="'+esc(p.id)+'" aria-label="Reproduzir '+esc(p.title)+'"><img loading="lazy" src="'+esc(thumbnail(p))+'" alt=""><span class="pmom-card-badge">PULSO MOMENT</span><span class="pmom-card-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.8a1.3 1.3 0 0 1 1.96-1.12l10 6.2a1.3 1.3 0 0 1 0 2.24l-10 6.2A1.3 1.3 0 0 1 8 18.2z"/></svg></span><span class="pmom-card-copy"><span>'+esc((p.artist||'COMUNIDADE PULSO').toUpperCase())+'</span><strong>'+esc(p.title||'Momento PULSO')+'</strong><small>'+esc((p.description||p.type||'Vídeo da comunidade').slice(0,110))+'</small></span></button>').join('');
  }
  function publish(){
