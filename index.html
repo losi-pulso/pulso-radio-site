@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="pulso54.css?v=5.18-compact-catalog">
   <link rel="stylesheet" href="pulso-visual-refresh.css?v=5.25-premium-mobile">
   <link rel="stylesheet" href="pulso-home-highlights.css?v=1.1">
-  <link rel="stylesheet" href="pulso-artist-ribbon.css?v=1.1">
+  <link rel="stylesheet" href="pulso-artist-ribbon.css?v=1.1">\n  <link rel="stylesheet" href="pulso-moments.css?v=1.0-community-feed">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="config.js"></script>
   <script defer src="https://w.soundcloud.com/player/api.js"></script>
@@ -53,7 +53,7 @@
   <script defer src="pulso-capsule-export.js?v=5.25-story-share"></script>
   <script defer src="pulso-share.js?v=5.12-fab"></script>
   <script defer src="pulso-insights.js?v=1.3-cloudflare-video-download"></script>
-  <script defer src="pulso-media-actions.js?v=1.0-fullscreen-offline"></script>
+  <script defer src="pulso-media-actions.js?v=1.0-fullscreen-offline"></script>\n  <script defer src="pulso-moments.js?v=1.0-community-feed"></script>
 </head>
 <body>
   <a class="skip-link" href="#explorar">Pular para o conteúdo</a>
@@ -159,6 +159,30 @@
       <div class="phome-bottomline"><span><i></i> CURADORIA EM MOVIMENTO</span><span>PLAY ALTO. VIVA O PULSO.</span></div>
     </section>
 
+<!-- PULSO MOMENTS — comunidade de vídeos de festas -->
+<section id="pulsoMoments" class="pmom container" aria-labelledby="pmomTitle">
+  <div class="pmom-glow" aria-hidden="true"></div>
+  <div class="pmom-head">
+    <div class="pmom-copy">
+      <span class="pmom-eyebrow"><span class="pmom-live-dot"></span> A PISTA É SUA · COMUNIDADE PULSO</span>
+      <h2 id="pmomTitle">VOCÊ VIVEU.<br><em>COMPARTILHE.</em></h2>
+      <p>Os melhores momentos acontecem na pista. Publique seus vídeos de festas, clubs e festivais e reviva a energia com a comunidade.</p>
+      <div class="pmom-actions">
+        <button type="button" class="pmom-publish" id="pmomPublish"><span>＋</span> PUBLICAR MEU MOMENTO</button>
+        <button type="button" class="pmom-watch" id="pmomWatch">ASSISTIR MOMENTS <span>↗</span></button>
+      </div>
+      <div class="pmom-note"><span>↗</span> Vídeos enviados passam por aprovação antes de aparecer para todos.</div>
+    </div>
+    <div class="pmom-collage" aria-label="Momentos de música eletrônica">
+      <div class="pmom-frame pmom-frame-main"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=85" alt="Multidão em um festival de música eletrônica" loading="lazy"><span class="pmom-frame-tag">REAL MOMENTS · PULSO</span><span class="pmom-play-mark">▶</span></div>
+      <div class="pmom-frame pmom-frame-small"><img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=500&q=85" alt="Público curtindo um show ao vivo" loading="lazy"></div>
+      <div class="pmom-stamp"><strong>YOUR<br>ENERGY.</strong><span>YOUR STORY.</span></div>
+    </div>
+  </div>
+  <div class="pmom-feed-head"><div><span class="pmom-feed-kicker">DA COMUNIDADE PARA A PISTA</span><h3>MOMENTS <em>EM DESTAQUE</em></h3></div><span class="pmom-count" id="pmomCount">VÍDEOS DA COMUNIDADE</span></div>
+  <div class="pmom-grid" id="pmomGrid" aria-live="polite"><div class="pmom-empty"><span>✳</span><strong>SEU MOMENTO PODE SER O PRIMEIRO.</strong><p>Foi a uma festa inesquecível? Compartilhe a energia com a comunidade PULSO.</p><button type="button" data-pmom-publish>PUBLICAR O PRIMEIRO VÍDEO ↗</button></div></div>
+  <div class="pmom-foot"><span>✦ MOMENTOS REAIS. MÚSICA SEM FRONTEIRAS.</span><span>RESPEITE A PISTA · PUBLIQUE COM AUTORIZAÇÃO</span></div>
+</section>
     <section id="p54Catalog" class="p54-section container" aria-labelledby="p54CatalogTitle">
       <div class="p54-over"><span>EXPEDIÇÃO SONORA · YOUTUBE OFICIAL</span><strong>EXPLORE AS FREQUÊNCIAS</strong></div>
       <div class="p54-heading"><div><span class="p54-eyebrow">FESTIVAL ARCHIVE / PULSO CURADORIA</span><h2 id="p54CatalogTitle">OS GRANDES <em>SESSIONS.</em></h2><p>Seleção de apresentações publicadas no YouTube por canais dos DJs, festivais e art cars. Toque para assistir no player flutuante e continue navegando no PULSO.</p></div><span class="p54-livebadge">● CURADORIA ATUALIZADA</span></div>
