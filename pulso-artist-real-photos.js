@@ -34,6 +34,7 @@ const photos={
 'cat dealers':'https://catdealers.com.br/wp-content/uploads/2024/03/%40theclayprice-Toronto-4-scaled-e1710249690752.jpg',
 'laurent garnier':'https://www.kdbuzz.com/images/garnier_electrochoc.jpg',
 'peggy gou':'https://i.scdn.co/image/ab6761610000e5ebd8b998e4e7d0a9efb0d6e8c4',
+'dubdogz':'https://billboard-com-br.s3.amazonaws.com/wp-content/uploads/2026/09/28220153/Dubdogz-divulgacao-1024x536.webp',
 'antdot':'https://assets.beatportal.com/images/transforms/artist/_2668x2668_crop_center-center_none/920987/Antdot_artist_cover.webp',
 'john summit':'https://iscale.iheart.com/v3/surl/aHR0cDovL2ltYWdlLmloZWFydC5jb20vaW1hZ2VzL2FydGlzdHMvMzEvNTcvNDAxOS82N2Q0NWQ5NDExYTNjOTBhNmUyMjNlOTAuanBn?sn=eGtleWJhc2UyMDIxMTExMDqS3duv0XvBZ5Ia5l-eyhSvr5iUegDV59L-btXSDsjgqQ%3D%3D&surrogate=1cOXl179JY-syhxYSCX6Q1a_Mcu6UO8d-F4oJzpZf1hcUbJr4aImxdQOFUfqwAxaHVBp0956GB-X_PLGLYCtFZqS0PuCh0uuj2en-xSlGoeRLTNduB8w4oy-T2VtZbadPRZUgnTvmwascNiULRTkJTClA_JDwWIW3NIVqvWg8_xEMAhoXSFwMohk9FDcBnqPgUqLXjxFAKLfNyQgpTdcDXDyCAiO3Fj4gDjC8ZtkuFsF9YWWXjvNxyDy',
 'solomun':'https://geo-static.traxsource.com/files/artists/6185.jpg',
