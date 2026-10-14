@@ -1617,7 +1617,8 @@
       else media=radioEngine?.kind==='audio'?radioEngine.player:null;
     }else{
       p=jumpActivePost;
-      if(mediaEmbed(p?.url||'')?.kind==='youtube'){kind='youtube';if(jumpYoutubePlayer&&jumpYoutubeReady){time=Number(jumpYoutubePlayer.getCurrentTime?.())||0;duration=Number(jumpYoutubePlayer.getDuration?.())||0;playing=jumpYoutubePlayer.getPlayerState?.()===1;}}
+      // Não chamar mediaEmbed com URL vazia: isso lança TypeError no Safari/iOS.
+      if(p?.url && mediaEmbed(p.url)?.kind==='youtube'){kind='youtube';if(jumpYoutubePlayer&&jumpYoutubeReady){time=Number(jumpYoutubePlayer.getCurrentTime?.())||0;duration=Number(jumpYoutubePlayer.getDuration?.())||0;playing=jumpYoutubePlayer.getPlayerState?.()===1;}}
       else media=$('embedContainer')?.querySelector('audio,video')||null;
     }
     if(!p||!p.url||!/^https:\/\//i.test(p.url))return null;
