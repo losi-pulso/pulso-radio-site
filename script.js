@@ -852,7 +852,9 @@
     const s=String(v).trim();if(!/^\d{1,4}(:[0-5]\d){0,2}$/.test(s))return null;
     const p=s.split(':').map(Number);return p.reduce((acc,v)=>acc*60+v,0);
   }
+  let jumpActivePost = null;
   function playPost(p) {
+    jumpActivePost = p;
     window.PULSO_VIDEO?.pause?.(); // Pausa o vídeo flutuante antes de abrir outra publicação.
     if(p.demo){toast('Exemplo de layout. Publique um link real para ativar o player.');return;}
     if (radioActive) radioPause(); // Ao abrir outra mídia, pausa a rádio sem perder a fila nem o ponto de escuta.
@@ -1599,7 +1601,41 @@
       if(connected)window.PULSO_SOCIAL.refresh().catch(console.warn);
     }
   });
-  window.PULSO_APP={playbackReady:false,client:()=>sb,user:()=>user,admin:()=>isAdmin,posts:()=>posts,playById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');if(p)playPost(p);},likeById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');return p?toggleLike(p):Promise.resolve();},isLiked:id=>likes.has(id),pauseForReels:()=>{if(radioActive)radioPause();const media=$('embedContainer')?.querySelector('audio,video');if(media)media.pause();},radio:()=>radioStart(),login:authDialog,toast,setSavedRemote:ids=>{try{if(!localStorage.getItem('pulso_saved_legacy_v1')){const previous=localStorage.getItem(savedKey);if(previous)localStorage.setItem('pulso_saved_legacy_v1',previous);}}catch{}saved=new Set(ids);store(savedKey,[...saved]);render();}};
+  function jumpState(){
+    let p=null, media=null, radio=false;
+    if(radioActive && radioQueue[radioIndex]){
+      p=radioQueue[radioIndex];radio=true;
+      media=radioEngine?.kind==='audio'?radioEngine.player:null;
+    }else{
+      p=jumpActivePost;
+      media=$('embedContainer')?.querySelector('audio,video')||null;
+    }
+    if(!p||!media||!p.url||!/^https:\/\//i.test(p.url))return null;
+    const info=mediaEmbed(p.url);
+    if(!info||!['audio','chunked-audio'].includes(info.kind))return null;
+    return {id:String(p.id),title:String(p.title||'PULSO'),artist:String(p.artist||''),url:String(p.url),cover:String(p.cover||''),time:Number(media.currentTime)||0,duration:Number(media.duration)||0,playing:!media.paused,radio};
+  }
+  function jumpPlay(id,time=0){
+    const p=posts.find(x=>String(x.id)===String(id)&&x.status==='approved');
+    if(!p)return false;
+    const info=mediaEmbed(p.url||'');
+    if(!info||!['audio','chunked-audio'].includes(info.kind))return false;
+    if(radioActive){
+      radioQueue=radioOrdered(radioCandidates());
+      const index=radioQueue.findIndex(x=>String(x.id)===String(id));
+      if(index<0)return false;
+      radioActive=true;radioPaused=false;radioSelect(index);
+      const apply=()=>{if(radioEngine?.kind==='audio'&&Number.isFinite(radioEngine.player.duration))radioEngine.player.currentTime=Math.max(0,Math.min(Number(time)||0,radioEngine.player.duration-0.1));};
+      if(radioEngine?.kind==='audio'){radioEngine.player.addEventListener('loadedmetadata',apply,{once:true});apply();}
+      return true;
+    }
+    playPost(p);
+    const apply=()=>{const m=$('embedContainer')?.querySelector('audio');if(m&&Number.isFinite(m.duration))m.currentTime=Math.max(0,Math.min(Number(time)||0,m.duration-0.1));};
+    const m=$('embedContainer')?.querySelector('audio');
+    if(m){m.addEventListener('loadedmetadata',apply,{once:true});apply();}
+    return true;
+  }
+  window.PULSO_APP={playbackReady:false,client:()=>sb,user:()=>user,admin:()=>isAdmin,posts:()=>posts,jumpState,jumpPlay,playById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');if(p)playPost(p);},likeById:id=>{const p=posts.find(x=>x.id===id&&x.status==='approved');return p?toggleLike(p):Promise.resolve();},isLiked:id=>likes.has(id),pauseForReels:()=>{if(radioActive)radioPause();const media=$('embedContainer')?.querySelector('audio,video');if(media)media.pause();},radio:()=>radioStart(),login:authDialog,toast,setSavedRemote:ids=>{try{if(!localStorage.getItem('pulso_saved_legacy_v1')){const previous=localStorage.getItem(savedKey);if(previous)localStorage.setItem('pulso_saved_legacy_v1',previous);}}catch{}saved=new Set(ids);store(savedKey,[...saved]);render();}};
   init().catch(err=>toast(`Falha ao iniciar o site: ${errorText(err)}`));
   $('cancelVideoUpload').addEventListener('click',()=>{if(activeVideoUpload){activeVideoUpload();$('cancelVideoUpload').disabled=true;}});
 })();
