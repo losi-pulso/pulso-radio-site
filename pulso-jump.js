@@ -41,7 +41,7 @@ function bindPlayback(){
  document.addEventListener('seeking',e=>{if(!(e.target instanceof HTMLMediaElement)||role!=='host'||!channel)return;const s=app()?.jumpState?.();if(s)publishState(s,true);},true);
  document.addEventListener('loadedmetadata',()=>{if(role==='guest'&&current&&!localPaused)receiveState(current);},true);
  document.addEventListener('pause',e=>{if(e.target instanceof HTMLMediaElement&&role==='guest')localPaused=true;},true);
- if(role==='host')syncTimer=setInterval(()=>{if(!channel)return;const s=app()?.jumpState?.();if(s&&(!current||String(s.id)!==String(current.id)))publishState(s,true);},1200);
+ syncTimer=setInterval(()=>{if(!channel)return;if(role==='host'){const s=app()?.jumpState?.();if(s&&(!current||String(s.id)!==String(current.id)))publishState(s,true);}else if(current&&!localPaused)receiveState(current);},1800);
 }
 document.addEventListener('DOMContentLoaded',()=>{buildUI();bindPlayback();});
 })();
