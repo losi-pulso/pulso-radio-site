@@ -2,7 +2,7 @@
 (()=>{'use strict';
 const photos={
 'david guetta':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2026-09/Guetta.jpg.webp?itok=l6ckHhHJ',
-'martin garrix':'https://djmag.com/sites/default/files/styles/djm_23_961x540_jpg/public/2026-02/485909256_1218259256325736_3254876605054938336_n.jpg.webp.jpg?itok=fhLqhVbJ',
+'martin garrix':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2024-10/MGpressPhoto-2.jpg.webp?itok=c18RNSkb',
 'anyma':'https://djmag.com/sites/default/files/styles/djm_23_961x540/public/2025-12/anyma-matteo-milleri-performance-show-great-pyramids-giza-egypt-quantum-genesys.jpg.webp?itok=XMH_z6As',
 'alok':'https://djmag.com/sites/default/files/styles/djm_23_991x533_jpg/public/2023-10/4.%20Alok-Hudson%20Renan.jpg?itok=tQP5DZo7',
 'dimitri vegas like mike':'https://djmag.com/sites/default/files/styles/djm_23_961x540_jpg/public/2025-09/dimitri-vegas-like-mike.jpg?itok=omE6lLeh',
@@ -27,7 +27,7 @@ const photos={
 'boris brejcha':'https://www.time-warp.de/imgdb/boris-brejcha.jpg',
 'michael bibi':'https://i.scdn.co/image/ab6761610000e5eb5da9a30b4ebb31ba1212adb9',
 'rufus du sol':'https://venueeventartist.com/imateq/artist/97/230341/g500SC0/428819.jpg',
-'jord':'https://geo-media.beatport.com/image_size/590x404/944d9ec0-d62c-46be-82c6-471ceca36887.jpg',
+'jord':'https://eletrovibez.com/wp-content/uploads/2019/05/jord-so-wrong-lancamento.jpg',
 'anotr':'https://geo-static.traxsource.com/files/artists/256799.jpg',
 'artbat':'https://cdn.prod.website-files.com/5fc4ae7214179129b5354a52/695f64a9519edf6aadf30983_ARTBAT-p-800.png',
 'miss monique':'https://mi4l.s3.amazonaws.com/uploads/2021/11/MissMonique-scaled.jpg',
@@ -37,9 +37,10 @@ const photos={
 'pawsa':'https://i.iheart.com/v3/catalog/artist/31768102?ops=fit%28720%2C720%29',
 'tiesto':'https://media.zaiko.io/zaiko/1_4984xaghoumyewm4jkrjq',
 'kshmr':'https://rollingstoneindia.com/wp-content/uploads/2023/04/KSHMR-2023-web-photo-e1681284870312.jpg',
+'whomadewho':'https://images.squarespace-cdn.com/content/v1/62025a14fc895a544588a7f3/e498791f-3a78-4232-a341-c064e4c95aba/WhoMadeWho-by-Kristoffer-Juhl-2.jpg?format=2500w',
 'w w':'https://viberate-upload.ams3.cdn.digitaloceanspaces.com/prod/entity/artist/wandw.jpg'
 };
-const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const normalize=s=>String(s||'').replace(/[øØ]/g,'o').replace(/[æÆ]/g,'ae').replace(/[œŒ]/g,'oe').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
 function update(){
  const track=document.getElementById('pulsoArtistRibbonTrack');
  if(!track)return;
