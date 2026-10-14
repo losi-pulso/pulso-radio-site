@@ -1645,8 +1645,13 @@
     if(radioActive&&radioEngine?.kind==='audio'){const m=radioEngine.player;if(Number.isFinite(m.duration)){m.currentTime=Math.max(0,Math.min(Number(time)||0,m.duration-0.1));if(hostPlaying)m.play().catch(()=>{});return true;}}
     return false;
   }
-  function jumpPlay(id,time=0){
-    const p=posts.find(x=>String(x.id)===String(id)&&x.status==='approved');
+  function jumpPlay(id,time=0,shared=null){
+    // Para YouTube, o convidado pode não ter o mesmo post no catálogo; use o link compartilhado.
+    let p=posts.find(x=>String(x.id)===String(id)&&x.status==='approved');
+    if(!p&&shared&&typeof shared.url==='string'&&/^https:\/\//i.test(shared.url)&&shared.kind==='youtube'){
+      const videoId=String(shared.videoId||youtubeVideoId(shared.url)||'');
+      if(/^[a-zA-Z0-9_-]{11}$/.test(videoId))p={id:String(shared.id||id),title:String(shared.title||'Set do YouTube'),artist:String(shared.artist||''),genre:'YouTube',url:'https://www.youtube.com/watch?v='+videoId,cover:String(shared.cover||''),status:'approved'};
+    }
     if(!p)return false;
     const info=mediaEmbed(p.url||'');
     if(!info||!['audio','chunked-audio','youtube'].includes(info.kind))return false;
