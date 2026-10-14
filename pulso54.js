@@ -102,6 +102,19 @@ const featuredDjs=[
   {artist:"Black Coffee",style:"AFRO HOUSE",detail:"MAYAN WARRIOR · BURNING MAN",video:"FH7lIOv1s3Q",instagram:"https://www.instagram.com/realblackcoffee/"},
   {artist:"Charlotte de Witte",style:"TECHNO",detail:"KNTXT · TOMORROWLAND",video:"fjnSF0K70q4",instagram:"https://www.instagram.com/charlottedewittemusic/"}
 ];
+
+/* PULSO ARTIST RIBBON — artistas do catálogo */
+function renderArtistRibbon(){
+ const root=document.getElementById('pulsoArtistRibbonTrack');if(!root)return;
+ const catalog=Array.isArray(sets)?sets:[];const artists=[];
+ catalog.forEach(s=>{
+  const names=String(s.artist||'').split(/\\s+b2b\\s+/i).map(x=>x.trim()).filter(Boolean);
+  const match=String(s.url||'').match(/[?&]v=([^&]+)/)||String(s.url||'').match(/youtu\\.be\\/([^?&]+)/);const video=match?match[1]:'';
+  names.forEach(name=>{if(!artists.some(a=>a.name.toLowerCase()===name.toLowerCase()))artists.push({name,video});});
+ });
+ const makeCard=(a,i)=>'<button class="par-card" type="button" data-p54-artist="'+safe(a.name)+'" aria-label="Ver sets de '+safe(a.name)+'" tabindex="0"><span class="par-avatar"><img src="https://i.ytimg.com/vi/'+safe(a.video||'vqz8c4ZP3Wg')+'/hqdefault.jpg" alt="" loading="lazy" decoding="async" onerror="this.style.opacity=0"></span><span class="par-name">'+safe(a.name)+'</span></button>';
+ const all=artists.map(makeCard).join('');root.innerHTML=all+artists.map(makeCard).join('');root.setAttribute('aria-label',artists.length+' artistas cadastrados. Selecione um artista para ver seus sets.');
+}
 function renderSignatures(){
  const root=$('p54Signatures');if(!root)return;
  root.classList.add('p54-featured-grid');
@@ -122,7 +135,7 @@ function renderSignatures(){
  }).join('');
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  renderRanking();renderClubRanking();renderSignatures();render();setHeroLocation('');setupHeroLocation();
+  renderRanking();renderClubRanking();renderSignatures();renderArtistRibbon();render();setHeroLocation('');setupHeroLocation();
   setCatalogExpanded(false);
   $('p54ExpandCatalog')?.addEventListener('click',()=>setCatalogExpanded(!$('p54Catalog')?.classList.contains('p54-catalog-expanded')));
   document.addEventListener('click',ev=>{
