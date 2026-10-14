@@ -895,7 +895,7 @@
     if(embedInfo.kind==='youtube'){
       const videoId=youtubeVideoId(url);const holder=document.createElement('div');holder.id='pulsoJumpYoutubePlayer';holder.className='pulso-jump-youtube-player';node.appendChild(holder);dialogOpen('playerDialog');
       jumpYoutubePlayer=null;jumpYoutubeReady=false;
-      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,origin:location.origin},events:{onReady:()=>{jumpYoutubeReady=true;},onError:()=>{jumpYoutubeReady=false;}}});}).catch(err=>console.warn('PULSO JUMP YouTube API:',err));return;
+      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,enablejsapi:1,origin:location.origin},events:{onReady:()=>{jumpYoutubeReady=true;},onError:()=>{jumpYoutubeReady=false;}}});}).catch(err=>console.warn('PULSO JUMP YouTube API:',err));return;
     }
     const iframe=document.createElement('iframe');iframe.src=embedInfo.url;iframe.title=embedInfo.title;
     iframe.allow='autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture';
@@ -1622,7 +1622,7 @@
   });
   function jumpState(){
     let p=null,media=null,radio=false,kind='audio',time=0,duration=0,playing=false;
-    if(radioActive&&radioQueue[radioIndex]){
+    if(radioActive&&!radioPaused&&radioQueue[radioIndex]){
       p=radioQueue[radioIndex];radio=true;
       if(radioEngine?.kind==='youtube'){kind='youtube';const y=radioEngine.player;time=Number(y?.getCurrentTime?.())||0;duration=Number(y?.getDuration?.())||0;playing=y?.getPlayerState?.()===1;}
       else media=radioEngine?.kind==='audio'?radioEngine.player:null;
