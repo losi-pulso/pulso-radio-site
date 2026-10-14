@@ -1611,6 +1611,7 @@
   });
   function jumpState(){
     let p=null,media=null,radio=false,kind='audio',time=0,duration=0,playing=false;
+    const safeMediaInfo=link=>{if(typeof link!=='string'||!/^https?:\/\//i.test(link.trim()))return null;try{return mediaEmbed(link.trim());}catch(err){console.warn('PULSO JUMP: URL de mídia inválida',link,err);return null;}};
     if(radioActive&&!radioPaused&&radioQueue[radioIndex]){
       p=radioQueue[radioIndex];radio=true;
       if(radioEngine?.kind==='youtube'){kind='youtube';const y=radioEngine.player;time=Number(y?.getCurrentTime?.())||0;duration=Number(y?.getDuration?.())||0;playing=y?.getPlayerState?.()===1;}
@@ -1618,17 +1619,17 @@
     }else{
       p=jumpActivePost;
       // Não chamar mediaEmbed com URL vazia: isso lança TypeError no Safari/iOS.
-      if(p?.url && mediaEmbed(p.url)?.kind==='youtube'){kind='youtube';if(jumpYoutubePlayer&&jumpYoutubeReady){time=Number(jumpYoutubePlayer.getCurrentTime?.())||0;duration=Number(jumpYoutubePlayer.getDuration?.())||0;playing=jumpYoutubePlayer.getPlayerState?.()===1;}}
+      if(p?.url && safeMediaInfo(p.url)?.kind==='youtube'){kind='youtube';if(jumpYoutubePlayer&&jumpYoutubeReady){time=Number(jumpYoutubePlayer.getCurrentTime?.())||0;duration=Number(jumpYoutubePlayer.getDuration?.())||0;playing=jumpYoutubePlayer.getPlayerState?.()===1;}}
       else media=$('embedContainer')?.querySelector('audio,video')||null;
     }
     if(!p||!p.url||!/^https:\/\//i.test(p.url))return null;
-    const info=mediaEmbed(p.url);if(!info||!['audio','chunked-audio','youtube'].includes(info.kind))return null;
+    const info=safeMediaInfo(p.url);if(!info||!['audio','chunked-audio','youtube'].includes(info.kind))return null;
     if(info.kind==='youtube'&&kind!=='youtube')return null;
     if(media){time=Number(media.currentTime)||0;duration=Number(media.duration)||0;playing=!media.paused;kind=info.kind;}
     return {id:String(p.id),title:String(p.title||'PULSO'),artist:String(p.artist||''),url:String(p.url),cover:String(p.cover||''),time,duration,playing,radio,kind,videoId:info.kind==='youtube'?youtubeVideoId(p.url):''};
   }
   function jumpSync(time,hostPlaying=true){
-    const p=jumpActivePost,info=mediaEmbed(p?.url||'');
+    const p=jumpActivePost,info=p?.url?safeMediaInfo(p.url):null;
     if(info?.kind==='youtube'&&jumpYoutubePlayer&&jumpYoutubeReady){
       const duration=Number(jumpYoutubePlayer.getDuration?.())||0,at=Math.max(0,Number(time)||0);
       if(duration>0)jumpYoutubePlayer.seekTo(Math.min(at,duration-0.25),true);
