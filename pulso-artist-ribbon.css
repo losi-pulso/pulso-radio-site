@@ -14,3 +14,25 @@
 @keyframes par-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:620px){.pulso-artist-ribbon{padding:12px 0 7px}.par-heading{padding:0 17px 10px;font-size:9px}.par-track{gap:14px;animation-duration:78s}.par-card{width:68px;flex-basis:68px;gap:7px}.par-avatar{width:58px;height:58px}.par-name{font-size:9px;min-height:24px}}
 @media(prefers-reduced-motion:reduce){.par-track{animation:none;transform:none}.par-track .par-card:nth-child(n+30){display:none}}
+
+
+/* PULSO DISCOVERY 5.58 — rolagem mais suave, controle manual e categorias */
+.par-track{animation-duration:155s;touch-action:pan-x;cursor:grab;}
+.par-track:hover,.par-track:focus-within,.par-track.par-paused{animation-play-state:paused;}
+.par-track.par-is-static{animation:none;}
+.par-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 clamp(16px,3vw,40px) 12px;}
+.par-tabs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.par-tabs button,.par-motion-toggle{border:1px solid #374634;background:#121a14;color:#bdcbb6;border-radius:999px;padding:8px 12px;font:800 9px/1 'Space Grotesk',sans-serif;letter-spacing:.08em;cursor:pointer;white-space:nowrap;}
+.par-tabs button[aria-pressed="true"]{background:#d1ff6b;border-color:#d1ff6b;color:#14200e;}
+.par-motion-toggle{border-color:#526148;color:#e4efd9;}
+.par-viewport{overflow-x:auto;overflow-y:hidden;position:relative;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x;cursor:grab;}
+.par-viewport::-webkit-scrollbar{display:none;}
+.par-viewport.par-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none;}
+.par-subname{display:block;font:500 8px/1.25 'DM Sans',sans-serif;color:#8f9d88;max-width:100%;white-space:normal;}
+.par-club-card .par-avatar{border-radius:17px;width:94px;height:68px;padding:0;}
+.par-club-card .par-avatar img{border-radius:15px;object-fit:cover;}
+.par-festival-card .par-avatar{border-radius:17px;width:88px;height:64px;padding:0;}
+.par-festival-card .par-avatar img{border-radius:15px;object-fit:cover;}
+.par-hint{padding:0 clamp(16px,3vw,40px);margin-top:0;color:#788872;font:700 8px/1.3 'Space Grotesk',sans-serif;letter-spacing:.13em;}
+.par-club-selected{outline:2px solid #d1ff6b;outline-offset:3px;}
+@media(max-width:620px){.par-track{animation-duration:125s;gap:14px}.par-toolbar{padding:0 17px 10px;align-items:flex-start}.par-tabs{gap:5px}.par-tabs button,.par-motion-toggle{font-size:8px;padding:8px 9px}.par-hint{padding:0 17px;font-size:7px}.par-club-card .par-avatar{width:88px;height:62px}.par-festival-card .par-avatar{width:82px;height:60px}}
