@@ -62,6 +62,9 @@
      const attempt=video.play();if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{});
    }
    if(!d.open){if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','');}
+   // Request true device fullscreen for video when the browser permits it.
+   const activeVideo=stage.querySelector('video');
+   if(activeVideo && activeVideo.requestFullscreen){const fs=activeVideo.requestFullscreen();if(fs&&typeof fs.catch==='function')fs.catch(()=>{});}
  }
  document.addEventListener('click',ev=>{
    if(ev.target.closest('#pmomPublish,[data-pmom-publish]')){publish();return;}
