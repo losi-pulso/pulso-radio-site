@@ -497,3 +497,16 @@ img{max-width:100%}
   .radio-dock:not([hidden]):not(.is-minimized) .radio-topbar button{touch-action:manipulation!important;}
   html:not(.radio-player-open),body:not(.radio-player-open){touch-action:pan-y;}
 }
+
+/* PULSO mobile menu reliability fix */
+@media(max-width:920px){
+  .site-header{overflow:visible;z-index:1000}
+  .header-inner{position:relative;overflow:visible}
+  .header-actions{gap:10px;min-width:0}
+  .menu-toggle{position:relative;z-index:1003;flex:0 0 40px;min-width:40px;min-height:40px;display:flex;cursor:pointer;touch-action:manipulation}
+  .menu-toggle span{flex:0 0 2px;border-radius:2px;pointer-events:none}
+  .mobile-nav,.mobile-nav.open{position:fixed;top:calc(75px + env(safe-area-inset-top,0px));left:0;right:0;z-index:1002;max-height:calc(100dvh - 75px - env(safe-area-inset-top,0px));overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 22px calc(20px + env(safe-area-inset-bottom,0px));box-shadow:0 18px 36px #0009}
+  .mobile-nav{display:none}
+  .mobile-nav.open{display:flex;visibility:visible;opacity:1;pointer-events:auto}
+  body.pulso-menu-open{overflow:hidden}
+}
