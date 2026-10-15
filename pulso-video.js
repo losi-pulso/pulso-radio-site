@@ -11,9 +11,23 @@
     const note=document.querySelector('#pulsoVideoDock .pulso-video-footer>span');
     if(note)note.textContent='O YouTube recusou este vídeo aqui (erro '+code+(errorReasons[code]?': '+errorReasons[code]:'')+'). Toque em YouTube ↗ para assistir lá.';
     console.warn('PULSO player: erro do YouTube',code,'video',currentVideoId,'origem',location.origin);
+    showFallback();
   }
   // Se o embed privado (youtube-nocookie.com) for recusado, tenta uma vez o embed padrão
   // (youtube.com) para o mesmo vídeo; só mostra o erro se os dois falharem.
+  // Botão "Abrir no YouTube" sobre o player: aparece quando o embed é recusado ou nunca fica pronto
+  // (tela de login, rede bloqueada). O app do YouTube costuma tocar o que o embed não consegue.
+  let readyTimer=0;
+  const hideFallback=()=>{clearTimeout(readyTimer);const a=$('pulsoVideoFallback');if(a)a.hidden=true;};
+  function showFallback(){
+    const a=$('pulsoVideoFallback');
+    if(!a||!activeSet?.url)return;
+    a.href=activeSet.url;a.hidden=false;
+  }
+  function armReadyTimer(){
+    clearTimeout(readyTimer);
+    readyTimer=setTimeout(()=>{if(expanded&&!(ytPlayer&&typeof ytPlayer.loadVideoById==='function'))showFallback();},10000);
+  }
   const altPlayerUrl='https://www.youtube.com/embed/';
   const triedAlternate=new Set();
   function handleEmbedError(code){
@@ -24,11 +38,13 @@
       ytPlayer=null;ytInitStarted=false;
       frame.src=embedUrl(currentVideoId,!restoredPaused,altPlayerUrl);
       attachController();
+      armReadyTimer();
       return;
     }
     showEmbedError(code);
   }
   function clearEmbedError(){
+    hideFallback();
     const note=document.querySelector('#pulsoVideoDock .pulso-video-footer>span');
     if(note&&note.textContent!==defaultNote)note.textContent=defaultNote;
   }
@@ -109,6 +125,7 @@
       const player=new api.Player(frame,{
         events:{
           onReady:evt=>{
+            hideFallback();
             if(!$('pulsoVideoDock')?.hidden&&currentVideoId){
               ytPlayer=evt.target;
               window.PULSO_CAPSULE?.observeYouTube?.(ytPlayer,activeSet);
@@ -147,6 +164,7 @@
   function close(){
     const dock=$('pulsoVideoDock'),frame=$('pulsoVideoIframe');
     if(!dock||!frame)return;
+    hideFallback();
     savePlayback(true);
     pause();
     if(ytPlayer){try{ytPlayer.stopVideo?.();}catch{}}
@@ -201,6 +219,7 @@
         ytPlayer=null;ytInitStarted=false;
         frame.src=embedUrl(id,!restoring);
         attachController();
+        armReadyTimer();
       }
     }else dispatchYoutube('playVideo');
     return true;

@@ -426,3 +426,8 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 @media(max-width:570px){
  #p54Catalog .p54-eventnav button[data-p54-event="Time Warp"]{padding-left:30px;padding-right:30px}
 }
+
+/* Botão "Abrir no YouTube" sobre o player quando o embed é recusado ou não carrega */
+.pulso-video-fallback{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:6px;padding:11px 18px;border-radius:999px;background:#d1ff6b;color:#0b1209;font:800 12px/1 'Space Grotesk',sans-serif;letter-spacing:.04em;text-decoration:none;white-space:nowrap;box-shadow:0 8px 24px #000a,0 0 0 1px #0b120933;touch-action:manipulation}
+.pulso-video-fallback[hidden]{display:none!important}
+.pulso-video-fallback:focus-visible{outline:2px solid #fff;outline-offset:2px}
