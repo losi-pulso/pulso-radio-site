@@ -881,14 +881,14 @@
         const a=document.createElement('a');a.href=embedInfo.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Abrir arquivo original ↗';
         message.append(a);node.appendChild(message);
       });node.appendChild(video);dialogOpen('playerDialog');return;}
-    if(embedInfo.kind==='youtube'){
-      const videoId=youtubeVideoId(url);const holder=document.createElement('div');holder.id='pulsoJumpYoutubePlayer';holder.className='pulso-jump-youtube-player';node.appendChild(holder);dialogOpen('playerDialog');
-      jumpYoutubePlayer=null;jumpYoutubeReady=false;
-      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,enablejsapi:1,origin:location.origin},events:{onReady:()=>{jumpYoutubeReady=true;},onError:()=>{jumpYoutubeReady=false;}}});}).catch(err=>console.warn('PULSO JUMP YouTube API:',err));return;
-    }
+    // Para reprodução comum, use o embed padrão do YouTube diretamente.
+    // A API IFrame era iniciada por um wrapper compartilhado com o JUMP e podia
+    // deixar o player em estado de erro; o JUMP continua usando sua própria API.
     const iframe=document.createElement('iframe');iframe.src=embedInfo.url;iframe.title=embedInfo.title;
-    iframe.allow='autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture';
+    iframe.allow='autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture; web-share';
     iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allowFullscreen=true;
+    iframe.setAttribute('loading','eager');
+    iframe.setAttribute('allowfullscreen','');
     node.appendChild(iframe);dialogOpen('playerDialog');
   }
   async function copyText(value) {
