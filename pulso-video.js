@@ -4,6 +4,18 @@
   const $=id=>document.getElementById(id);
   const iframeTitle='PULSO PLAYER · YouTube';
   const playerUrl='https://www.youtube-nocookie.com/embed/';
+  const defaultNote='Continue navegando pelo PULSO enquanto assiste.';
+  const errorReasons={2:'parâmetro inválido no link',5:'erro do player HTML5',100:'vídeo removido ou privado',101:'o dono não permite exibir em outros sites',150:'o dono não permite exibir em outros sites',153:'o YouTube não recebeu a origem do site'};
+  // Mostra o código que o YouTube devolve em vez de deixar só a tela genérica "Vídeo indisponível".
+  function showEmbedError(code){
+    const note=document.querySelector('#pulsoVideoDock .pulso-video-footer>span');
+    if(note)note.textContent='O YouTube recusou este vídeo aqui (erro '+code+(errorReasons[code]?': '+errorReasons[code]:'')+'). Toque em YouTube ↗ para assistir lá.';
+    console.warn('PULSO player: erro do YouTube',code,'video',currentVideoId,'origem',location.origin);
+  }
+  function clearEmbedError(){
+    const note=document.querySelector('#pulsoVideoDock .pulso-video-footer>span');
+    if(note&&note.textContent!==defaultNote)note.textContent=defaultNote;
+  }
   let currentId='',currentVideoId='',expanded=true;
   let ytPlayer=null,ytInitStarted=false,ytApiPromise=null,activeSet=null;
   let pendingRestore=null,restoredPaused=false,restoreAttempted=false,lastPersistAt=0;
@@ -92,7 +104,7 @@
             }
           },
           onStateChange:evt=>{if(evt.data===1||evt.data===2)savePlayback();window.PULSO_CAPSULE?.onYouTubeState?.(evt.data);},
-          onError:()=>window.PULSO_CAPSULE?.onYouTubeState?.(-1)
+          onError:evt=>{window.PULSO_CAPSULE?.onYouTubeState?.(-1);showEmbedError(evt?.data);}
         }
       });
       ytPlayer=player;
@@ -161,6 +173,7 @@
     setExpanded(true);
     // Preserve timestamp and current playback if they select the same item again.
     if(!isSame){
+      clearEmbedError();
       frame.title=iframeTitle+' — '+(set.title||'DJ set');
       if(ytPlayer){
         window.PULSO_CAPSULE?.observeYouTube?.(ytPlayer,set);
