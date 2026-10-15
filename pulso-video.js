@@ -191,10 +191,14 @@
     if(!isSame){
       clearEmbedError();
       frame.title=iframeTitle+' — '+(set.title||'DJ set');
-      if(ytPlayer){
+      // O objeto do player existe assim que é criado, mas só ganha métodos quando o YouTube
+      // avisa que está pronto. Se nunca ficou pronto (tela de login, erro, rede), chamar
+      // loadVideoById?.() não faz nada e o iframe ficava preso no primeiro vídeo.
+      if(ytPlayer&&typeof ytPlayer.loadVideoById==='function'){
         window.PULSO_CAPSULE?.observeYouTube?.(ytPlayer,set);
-        try{ytPlayer.mute?.();ytPlayer.loadVideoById?.(id);}catch{frame.src=embedUrl(id);}
+        try{ytPlayer.mute?.();ytPlayer.loadVideoById(id);}catch{frame.src=embedUrl(id);}
       }else{
+        ytPlayer=null;ytInitStarted=false;
         frame.src=embedUrl(id,!restoring);
         attachController();
       }
