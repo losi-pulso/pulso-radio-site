@@ -15,7 +15,7 @@
 @media(max-width:600px){#playerJumpButton{min-height:48px;margin:11px 0;padding:9px 12px}.pj-invite-row input{font-size:10px}}
 
 /* Mobile menu: scroll inside the drawer, not the page behind it. */
-@media(max-width:800px){body.pulso-menu-open{overflow:hidden;touch-action:none}#mobileNav{position:fixed;top:76px;left:0;right:0;bottom:0;max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;z-index:7000}#mobileNav.open{display:flex;flex-direction:column}#mobileNav a,#mobileNav button{flex-shrink:0}}
+@media(max-width:800px){body.pulso-menu-open{overflow:hidden;touch-action:none}#mobileNav{position:absolute;top:100%;left:0;right:0;bottom:auto;max-height:calc(100dvh - 150px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;z-index:7000}#mobileNav.open{display:flex;flex-direction:column}#mobileNav a,#mobileNav button{flex-shrink:0}}
 #pulsoJumpFab[hidden]{display:none!important}
 
 /* Acesso ao JUMP diretamente dentro do player principal, inclusive nos sets do YouTube. */
