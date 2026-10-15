@@ -12,6 +12,22 @@
     if(note)note.textContent='O YouTube recusou este vídeo aqui (erro '+code+(errorReasons[code]?': '+errorReasons[code]:'')+'). Toque em YouTube ↗ para assistir lá.';
     console.warn('PULSO player: erro do YouTube',code,'video',currentVideoId,'origem',location.origin);
   }
+  // Se o embed privado (youtube-nocookie.com) for recusado, tenta uma vez o embed padrão
+  // (youtube.com) para o mesmo vídeo; só mostra o erro se os dois falharem.
+  const altPlayerUrl='https://www.youtube.com/embed/';
+  const triedAlternate=new Set();
+  function handleEmbedError(code){
+    const frame=$('pulsoVideoIframe');
+    if(frame&&currentVideoId&&!triedAlternate.has(currentVideoId)&&(frame.src||'').startsWith(playerUrl)){
+      triedAlternate.add(currentVideoId);
+      console.info('PULSO player: erro '+code+' no embed privado; tentando youtube.com',currentVideoId);
+      ytPlayer=null;ytInitStarted=false;
+      frame.src=embedUrl(currentVideoId,!restoredPaused,altPlayerUrl);
+      attachController();
+      return;
+    }
+    showEmbedError(code);
+  }
   function clearEmbedError(){
     const note=document.querySelector('#pulsoVideoDock .pulso-video-footer>span');
     if(note&&note.textContent!==defaultNote)note.textContent=defaultNote;
@@ -62,11 +78,11 @@
       return /^[a-zA-Z0-9_-]{11}$/.test(id)?id:'';
     }catch{return '';}
   };
-  const embedUrl=(id,autoplay=true)=>{
+  const embedUrl=(id,autoplay=true,base=playerUrl)=>{
     const options=new URLSearchParams({
       autoplay:autoplay?'1':'0',mute:'1',playsinline:'1',controls:'1',rel:'0',enablejsapi:'1',origin:location.origin
     });
-    return playerUrl+id+'?'+options.toString();
+    return base+id+'?'+options.toString();
   };
 
   function youtubeApi(){
@@ -104,7 +120,7 @@
             }
           },
           onStateChange:evt=>{if(evt.data===1||evt.data===2)savePlayback();window.PULSO_CAPSULE?.onYouTubeState?.(evt.data);},
-          onError:evt=>{window.PULSO_CAPSULE?.onYouTubeState?.(-1);showEmbedError(evt?.data);}
+          onError:evt=>{window.PULSO_CAPSULE?.onYouTubeState?.(-1);handleEmbedError(evt?.data);}
         }
       });
       ytPlayer=player;
@@ -118,7 +134,7 @@
     if(!frame?.src||!currentVideoId)return;
     try{
       if(ytPlayer&&typeof ytPlayer[command]==='function'){ytPlayer[command]();return;}
-      frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:command,args:[]}), 'https://www.youtube-nocookie.com');
+      frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:command,args:[]}), new URL(frame.src).origin);
     }catch(err){console.info('Player PULSO:',err);}
   };
   function pause(){dispatchYoutube('pauseVideo');savePlayback(true);}
