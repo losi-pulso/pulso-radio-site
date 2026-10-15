@@ -1,0 +1,46 @@
+/* PULSO mobile menu — isolated override, loaded after all theme stylesheets */
+@media (max-width: 920px) {
+  .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    isolation: isolate;
+  }
+  .site-header .header-inner { position: relative; z-index: 1002; }
+  #menuToggle {
+    display: flex !important;
+    position: relative !important;
+    z-index: 1005 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+  #mobileNav {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1004 !important;
+    max-height: calc(100dvh - 75px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+  }
+  #mobileNav.open {
+    display: flex !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  .noise { pointer-events: none !important; }
+  body.pulso-menu-open { overflow: hidden; }
+}
+@media (min-width: 921px) {
+  #menuToggle, #mobileNav { display: none !important; }
+}
