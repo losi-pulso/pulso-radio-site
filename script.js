@@ -674,7 +674,7 @@
     }catch{return '';}
   }
   function videoEmbedSource(link) {
-    const yt=youtubeVideoId(link);if(yt)return {kind:'youtube',url:`https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0`,title:'Vídeo do YouTube'};
+    const yt=youtubeVideoId(link);if(yt)return {kind:'youtube',url:`https://www.youtube.com/embed/${yt}?autoplay=1&rel=0`,title:'Vídeo do YouTube'};
     try {
       const u=new URL(link),h=u.hostname.toLowerCase().replace(/^www\./,'');
       if(['vimeo.com','player.vimeo.com'].includes(h)){
@@ -708,7 +708,7 @@
       if(url.pathname==='/watch')video=url.searchParams.get('v')||'';
       if(/^\/(shorts|live|embed)\//.test(url.pathname))video=url.pathname.split('/')[2]||'';
     }
-    if(/^[a-zA-Z0-9_-]{11}$/.test(video))return {kind:'youtube',url:`https://www.youtube-nocookie.com/embed/${video}?autoplay=1&rel=0`,title:'Player do YouTube'};
+    if(/^[a-zA-Z0-9_-]{11}$/.test(video))return {kind:'youtube',url:`https://www.youtube.com/embed/${video}?autoplay=1&rel=0`,title:'Player do YouTube'};
     if(['spotify.com','open.spotify.com'].includes(host)){
       const match=url.pathname.match(/\/(track|album|playlist|episode|show)\/([a-zA-Z0-9]+)/);
       if(match)return {kind:'spotify',url:`https://open.spotify.com/embed/${match[1]}/${match[2]}`,title:'Player do Spotify'};
@@ -884,7 +884,7 @@
     if(embedInfo.kind==='youtube'){
       const videoId=youtubeVideoId(url);const holder=document.createElement('div');holder.id='pulsoJumpYoutubePlayer';holder.className='pulso-jump-youtube-player';node.appendChild(holder);dialogOpen('playerDialog');
       jumpYoutubePlayer=null;jumpYoutubeReady=false;
-      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,enablejsapi:1,origin:location.origin},events:{onReady:()=>{jumpYoutubeReady=true;},onError:(event)=>{jumpYoutubeReady=false;console.warn('PULSO YouTube player error:',event?.data);}}});}).catch(err=>console.warn('PULSO YouTube API:',err));return;
+      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,host:'https://www.youtube.com',playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,enablejsapi:1,origin:location.origin,widget_referrer:location.href},events:{onReady:()=>{jumpYoutubeReady=true;},onError:(event)=>{jumpYoutubeReady=false;console.warn('PULSO YouTube player error:',event?.data);}}});}).catch(err=>console.warn('PULSO YouTube API:',err));return;
     }
     const iframe=document.createElement('iframe');iframe.src=embedInfo.url;iframe.title=embedInfo.title;
     iframe.allow='autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture';
