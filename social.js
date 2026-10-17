@@ -147,24 +147,33 @@
   function drawStory(p,time=0,video=null){
     const canvas=el('socialStoryCanvas'),ctx=canvas.getContext('2d');if(!ctx)return;
     const W=canvas.width,H=canvas.height;
-    const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#142518');g.addColorStop(.5,'#090e0d');g.addColorStop(1,'#263317');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    ctx.save();ctx.globalAlpha=.13;for(let i=0;i<13;i++){ctx.strokeStyle=i%2?'#d1fb83':'#98be5c';ctx.lineWidth=2;ctx.beginPath();ctx.arc(W/2,H*.38,160+i*33+Math.sin(time*.8+i)*5,0,2*Math.PI);ctx.stroke();}ctx.restore();
-    ctx.fillStyle='#c5fb72';ctx.fillRect(65,80,110,10);
-    ctx.font='bold 46px system-ui';ctx.fillStyle='#f4f9ec';ctx.fillText('PULSO',65,159);
-    ctx.fillStyle='#c5fb72';ctx.fillText('× LØSI',256,159);
-    const x=90,y=335,size=900;
-    ctx.fillStyle='#1c271e';ctx.fillRect(x-8,y-8,size+16,size+16);
-    if(video && video.readyState>=2){try{ctx.drawImage(video,x,y,size,size);}catch{}}
-    else if(artImage){try{const s=Math.min(artImage.naturalWidth,artImage.naturalHeight),sx=(artImage.naturalWidth-s)/2,sy=(artImage.naturalHeight-s)/2;ctx.drawImage(artImage,sx,sy,s,s,x,y,size,size);}catch{}}
-    else{ctx.fillStyle='#23311e';ctx.fillRect(x,y,size,size);ctx.fillStyle='#c6fc72';ctx.font='bold 330px system-ui';ctx.textAlign='center';ctx.fillText('◉',W/2,y+590);ctx.textAlign='left';}
-    ctx.fillStyle='rgba(7,11,8,.85)';ctx.fillRect(65,1320,950,360);
-    ctx.fillStyle='#c9f680';ctx.font='bold 29px system-ui';ctx.fillText('NOW PLAYING  /  PULSO RADIO',100,1388);
-    let title=String(p.title||'');ctx.fillStyle='#fff';ctx.font='bold 67px system-ui';while(ctx.measureText(title).width>880 && title.length>4)title=title.slice(0,-2);if(title!==p.title)title+='…';ctx.fillText(title,100,1491);
-    let artist=String(p.artist||'PULSO');ctx.font='38px system-ui';while(ctx.measureText(artist).width>870&&artist.length>4)artist=artist.slice(0,-2);ctx.fillStyle='#d4ddcb';ctx.fillText(artist,100,1560);
-    const width=time?Math.min(1,time/60):.28;
-    ctx.fillStyle='#3c4b35';ctx.fillRect(100,1633,870,11);ctx.fillStyle='#c8ff70';ctx.fillRect(100,1633,width*870,11);
-    ctx.fillStyle='#e8efe0';ctx.font='bold 29px system-ui';ctx.fillText('OUÇA NO PULSO',65,1805);
-    ctx.font='25px system-ui';ctx.fillStyle='#bec8ba';ctx.fillText(location.host,65,1855);
+    // Story 9:16: mídia ocupa praticamente toda a tela; branding pequeno e discreto.
+    ctx.fillStyle='#080b09';ctx.fillRect(0,0,W,H);
+    const media=video&&video.readyState>=2?video:artImage;
+    if(media){
+      try{
+        const iw=media.videoWidth||media.naturalWidth||W,ih=media.videoHeight||media.naturalHeight||H;
+        const scale=Math.max(W/iw,H/ih),sw=W/scale,sh=H/scale,sx=(iw-sw)/2,sy=(ih-sh)/2;
+        ctx.drawImage(media,sx,sy,sw,sh,0,0,W,H);
+      }catch{}
+    }else{
+      const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#142518');g.addColorStop(.5,'#090e0d');g.addColorStop(1,'#263317');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+      ctx.fillStyle='#c6fc72';ctx.font='bold 280px system-ui';ctx.textAlign='center';ctx.fillText('LØ',W/2,H/2);ctx.textAlign='left';
+    }
+    // Pequena camada de contraste apenas nas bordas para preservar a imagem/vídeo.
+    const top=ctx.createLinearGradient(0,0,0,260);top.addColorStop(0,'rgba(0,0,0,.52)');top.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=top;ctx.fillRect(0,0,W,260);
+    const bottom=ctx.createLinearGradient(0,H-360,0,H);bottom.addColorStop(0,'rgba(0,0,0,0)');bottom.addColorStop(1,'rgba(0,0,0,.72)');ctx.fillStyle=bottom;ctx.fillRect(0,H-360,W,360);
+    // Marca reduzida: não existe mais moldura grande nem painel cobrindo a mídia.
+    ctx.fillStyle='rgba(7,11,8,.52)';ctx.beginPath();ctx.roundRect(42,62,285,76,28);ctx.fill();
+    ctx.fillStyle='#c5fb72';ctx.fillRect(61,83,7,34);
+    ctx.font='800 34px system-ui';ctx.fillStyle='#f4f9ec';ctx.fillText('PULSO',84,111);
+    ctx.fillStyle='#c5fb72';ctx.fillText('× LØSI',204,111);
+    const safe=String(p.title||'');let title=safe;
+    ctx.font='bold 48px system-ui';while(title.length>4&&ctx.measureText(title).width>W-100)title=title.slice(0,-2);if(title!==safe)title+='…';
+    ctx.fillStyle='#fff';ctx.fillText(title,48,H-184);
+    let artist=String(p.artist||'PULSO');ctx.font='30px system-ui';while(artist.length>4&&ctx.measureText(artist).width>W-100)artist=artist.slice(0,-2);if(artist!==p.artist)artist+='…';
+    ctx.fillStyle='#dbe4d5';ctx.fillText(artist,48,H-130);
+    ctx.fillStyle='rgba(255,255,255,.65)';ctx.font='22px system-ui';ctx.fillText('OUÇA NO PULSO',48,H-70);
   }
   async function openStory(p){
     activePost=p;recordedBlob=null;
