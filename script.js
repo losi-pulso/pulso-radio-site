@@ -1532,6 +1532,7 @@
     $('mobileNav')?.addEventListener('click',ev=>{if(ev.target.closest('a,button'))closeMobileMenu();});
     window.addEventListener('hashchange',closeMobileMenu);
     for(const id of ['openComposer','heroPublish','bannerPublish','emptyPublish','mobilePublish'])$(id).addEventListener('click',()=>{openComposer();$('mobileNav').classList.remove('open');});
+    $('losiOriginalsUpload')?.addEventListener('click',()=>{openComposer();$('mobileNav').classList.remove('open');});
     for(const id of ['closeComposer','cancelComposer'])$(id).addEventListener('click',closeComposer);
     $('composerDialog').addEventListener('click',ev=>{if(ev.target===$('composerDialog'))closeComposer();});
     $('postForm').addEventListener('submit',submitPost);
