@@ -890,7 +890,7 @@
     $('youtubePlayerHint').hidden=!youtube;
     const node=$('embedContainer');node.className=`embed-container ${embedInfo.kind}`;node.replaceChildren();
     if(embedInfo.kind==='chunked-audio'){if(activeLargeAudioPlayer)activeLargeAudioPlayer.dispose();activeLargeAudioPlayer=mountChunkedAudio(url,node);addBeautifulAudioControls(node,activeLargeAudioPlayer.audio,p.title,p.artist,p.cover,p);dialogOpen('playerDialog');return;}
-    if(embedInfo.kind==='audio'){const audio=document.createElement('audio');audio.autoplay=true;audio.preload='metadata';audio.crossOrigin='anonymous';audio.src=embedInfo.url;addBeautifulAudioControls(node,audio,p.title,p.artist,p.cover,p);dialogOpen('playerDialog');audio.play().catch(()=>{});return;}
+    if(embedInfo.kind==='audio'){const audio=document.createElement('audio');audio.autoplay=true;audio.preload='metadata';audio.crossOrigin='anonymous';audio.src=embedInfo.url;addBeautifulAudioControls(node,audio,p.title,p.artist,p.cover,p);dialogOpen('playerDialog');audio.play().catch(()=>{toast('O navegador bloqueou a reprodução. Toque em ▶ no player para iniciar.');});return;}
     if(embedInfo.kind==='video'){const video=document.createElement('video');video.controls=true;video.autoplay=true;video.playsInline=false;video.preload='metadata';video.src=embedInfo.url;video.setAttribute('controlsList','nodownload');
       video.addEventListener('error',()=>{
         if(node.querySelector('.mov-fallback'))return;
@@ -1504,6 +1504,8 @@
 
   function wireEvents() {
     $('cardsGrid').addEventListener('click',onCardAction);
+    // LØSI Originals fica fora de cardsGrid; sem este listener o botão OU V I R não dispara.
+    $('losiOriginalsTracks')?.addEventListener('click',onCardAction);
     $('genreFilters').addEventListener('click',ev=>{const b=ev.target.closest('[data-genre]');if(b){activeGenre=b.dataset.genre;render();}});
     $('genreFilters').addEventListener('change',ev=>{if(ev.target.id==='genreMoreFilter'&&ev.target.value){activeGenre=ev.target.value;render();}});
     $('mediaFilters').addEventListener('click',ev=>{const b=ev.target.closest('[data-media]');if(b){mediaFilter=b.dataset.media;render();}});
