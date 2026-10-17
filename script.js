@@ -224,10 +224,28 @@
     const share=ev.target.closest('[data-community-share]');if(share){const p=posts.find(x=>String(x.id)===String(share.dataset.communityShare));if(!p)return;const u=new URL(location.href);u.searchParams.set('track',p.id);u.hash='';const data={title:(p.title||'Set')+' · PULSO',text:'Escuta este set no PULSO RADIO × LØSI',url:u.href};if(navigator.share)navigator.share(data).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(u.href).then(()=>toast('Link copiado!'));else prompt('Copie o link do set:',u.href);}
     if(ev.target.closest('[data-open-composer]')){const trigger=$('openComposer')||$('heroPublish');trigger?.click();}
   });
+  function renderLosiOriginals() {
+    const root=$('losiOriginalsTracks');
+    if(!root)return;
+    const tracks=posts.filter(p=>p.status==='approved' && !p.demo && !isVideoPost(p) &&
+      (String(p.artist||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().includes('losi') ||
+       (user && p.owner_id===user.id && String(p.type||'Faixa')==='Faixa')))
+      .sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));
+    if(!tracks.length){
+      root.innerHTML='<p style="margin:0;color:#9da99a;font-size:13px;">Suas faixas autorais publicadas aparecerão aqui automaticamente depois de aprovadas. Use “ENVIAR MP3 / WAV” para publicar uma nova.</p>';
+      return;
+    }
+    root.innerHTML='<div style="display:grid;gap:8px;">'+tracks.map(p=>{
+      const cover=safeUrl(p.cover);
+      const image=cover?'<img src="'+e(cover)+'" alt="" loading="lazy" style="width:48px;height:48px;object-fit:cover;border-radius:10px;">':'<span aria-hidden="true" style="width:48px;height:48px;display:grid;place-items:center;background:#26321d;border-radius:10px;color:#d1ff61;font-weight:900;">LØ</span>';
+      return '<article style="display:flex;align-items:center;gap:10px;padding:9px;border:1px solid #344432;border-radius:13px;background:rgba(0,0,0,.22);"><div>'+image+'</div><div style="min-width:0;flex:1;"><strong style="display:block;color:#f2f5ee;font-size:13px;overflow-wrap:anywhere;">'+e(p.title)+'</strong><span style="display:block;color:#9da99a;font-size:11px;">'+e(p.artist||'LØSI')+' · '+e(p.genre||'Original')+'</span></div><button type="button" data-action="play" data-track-id="'+e(p.id)+'" aria-label="Ouvir '+e(p.title)+'" style="flex:0 0 auto;border:0;border-radius:999px;background:#d1ff61;color:#10170b;padding:9px 12px;font-weight:900;cursor:pointer;">▶ OUVIR</button></article>';
+    }).join('')+'</div>';
+  }
   function render() {
     renderFilters();renderMediaFilters();const shown=visiblePosts();
     renderCommunitySets();
     $('cardsGrid').innerHTML=shown.map(card).join('');
+    renderLosiOriginals();
     $('emptyState').classList.toggle('hidden',shown.length!==0);
     $('cardsGrid').classList.toggle('hidden',shown.length===0);
     $('trackCount').textContent=`${shown.length} ${shown.length===1?'publicação':'publicações'} no radar`;
@@ -970,7 +988,7 @@
   }
   async function onCardAction(ev) {
     const button=ev.target.closest('[data-action]');if(!button)return;
-    const el=button.closest('[data-id]'),p=posts.find(row=>String(row.id)===el?.dataset.id);if(!p)return;
+    const el=button.closest('[data-id]'),trackId=button.dataset.trackId||el?.dataset.id,p=posts.find(row=>String(row.id)===String(trackId));if(!p)return;
     switch(button.dataset.action){
       case 'play':playPost(p);break;
       case 'like':await toggleLike(p);break;
