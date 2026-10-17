@@ -173,7 +173,7 @@
     ctx.fillStyle='#fff';ctx.fillText(title,48,H-184);
     let artist=String(p.artist||'PULSO');ctx.font='30px system-ui';while(artist.length>4&&ctx.measureText(artist).width>W-100)artist=artist.slice(0,-2);if(artist!==p.artist)artist+='…';
     ctx.fillStyle='#dbe4d5';ctx.fillText(artist,48,H-130);
-    ctx.fillStyle='rgba(255,255,255,.65)';ctx.font='22px system-ui';ctx.fillText('OUÇA NO PULSO',48,H-70);
+    ctx.fillStyle='rgba(255,255,255,.65)';ctx.font='22px system-ui';ctx.fillText('OUÇA NO PULSO',48,H-70);\n    ctx.font='bold 22px system-ui';ctx.fillStyle='#c5fb72';ctx.fillText('ABRA O PULSO · LINK NA BIO',W-475,H-70);
   }
   async function openStory(p){
     activePost=p;recordedBlob=null;
@@ -220,7 +220,7 @@
       const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)throw new Error('Captura de áudio não disponível.');
       ac=new AudioCtx();const source=ac.createMediaElementSource(media),destination=ac.createMediaStreamDestination();source.connect(destination);await ac.resume();
       stream=canvas.captureStream(20);for(const track of destination.stream.getAudioTracks())stream.addTrack(track);
-      recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:1800000,audioBitsPerSecond:128000});
+      recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:8000000,audioBitsPerSecond:192000});
       const parts=[];recorder.ondataavailable=ev=>{if(ev.data?.size)parts.push(ev.data)};
       const completed=new Promise((resolve,reject)=>{recorder.onerror=ev=>reject(ev.error||new Error('Falha na gravação.'));recorder.onstop=()=>resolve(new Blob(parts,{type:mime.split(';')[0]}));});
       const started=performance.now();function frame(){drawStory(p,Math.min(60,(performance.now()-started)/1000),media.tagName==='VIDEO'?media:null);raf=requestAnimationFrame(frame);}frame();
