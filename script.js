@@ -902,7 +902,7 @@
     if(embedInfo.kind==='youtube'){
       const videoId=youtubeVideoId(url);const holder=document.createElement('div');holder.id='pulsoJumpYoutubePlayer';holder.className='pulso-jump-youtube-player';node.appendChild(holder);dialogOpen('playerDialog');
       jumpYoutubePlayer=null;jumpYoutubeReady=false;
-      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,enablejsapi:1,origin:location.origin},events:{onReady:()=>{jumpYoutubeReady=true;},onError:()=>{jumpYoutubeReady=false;}}});}).catch(err=>console.warn('PULSO JUMP YouTube API:',err));return;
+      jumpYoutubeAPI().then(YT=>{if(!holder.isConnected)return;jumpYoutubePlayer=new YT.Player(holder,{height:'100%',width:'100%',videoId,playerVars:{autoplay:1,playsinline:1,rel:0,controls:1,enablejsapi:1,origin:location.origin},events:{onReady:evt=>{jumpYoutubeReady=true;window.PULSO_CAPSULE?.observeYouTube?.(evt.target,p);},onStateChange:evt=>window.PULSO_CAPSULE?.onYouTubeState?.(evt.data),onError:()=>{jumpYoutubeReady=false;window.PULSO_CAPSULE?.detachYouTube?.();}}});}).catch(err=>console.warn('PULSO JUMP YouTube API:',err));return;
     }
     const iframe=document.createElement('iframe');iframe.src=embedInfo.url;iframe.title=embedInfo.title;
     iframe.allow='autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture';
