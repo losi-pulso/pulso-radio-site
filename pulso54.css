@@ -431,3 +431,11 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 .pulso-video-fallback{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:6px;padding:11px 18px;border-radius:999px;background:#d1ff6b;color:#0b1209;font:800 12px/1 'Space Grotesk',sans-serif;letter-spacing:.04em;text-decoration:none;white-space:nowrap;box-shadow:0 8px 24px #000a,0 0 0 1px #0b120933;touch-action:manipulation}
 .pulso-video-fallback[hidden]{display:none!important}
 .pulso-video-fallback:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+/* PULSO 5.19 — filtros do catálogo sempre visíveis, sem exigir rolagem horizontal escondida. */
+#p54Catalog .p54-eventnav{display:flex;flex-wrap:wrap;overflow:visible;gap:9px;padding:9px 0 14px;scrollbar-width:auto}
+#p54Catalog .p54-artist-shortcuts{display:flex;flex-wrap:wrap;overflow:visible}
+#p54Catalog .p54-toolbar{justify-content:flex-start;align-items:flex-start;gap:12px}
+#p54Catalog .p54-filtergroup{display:flex;flex-wrap:wrap;overflow:visible;max-width:100%;gap:5px}
+#p54Catalog .p54-search{flex:1 1 220px;max-width:320px}
+@media(max-width:700px){#p54Catalog .p54-eventnav button{min-height:42px;padding:10px 13px;font-size:10px}#p54Catalog .p54-toolbar{display:flex;flex-direction:column;align-items:stretch}#p54Catalog .p54-filtergroup{width:100%}#p54Catalog .p54-search{max-width:none;width:100%;flex-basis:auto}}
