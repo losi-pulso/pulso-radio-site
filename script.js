@@ -1078,6 +1078,62 @@
       await refreshPosts();toast(`${rows.length} postagens antigas importadas!`);
     }catch(error){toast(`Não foi possível importar: ${errorText(error)}`);}
   }
+  let p54ImportVideoId='',p54ImportMetadata=null;
+  function youtubeVideoId(value){
+    try{const u=new URL(value);if(!['youtube.com','www.youtube.com','m.youtube.com','youtu.be','www.youtu.be'].includes(u.hostname))return '';
+      const id=u.hostname.includes('youtu.be')?u.pathname.split('/').filter(Boolean)[0]:u.searchParams.get('v')||u.pathname.match(/\/(?:embed|shorts|live)\/([^/?]+)/)?.[1]||'';
+      return /^[A-Za-z0-9_-]{11}$/.test(id)?id:'';
+    }catch{return '';}
+  }
+  function suggestFestival(text){
+    const t=String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    const events=['Tomorrowland','Time Warp','DNA Art Car','Burning Man','Green Valley','Warung','Circoloco','Ibiza','Só Track Boa','Surreal Park','Wlogs'];
+    return events.find(name=>t.includes(name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()))||'Sets Especiais';
+  }
+  async function fetchYoutubeCatalogMetadata(){
+    if(!isAdmin||!connected)return;
+    const id=youtubeVideoId($('p54ImportUrl').value.trim());
+    if(!id){$('p54ImportStatus').textContent='Cole um link válido de vídeo do YouTube.';return;}
+    if(window.PULSO54?.sets?.some(s=>String(s.url||'').includes(id))){$('p54ImportStatus').textContent='Esse vídeo já está no catálogo.';return;}
+    $('p54ImportFetch').disabled=true;$('p54ImportStatus').textContent='Buscando título, canal e capa no YouTube…';
+    try{
+      const {data:existing,error:dupError}=await sb.from('festival_sets').select('video_id').eq('video_id',id).maybeSingle();
+      if(dupError)throw dupError;if(existing){$('p54ImportStatus').textContent='Esse vídeo já foi cadastrado.';return;}
+      const endpoint='https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id);
+      const response=await fetch(endpoint);if(!response.ok)throw new Error(response.status===404?'Vídeo privado, removido ou indisponível.':'Não foi possível consultar os dados do YouTube.');
+      const meta=await response.json();
+      const title=String(meta.title||'').trim();
+      const channel=String(meta.author_name||'').trim();
+      if(!title)throw new Error('O YouTube não retornou o título deste vídeo.');
+      p54ImportVideoId=id;p54ImportMetadata=meta;
+      const guess=title.split(/\s[-–|•:]\s/)[0].trim();
+      $('p54ImportArtist').value=guess.length>=2?guess:channel;
+      $('p54ImportTitle').value=title;
+      $('p54ImportEvent').value=suggestFestival(title+' '+channel);
+      $('p54ImportYear').value='';
+      $('p54ImportDescription').value='';
+      $('p54ImportEvents').innerHTML=['Tomorrowland','Time Warp','DNA Art Car','Burning Man','Green Valley','Warung','Circoloco','Ibiza','Só Track Boa','Surreal Park','Wlogs','Sets Especiais'].map(v=>'<option value="'+e(v)+'">').join('');
+      $('p54ImportPreview').hidden=false;
+      $('p54ImportStatus').textContent='Dados encontrados. Confira artista e categoria antes de publicar. A capa será obtida automaticamente.';
+    }catch(err){$('p54ImportStatus').textContent='Falha: '+errorText(err);}
+    finally{$('p54ImportFetch').disabled=false;}
+  }
+  async function saveYoutubeCatalogSet(){
+    if(!isAdmin||!connected||!user||!p54ImportVideoId)return;
+    const artist=$('p54ImportArtist').value.trim(),title=$('p54ImportTitle').value.trim(),event=$('p54ImportEvent').value.trim()||'Sets Especiais';
+    const year=Number($('p54ImportYear').value)||null,description=$('p54ImportDescription').value.trim();
+    if(artist.length<2||title.length<3||event.length<2){$('p54ImportStatus').textContent='Preencha artista, título e categoria.';return;}
+    if(year&&(year<1990||year>2100)){ $('p54ImportStatus').textContent='Confira o ano informado.';return;}
+    $('p54ImportSave').disabled=true;$('p54ImportStatus').textContent='Salvando no catálogo compartilhado…';
+    try{
+      const row={video_id:p54ImportVideoId,artist,title,event,year,genre:'Música eletrônica',channel:'YouTube',description,url:'https://www.youtube.com/watch?v='+p54ImportVideoId,cover:'https://i.ytimg.com/vi/'+p54ImportVideoId+'/hqdefault.jpg',status:'approved',created_by:user.id};
+      const {error}=await sb.from('festival_sets').insert(row);if(error)throw error;
+      await window.PULSO54?.refreshExternal?.();
+      $('p54ImportStatus').textContent='Set adicionado! Ele já está disponível no catálogo para todos os usuários.';
+      $('p54ImportPreview').hidden=true;$('p54ImportUrl').value='';p54ImportVideoId='';p54ImportMetadata=null;
+    }catch(err){$('p54ImportStatus').textContent='Não foi possível salvar: '+errorText(err);}
+    finally{$('p54ImportSave').disabled=false;}
+  }
   function exportPosts() {
     const own=posts.filter(isMine).map(p=>({title:p.title,artist:p.artist,genre:p.genre,type:p.type,url:p.url,cover:p.cover,description:p.description,timestamp:p.created_at}));
     if(!own.length){toast('Você ainda não tem postagens para exportar.');return;}
@@ -1596,7 +1652,7 @@
     $('adminDialog').addEventListener('click',ev=>{if(ev.target===$('adminDialog'))dialogClose('adminDialog');});
     document.querySelectorAll('[data-admin-tab]').forEach(b=>b.addEventListener('click',async()=>{adminTab=b.dataset.adminTab;await refreshAdmin();}));
     $('adminList').addEventListener('click',onAdminAction);
-    $('importBackup').addEventListener('change',importBackup);
+    $('importBackup').addEventListener('change',importBackup);\n    $('p54ImportFetch')?.addEventListener('click',fetchYoutubeCatalogMetadata);\n    $('p54ImportSave')?.addEventListener('click',saveYoutubeCatalogSet);\n    $('p54ImportUrl')?.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();fetchYoutubeCatalogMetadata();}});
     $('exportPosts').addEventListener('click',exportPosts);
     $('previewDismiss').addEventListener('click',()=>$('previewBanner').hidden=true);
     $('appRadioButton')?.addEventListener('click',()=>{if(!radioActive){radioStart();return;}radioDockMinimized=false;radioUpdateUI();$('radioDock').scrollTop=0;});
