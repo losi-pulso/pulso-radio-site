@@ -89,7 +89,7 @@ function card(s){const id=encodeURIComponent(s.id);return `<article class="p54-c
  <p>${safe(s.description)}</p><div class="p54-card-actions"><button type="button" data-p54-video="${safe(s.id)}"><svg class="pulso-svg-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.3 5.4c0-.72.79-1.16 1.41-.79l10.17 6.59a.95.95 0 0 1 0 1.6L9.71 19.4c-.62.4-1.41-.05-1.41-.79V5.4Z" fill="currentColor"/></svg> ASSISTIR NO PULSO</button>
  <a href="${safe(s.url)}" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a></div></div></article>`;}
 function filtered(){return sets.filter(s=>{
- const passEvent=selectedEvent==='Todos'||s.event===selectedEvent;
+ const passEvent=selectedEvent==='Todos'||norm(s.event)===norm(selectedEvent);
  const passArtist=selectedArtist==='Todos'||norm(s.artist).includes(norm(selectedArtist));
  const passYear=selectedYear==='Todos'||String(s.year)===selectedYear||(selectedYear==='Clássicos'&&s.year<2025);
  const passGenre=selectedGenre==='Todos'||norm(s.genre).includes(norm(selectedGenre));
