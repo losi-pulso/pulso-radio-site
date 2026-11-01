@@ -20,7 +20,23 @@ function djInstagram(p){
   if(p?.instagram&&/^https:\/\/www\.instagram\.com\/[a-z0-9_.]+\/$/i.test(p.instagram))return p.instagram;
   const handle=rankedInstagram[norm(p?.artist)]||Object.entries(rankedInstagram).find(([k])=>norm(k)===norm(p?.artist))?.[1]||insta[norm(p?.artist)];return handle?'https://www.instagram.com/'+handle+'/':'';
 }
-window.PULSO54={sets,ranking,djInstagram};
+window.PULSO54={sets,ranking,djInstagram,refreshExternal:async()=>{
+ try{
+  const cfg=window.PULSO_CONFIG||{};
+  if(!cfg.supabaseUrl||!cfg.supabaseAnonKey||!window.supabase?.createClient)return;
+  const client=window.__PULSO54_SB||(window.__PULSO54_SB=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey,{auth:{persistSession:false,autoRefreshToken:false}}));
+  const {data,error}=await client.from('festival_sets').select('id,video_id,artist,title,event,year,genre,channel,description,url,cover,status,created_at').eq('status','approved').order('created_at',{ascending:false}).limit(500);
+  if(error)throw error;
+  const known=new Set(sets.map(s=>String(s.url||'').match(/[A-Za-z0-9_-]{11}(?:$|[^A-Za-z0-9_-])/)?String(s.url).match(/[A-Za-z0-9_-]{11}(?:$|[^A-Za-z0-9_-])/)[0].slice(0,11):''));
+  for(const row of data||[]){
+   if(known.has(row.video_id))continue;
+   sets.push({id:'db-'+row.id,artist:row.artist,title:row.title,event:row.event,year:row.year||new Date(row.created_at).getFullYear(),genre:row.genre||'Música eletrônica',channel:'YouTube',description:row.description||'',url:row.url,official:false,curated:true,type:'Vídeo DJ Set',status:'approved',cover:row.cover||'https://i.ytimg.com/vi/'+row.video_id+'/hqdefault.jpg',instagram:'',source_name:row.channel||'YouTube',djmag:null});
+   known.add(row.video_id);
+  }
+  renderArtistRibbon();render();
+ }catch(err){console.warn('Catálogo compartilhado indisponível:',err);}
+}};
+
 let selectedEvent='Todos',selectedYear='Todos',selectedGenre='Todos',selectedArtist='Todos',search='';
 const $=id=>document.getElementById(id);
 
@@ -160,7 +176,7 @@ function renderSignatures(){
  }).join('');
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  renderRanking();renderClubRanking();renderSignatures();renderArtistRibbon();setupParRibbon();render();setHeroLocation('');setupHeroLocation();
+  renderRanking();renderClubRanking();renderSignatures();renderArtistRibbon();setupParRibbon();render();window.PULSO54.refreshExternal();setHeroLocation('');setupHeroLocation();
   setCatalogExpanded(false);
   $('p54ExpandCatalog')?.addEventListener('click',()=>setCatalogExpanded(!$('p54Catalog')?.classList.contains('p54-catalog-expanded')));
   document.addEventListener('click',ev=>{
