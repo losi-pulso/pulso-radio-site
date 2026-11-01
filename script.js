@@ -1652,7 +1652,8 @@
     $('adminDialog').addEventListener('click',ev=>{if(ev.target===$('adminDialog'))dialogClose('adminDialog');});
     document.querySelectorAll('[data-admin-tab]').forEach(b=>b.addEventListener('click',async()=>{adminTab=b.dataset.adminTab;await refreshAdmin();}));
     $('adminList').addEventListener('click',onAdminAction);
-    $('importBackup').addEventListener('change',importBackup);\n    $('p54ImportFetch')?.addEventListener('click',fetchYoutubeCatalogMetadata);\n    $('p54ImportSave')?.addEventListener('click',saveYoutubeCatalogSet);\n    $('p54ImportUrl')?.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();fetchYoutubeCatalogMetadata();}});
+    $('importBackup').addEventListener('change',importBackup);
+    $('p54ImportFetch')?.addEventListener('click',fetchYoutubeCatalogMetadata);\n    $('p54ImportSave')?.addEventListener('click',saveYoutubeCatalogSet);\n    $('p54ImportUrl')?.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();fetchYoutubeCatalogMetadata();}});
     $('exportPosts').addEventListener('click',exportPosts);
     $('previewDismiss').addEventListener('click',()=>$('previewBanner').hidden=true);
     $('appRadioButton')?.addEventListener('click',()=>{if(!radioActive){radioStart();return;}radioDockMinimized=false;radioUpdateUI();$('radioDock').scrollTop=0;});
