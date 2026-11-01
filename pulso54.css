@@ -439,3 +439,18 @@ body:has(#p51InstallBar:not([hidden])) .pulso-video-dock{bottom:96px}
 #p54Catalog .p54-filtergroup{display:flex;flex-wrap:wrap;overflow:visible;max-width:100%;gap:5px}
 #p54Catalog .p54-search{flex:1 1 220px;max-width:320px}
 @media(max-width:700px){#p54Catalog .p54-eventnav button{min-height:42px;padding:10px 13px;font-size:10px}#p54Catalog .p54-toolbar{display:flex;flex-direction:column;align-items:stretch}#p54Catalog .p54-filtergroup{width:100%}#p54Catalog .p54-search{max-width:none;width:100%;flex-basis:auto}}
+
+
+/* PULSO 5.22 — faixa fotográfica cinematográfica dos festivais; movimento discreto e sem autoplay. */
+#p54Catalog .p54-photo-rail{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:12px;margin:18px 0 28px}
+#p54Catalog .p54-photo-card{position:relative;isolation:isolate;min-height:172px;overflow:hidden;border:1px solid #ffffff20;border-radius:14px;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;gap:7px;color:#fff;text-decoration:none;background-color:#151915;background-size:cover;background-position:center;box-shadow:inset 0 -90px 75px -35px #050706e8;transition:transform .35s ease,border-color .35s ease,background-position .8s ease}
+#p54Catalog .p54-photo-card:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#080a0920 0%,#080a0960 52%,#080a09ed 100%)}
+#p54Catalog .p54-photo-card:hover{transform:translateY(-3px);border-color:#d1ff6b80;background-position:center 46%}
+#p54Catalog .p54-photo-card span{font-size:9px;letter-spacing:.17em;font-weight:700;color:#d1ff6b}
+#p54Catalog .p54-photo-card strong{font-size:clamp(17px,2vw,25px);letter-spacing:-.035em;line-height:1.05}
+#p54Catalog .p54-photo-card i{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.12em;opacity:.8}
+#p54Catalog .p54-photo-burning{background-image:url('https://i.ytimg.com/vi/mXhayxqft-0/hqdefault.jpg')}
+#p54Catalog .p54-photo-tomorrowland{background-image:linear-gradient(135deg,#1a3b43,#101519 45%,#543b2b)}
+#p54Catalog .p54-photo-artcar{background-image:linear-gradient(135deg,#2a2520,#161819 55%,#3e4933)}
+@media(max-width:700px){#p54Catalog .p54-photo-rail{grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 22px}#p54Catalog .p54-photo-card{min-height:130px;padding:13px}#p54Catalog .p54-photo-burning{grid-column:1/-1;min-height:155px}#p54Catalog .p54-photo-card strong{font-size:17px}}
+@media(prefers-reduced-motion:reduce){#p54Catalog .p54-photo-card{transition:none}}
