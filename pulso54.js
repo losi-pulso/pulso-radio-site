@@ -34,6 +34,7 @@ window.PULSO54={sets,ranking,djInstagram,refreshExternal:async()=>{
    known.add(row.video_id);
   }
   renderArtistRibbon();render();
+  window.dispatchEvent(new CustomEvent('pulso:festival-catalog-updated',{detail:{count:(data||[]).length}}));
  }catch(err){console.warn('Catálogo compartilhado indisponível:',err);}
 }};
 
@@ -176,7 +177,7 @@ function renderSignatures(){
  }).join('');
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  renderRanking();renderClubRanking();renderSignatures();renderArtistRibbon();setupParRibbon();render();window.PULSO54.refreshExternal();setHeroLocation('');setupHeroLocation();
+  renderRanking();renderClubRanking();renderSignatures();renderArtistRibbon();setupParRibbon();render();window.PULSO54.refreshExternal();setTimeout(()=>window.PULSO54?.refreshExternal?.(),1800);setTimeout(()=>window.PULSO54?.refreshExternal?.(),5000);setHeroLocation('');setupHeroLocation();
   setCatalogExpanded(false);
   $('p54ExpandCatalog')?.addEventListener('click',()=>setCatalogExpanded(!$('p54Catalog')?.classList.contains('p54-catalog-expanded')));
   document.addEventListener('click',ev=>{
