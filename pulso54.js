@@ -176,3 +176,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('[data-open-desert]').forEach(b=>b.addEventListener('click',()=>{setCatalogExpanded(true);$('p54Catalog')?.scrollIntoView({block:'start',behavior:'smooth'});}));
 });
 })();
+
+/* Cartões fotográficos da curadoria: selecionar o evento correspondente. */
+document.addEventListener("click",function(e){
+ const card=e.target.closest("[data-p54-event-link]");
+ if(!card)return;
+ const eventName=card.getAttribute("data-p54-event-link");
+ const button=document.querySelector('#p54Catalog [data-p54-event="'+eventName+'"]');
+ if(button){e.preventDefault();button.click();document.getElementById("p54Catalog")?.scrollIntoView({behavior:"smooth",block:"start"});}
+});
