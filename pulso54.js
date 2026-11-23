@@ -23,19 +23,25 @@ function djInstagram(p){
 window.PULSO54={sets,ranking,djInstagram,refreshExternal:async()=>{
  try{
   const cfg=window.PULSO_CONFIG||{};
-  if(!cfg.supabaseUrl||!cfg.supabaseAnonKey||!window.supabase?.createClient)return;
+  if(!cfg.supabaseUrl||!cfg.supabaseAnonKey||!window.supabase?.createClient)throw new Error('Configuração do Supabase indisponível.');
   const client=window.__PULSO54_SB||(window.__PULSO54_SB=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey,{auth:{persistSession:false,autoRefreshToken:false}}));
   const {data,error}=await client.from('festival_sets').select('id,video_id,artist,title,event,year,genre,channel,description,url,cover,status,created_at').eq('status','approved').order('created_at',{ascending:false}).limit(500);
   if(error)throw error;
-  const known=new Set(sets.map(s=>String(s.url||'').match(/[A-Za-z0-9_-]{11}(?:$|[^A-Za-z0-9_-])/)?String(s.url).match(/[A-Za-z0-9_-]{11}(?:$|[^A-Za-z0-9_-])/)[0].slice(0,11):''));
+  const getVideoId=value=>{try{const u=new URL(value);return u.hostname.includes('youtu.be')?u.pathname.split('/').filter(Boolean)[0]||'':u.searchParams.get('v')||u.pathname.match(/\\/(?:embed|shorts|live)\\/([^/?]+)/)?.[1]||'';}catch{return '';}};
+  const known=new Set(sets.map(s=>getVideoId(s.url)).filter(Boolean));
+  let added=0;
   for(const row of data||[]){
    if(known.has(row.video_id))continue;
-   sets.push({id:'db-'+row.id,artist:row.artist,title:row.title,event:row.event,year:row.year||new Date(row.created_at).getFullYear(),genre:row.genre||'Música eletrônica',channel:'YouTube',description:row.description||'',url:row.url,official:false,curated:true,type:'Vídeo DJ Set',status:'approved',cover:row.cover||'https://i.ytimg.com/vi/'+row.video_id+'/hqdefault.jpg',instagram:'',source_name:row.channel||'YouTube',djmag:null});
-   known.add(row.video_id);
+   sets.push({id:'db-'+row.id,video_id:row.video_id,artist:row.artist,title:row.title,event:row.event,year:row.year||new Date(row.created_at).getFullYear(),genre:row.genre||'Música eletrônica',channel:'YouTube',description:row.description||'',url:row.url,official:false,curated:true,type:'Vídeo DJ Set',status:'approved',cover:row.cover||'https://i.ytimg.com/vi/'+row.video_id+'/hqdefault.jpg',instagram:'',source_name:row.channel||'YouTube',djmag:null});
+   known.add(row.video_id);added++;
   }
   renderArtistRibbon();render();
-  window.dispatchEvent(new CustomEvent('pulso:festival-catalog-updated',{detail:{count:(data||[]).length}}));
- }catch(err){console.warn('Catálogo compartilhado indisponível:',err);}
+  window.dispatchEvent(new CustomEvent('pulso:festival-catalog-updated',{detail:{count:(data||[]).length,added}}));
+  return {ok:true,count:(data||[]).length,added};
+ }catch(err){
+  console.warn('Catálogo compartilhado indisponível:',err);
+  return {ok:false,error:err?.message||String(err)};
+ }
 }};
 
 let selectedEvent='Todos',selectedYear='Todos',selectedGenre='Todos',selectedArtist='Todos',search='';
