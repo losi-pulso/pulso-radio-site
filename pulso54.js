@@ -27,7 +27,7 @@ window.PULSO54={sets,ranking,djInstagram,refreshExternal:async()=>{
   const client=window.__PULSO54_SB||(window.__PULSO54_SB=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey,{auth:{persistSession:false,autoRefreshToken:false}}));
   const {data,error}=await client.from('festival_sets').select('id,video_id,artist,title,event,year,genre,channel,description,url,cover,status,created_at').eq('status','approved').order('created_at',{ascending:false}).limit(500);
   if(error)throw error;
-  const getVideoId=value=>{try{const u=new URL(value);return u.hostname.includes('youtu.be')?u.pathname.split('/').filter(Boolean)[0]||'':u.searchParams.get('v')||u.pathname.match(/\\/(?:embed|shorts|live)\\/([^/?]+)/)?.[1]||'';}catch{return '';}};
+  const getVideoId=value=>{try{const u=new URL(value);const parts=u.pathname.split('/').filter(Boolean);return u.hostname.includes('youtu.be')?parts[0]||'':u.searchParams.get('v')||(['embed','shorts','live'].includes(parts[0])?parts[1]||'':'');}catch{return '';}};
   const known=new Set(sets.map(s=>getVideoId(s.url)).filter(Boolean));
   let added=0;
   for(const row of data||[]){
