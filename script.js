@@ -1126,11 +1126,21 @@
     if(year&&(year<1990||year>2100)){ $('p54ImportStatus').textContent='Confira o ano informado.';return;}
     $('p54ImportSave').disabled=true;$('p54ImportStatus').textContent='Salvando no catálogo compartilhado…';
     try{
-      const row={video_id:p54ImportVideoId,artist,title,event,year,genre:'Música eletrônica',channel:'YouTube',description,url:'https://www.youtube.com/watch?v='+p54ImportVideoId,cover:'https://i.ytimg.com/vi/'+p54ImportVideoId+'/hqdefault.jpg',status:'approved',created_by:user.id};
-      const {error}=await sb.from('festival_sets').insert(row);if(error)throw error;
-      await window.PULSO54?.refreshExternal?.();
-      $('p54ImportStatus').textContent='Set adicionado! Ele já está disponível no catálogo para todos os usuários.';
-      $('p54ImportPreview').hidden=true;$('p54ImportUrl').value='';p54ImportVideoId='';p54ImportMetadata=null;
+      const videoId=p54ImportVideoId;
+      const row={video_id:videoId,artist,title,event,year,genre:'Música eletrônica',channel:'YouTube',description,url:'https://www.youtube.com/watch?v='+videoId,cover:'https://i.ytimg.com/vi/'+videoId+'/hqdefault.jpg',status:'approved',created_by:user.id};
+      const {data:saved,error}=await sb.from('festival_sets').insert(row).select('id,video_id').single();
+      if(error)throw error;
+      if(!saved?.id||saved.video_id!==videoId)throw new Error('O banco não confirmou o cadastro do vídeo.');
+      const refresh=await window.PULSO54?.refreshExternal?.();
+      const visible=!!window.PULSO54?.sets?.some(s=>String(s.url||'').includes(videoId));
+      if(refresh?.ok&&visible){
+        $('p54ImportStatus').textContent='✓ Set salvo e publicado em '+event+'. Ele já aparece no catálogo de festivais.';
+        $('p54ImportPreview').hidden=true;$('p54ImportUrl').value='';p54ImportVideoId='';p54ImportMetadata=null;
+      }else if(!refresh?.ok){
+        $('p54ImportStatus').textContent='✓ O set foi salvo no banco, mas a lista não atualizou: '+(refresh?.error||'falha ao sincronizar')+'. Atualize a página para carregá-lo.';
+      }else{
+        throw new Error('O banco confirmou o cadastro, mas o set não apareceu na lista. Atualize a página; o link não será duplicado.');
+      }
     }catch(err){$('p54ImportStatus').textContent='Não foi possível salvar: '+errorText(err);}
     finally{$('p54ImportSave').disabled=false;}
   }
